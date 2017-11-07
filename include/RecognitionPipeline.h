@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "Node.h"
-#include "KeyPointDetector.h"
+#include "preprocessor/SIFTKeyPointDetector.h"
 
 class RecognitionPipeline {
 

@@ -43,10 +43,10 @@ RM = /home/arthur/Downloads/clion-2017.2/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/arthur/iccv2011
+CMAKE_SOURCE_DIR = /home/arthur/recognitionPipeline
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/arthur/iccv2011/cmake-build-debug
+CMAKE_BINARY_DIR = /home/arthur/recognitionPipeline/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/stereo_rec.dir/depend.make
@@ -57,42 +57,42 @@ include CMakeFiles/stereo_rec.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/stereo_rec.dir/flags.make
 
-CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o: CMakeFiles/stereo_rec.dir/flags.make
-CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o: ../src/KeyPointDetector.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/iccv2011/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o -c /home/arthur/iccv2011/src/KeyPointDetector.cpp
+CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o: CMakeFiles/stereo_rec.dir/flags.make
+CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o: ../src/preprocessor/SIFTKeyPointDetector.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o -c /home/arthur/recognitionPipeline/src/preprocessor/SIFTKeyPointDetector.cpp
 
-CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/iccv2011/src/KeyPointDetector.cpp > CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.i
+CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/recognitionPipeline/src/preprocessor/SIFTKeyPointDetector.cpp > CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.i
 
-CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/iccv2011/src/KeyPointDetector.cpp -o CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.s
+CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/recognitionPipeline/src/preprocessor/SIFTKeyPointDetector.cpp -o CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.s
 
-CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o.requires:
+CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o.requires:
 
-.PHONY : CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o.requires
+.PHONY : CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o.requires
 
-CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o.provides: CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o.requires
-	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o.provides.build
-.PHONY : CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o.provides
+CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o.provides: CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o.requires
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o.provides.build
+.PHONY : CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o.provides
 
-CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o.provides.build: CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o
+CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o.provides.build: CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o
 
 
 CMakeFiles/stereo_rec.dir/src/main.cpp.o: CMakeFiles/stereo_rec.dir/flags.make
 CMakeFiles/stereo_rec.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/iccv2011/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/stereo_rec.dir/src/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/stereo_rec.dir/src/main.cpp.o -c /home/arthur/iccv2011/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/stereo_rec.dir/src/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/stereo_rec.dir/src/main.cpp.o -c /home/arthur/recognitionPipeline/src/main.cpp
 
 CMakeFiles/stereo_rec.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/stereo_rec.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/iccv2011/src/main.cpp > CMakeFiles/stereo_rec.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/recognitionPipeline/src/main.cpp > CMakeFiles/stereo_rec.dir/src/main.cpp.i
 
 CMakeFiles/stereo_rec.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/stereo_rec.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/iccv2011/src/main.cpp -o CMakeFiles/stereo_rec.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/recognitionPipeline/src/main.cpp -o CMakeFiles/stereo_rec.dir/src/main.cpp.s
 
 CMakeFiles/stereo_rec.dir/src/main.cpp.o.requires:
 
@@ -107,16 +107,16 @@ CMakeFiles/stereo_rec.dir/src/main.cpp.o.provides.build: CMakeFiles/stereo_rec.d
 
 CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o: CMakeFiles/stereo_rec.dir/flags.make
 CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o: ../src/RecognitionPipeline.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/iccv2011/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o -c /home/arthur/iccv2011/src/RecognitionPipeline.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o -c /home/arthur/recognitionPipeline/src/RecognitionPipeline.cpp
 
 CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/iccv2011/src/RecognitionPipeline.cpp > CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/recognitionPipeline/src/RecognitionPipeline.cpp > CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.i
 
 CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/iccv2011/src/RecognitionPipeline.cpp -o CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/recognitionPipeline/src/RecognitionPipeline.cpp -o CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.s
 
 CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o.requires:
 
@@ -129,44 +129,70 @@ CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o.provides: CMakeFiles/ste
 CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o.provides.build: CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o
 
 
-CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o: CMakeFiles/stereo_rec.dir/flags.make
-CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o: ../src/SurfaceNormalEstimator.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/iccv2011/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o -c /home/arthur/iccv2011/src/SurfaceNormalEstimator.cpp
+CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o: CMakeFiles/stereo_rec.dir/flags.make
+CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o: ../src/preprocessor/SurfaceNormalEstimator.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o -c /home/arthur/recognitionPipeline/src/preprocessor/SurfaceNormalEstimator.cpp
 
-CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/iccv2011/src/SurfaceNormalEstimator.cpp > CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.i
+CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/recognitionPipeline/src/preprocessor/SurfaceNormalEstimator.cpp > CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.i
 
-CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/iccv2011/src/SurfaceNormalEstimator.cpp -o CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.s
+CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/recognitionPipeline/src/preprocessor/SurfaceNormalEstimator.cpp -o CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.s
 
-CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o.requires:
+CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o.requires:
 
-.PHONY : CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o.requires
+.PHONY : CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o.requires
 
-CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o.provides: CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o.requires
-	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o.provides.build
-.PHONY : CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o.provides
+CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o.provides: CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o.requires
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o.provides.build
+.PHONY : CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o.provides
 
-CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o.provides.build: CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o
+CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o.provides.build: CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o
+
+
+CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o: CMakeFiles/stereo_rec.dir/flags.make
+CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o: ../src/featuredescriptor/VPFHExtractor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o -c /home/arthur/recognitionPipeline/src/featuredescriptor/VPFHExtractor.cpp
+
+CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/recognitionPipeline/src/featuredescriptor/VPFHExtractor.cpp > CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.i
+
+CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/recognitionPipeline/src/featuredescriptor/VPFHExtractor.cpp -o CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.s
+
+CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o.requires:
+
+.PHONY : CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o.requires
+
+CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o.provides: CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o.requires
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o.provides.build
+.PHONY : CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o.provides
+
+CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o.provides.build: CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o
 
 
 # Object files for target stereo_rec
 stereo_rec_OBJECTS = \
-"CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o" \
+"CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o" \
 "CMakeFiles/stereo_rec.dir/src/main.cpp.o" \
 "CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o" \
-"CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o"
+"CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o" \
+"CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o"
 
 # External object files for target stereo_rec
 stereo_rec_EXTERNAL_OBJECTS =
 
-stereo_rec: CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o
+stereo_rec: CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o
 stereo_rec: CMakeFiles/stereo_rec.dir/src/main.cpp.o
 stereo_rec: CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o
-stereo_rec: CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o
+stereo_rec: CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o
+stereo_rec: CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o
 stereo_rec: CMakeFiles/stereo_rec.dir/build.make
 stereo_rec: /usr/lib/x86_64-linux-gnu/libboost_system.so
 stereo_rec: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
@@ -370,7 +396,7 @@ stereo_rec: /usr/local/lib/libvtkgl2ps-8.1.so.1
 stereo_rec: /usr/local/lib/libvtklibharu-8.1.so.1
 stereo_rec: /usr/local/lib/libvtkCommonCore-8.1.so.1
 stereo_rec: CMakeFiles/stereo_rec.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/arthur/iccv2011/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable stereo_rec"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable stereo_rec"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/stereo_rec.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -378,10 +404,11 @@ CMakeFiles/stereo_rec.dir/build: stereo_rec
 
 .PHONY : CMakeFiles/stereo_rec.dir/build
 
-CMakeFiles/stereo_rec.dir/requires: CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o.requires
+CMakeFiles/stereo_rec.dir/requires: CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o.requires
 CMakeFiles/stereo_rec.dir/requires: CMakeFiles/stereo_rec.dir/src/main.cpp.o.requires
 CMakeFiles/stereo_rec.dir/requires: CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o.requires
-CMakeFiles/stereo_rec.dir/requires: CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o.requires
+CMakeFiles/stereo_rec.dir/requires: CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o.requires
+CMakeFiles/stereo_rec.dir/requires: CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o.requires
 
 .PHONY : CMakeFiles/stereo_rec.dir/requires
 
@@ -390,6 +417,6 @@ CMakeFiles/stereo_rec.dir/clean:
 .PHONY : CMakeFiles/stereo_rec.dir/clean
 
 CMakeFiles/stereo_rec.dir/depend:
-	cd /home/arthur/iccv2011/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/arthur/iccv2011 /home/arthur/iccv2011 /home/arthur/iccv2011/cmake-build-debug /home/arthur/iccv2011/cmake-build-debug /home/arthur/iccv2011/cmake-build-debug/CMakeFiles/stereo_rec.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/arthur/recognitionPipeline/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/arthur/recognitionPipeline /home/arthur/recognitionPipeline /home/arthur/recognitionPipeline/cmake-build-debug /home/arthur/recognitionPipeline/cmake-build-debug /home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/stereo_rec.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/stereo_rec.dir/depend
 

@@ -48,10 +48,10 @@ RM = /home/arthur/Downloads/clion-2017.2/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/arthur/iccv2011
+CMAKE_SOURCE_DIR = /home/arthur/recognitionPipeline
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/arthur/iccv2011/cmake-build-debug
+CMAKE_BINARY_DIR = /home/arthur/recognitionPipeline/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arthur/iccv2011/cmake-build-debug/CMakeFiles /home/arthur/iccv2011/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles /home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arthur/iccv2011/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,33 +123,6 @@ stereo_rec/fast:
 	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/build
 .PHONY : stereo_rec/fast
 
-src/KeyPointDetector.o: src/KeyPointDetector.cpp.o
-
-.PHONY : src/KeyPointDetector.o
-
-# target to build an object file
-src/KeyPointDetector.cpp.o:
-	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o
-.PHONY : src/KeyPointDetector.cpp.o
-
-src/KeyPointDetector.i: src/KeyPointDetector.cpp.i
-
-.PHONY : src/KeyPointDetector.i
-
-# target to preprocess a source file
-src/KeyPointDetector.cpp.i:
-	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.i
-.PHONY : src/KeyPointDetector.cpp.i
-
-src/KeyPointDetector.s: src/KeyPointDetector.cpp.s
-
-.PHONY : src/KeyPointDetector.s
-
-# target to generate assembly for a file
-src/KeyPointDetector.cpp.s:
-	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.s
-.PHONY : src/KeyPointDetector.cpp.s
-
 src/RecognitionPipeline.o: src/RecognitionPipeline.cpp.o
 
 .PHONY : src/RecognitionPipeline.o
@@ -177,32 +150,32 @@ src/RecognitionPipeline.cpp.s:
 	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.s
 .PHONY : src/RecognitionPipeline.cpp.s
 
-src/SurfaceNormalEstimator.o: src/SurfaceNormalEstimator.cpp.o
+src/featuredescriptor/VPFHExtractor.o: src/featuredescriptor/VPFHExtractor.cpp.o
 
-.PHONY : src/SurfaceNormalEstimator.o
+.PHONY : src/featuredescriptor/VPFHExtractor.o
 
 # target to build an object file
-src/SurfaceNormalEstimator.cpp.o:
-	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o
-.PHONY : src/SurfaceNormalEstimator.cpp.o
+src/featuredescriptor/VPFHExtractor.cpp.o:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o
+.PHONY : src/featuredescriptor/VPFHExtractor.cpp.o
 
-src/SurfaceNormalEstimator.i: src/SurfaceNormalEstimator.cpp.i
+src/featuredescriptor/VPFHExtractor.i: src/featuredescriptor/VPFHExtractor.cpp.i
 
-.PHONY : src/SurfaceNormalEstimator.i
+.PHONY : src/featuredescriptor/VPFHExtractor.i
 
 # target to preprocess a source file
-src/SurfaceNormalEstimator.cpp.i:
-	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.i
-.PHONY : src/SurfaceNormalEstimator.cpp.i
+src/featuredescriptor/VPFHExtractor.cpp.i:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.i
+.PHONY : src/featuredescriptor/VPFHExtractor.cpp.i
 
-src/SurfaceNormalEstimator.s: src/SurfaceNormalEstimator.cpp.s
+src/featuredescriptor/VPFHExtractor.s: src/featuredescriptor/VPFHExtractor.cpp.s
 
-.PHONY : src/SurfaceNormalEstimator.s
+.PHONY : src/featuredescriptor/VPFHExtractor.s
 
 # target to generate assembly for a file
-src/SurfaceNormalEstimator.cpp.s:
-	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.s
-.PHONY : src/SurfaceNormalEstimator.cpp.s
+src/featuredescriptor/VPFHExtractor.cpp.s:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.s
+.PHONY : src/featuredescriptor/VPFHExtractor.cpp.s
 
 src/main.o: src/main.cpp.o
 
@@ -231,6 +204,60 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/preprocessor/SIFTKeyPointDetector.o: src/preprocessor/SIFTKeyPointDetector.cpp.o
+
+.PHONY : src/preprocessor/SIFTKeyPointDetector.o
+
+# target to build an object file
+src/preprocessor/SIFTKeyPointDetector.cpp.o:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o
+.PHONY : src/preprocessor/SIFTKeyPointDetector.cpp.o
+
+src/preprocessor/SIFTKeyPointDetector.i: src/preprocessor/SIFTKeyPointDetector.cpp.i
+
+.PHONY : src/preprocessor/SIFTKeyPointDetector.i
+
+# target to preprocess a source file
+src/preprocessor/SIFTKeyPointDetector.cpp.i:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.i
+.PHONY : src/preprocessor/SIFTKeyPointDetector.cpp.i
+
+src/preprocessor/SIFTKeyPointDetector.s: src/preprocessor/SIFTKeyPointDetector.cpp.s
+
+.PHONY : src/preprocessor/SIFTKeyPointDetector.s
+
+# target to generate assembly for a file
+src/preprocessor/SIFTKeyPointDetector.cpp.s:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.s
+.PHONY : src/preprocessor/SIFTKeyPointDetector.cpp.s
+
+src/preprocessor/SurfaceNormalEstimator.o: src/preprocessor/SurfaceNormalEstimator.cpp.o
+
+.PHONY : src/preprocessor/SurfaceNormalEstimator.o
+
+# target to build an object file
+src/preprocessor/SurfaceNormalEstimator.cpp.o:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o
+.PHONY : src/preprocessor/SurfaceNormalEstimator.cpp.o
+
+src/preprocessor/SurfaceNormalEstimator.i: src/preprocessor/SurfaceNormalEstimator.cpp.i
+
+.PHONY : src/preprocessor/SurfaceNormalEstimator.i
+
+# target to preprocess a source file
+src/preprocessor/SurfaceNormalEstimator.cpp.i:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.i
+.PHONY : src/preprocessor/SurfaceNormalEstimator.cpp.i
+
+src/preprocessor/SurfaceNormalEstimator.s: src/preprocessor/SurfaceNormalEstimator.cpp.s
+
+.PHONY : src/preprocessor/SurfaceNormalEstimator.s
+
+# target to generate assembly for a file
+src/preprocessor/SurfaceNormalEstimator.cpp.s:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.s
+.PHONY : src/preprocessor/SurfaceNormalEstimator.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -240,18 +267,21 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... stereo_rec"
-	@echo "... src/KeyPointDetector.o"
-	@echo "... src/KeyPointDetector.i"
-	@echo "... src/KeyPointDetector.s"
 	@echo "... src/RecognitionPipeline.o"
 	@echo "... src/RecognitionPipeline.i"
 	@echo "... src/RecognitionPipeline.s"
-	@echo "... src/SurfaceNormalEstimator.o"
-	@echo "... src/SurfaceNormalEstimator.i"
-	@echo "... src/SurfaceNormalEstimator.s"
+	@echo "... src/featuredescriptor/VPFHExtractor.o"
+	@echo "... src/featuredescriptor/VPFHExtractor.i"
+	@echo "... src/featuredescriptor/VPFHExtractor.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/preprocessor/SIFTKeyPointDetector.o"
+	@echo "... src/preprocessor/SIFTKeyPointDetector.i"
+	@echo "... src/preprocessor/SIFTKeyPointDetector.s"
+	@echo "... src/preprocessor/SurfaceNormalEstimator.o"
+	@echo "... src/preprocessor/SurfaceNormalEstimator.i"
+	@echo "... src/preprocessor/SurfaceNormalEstimator.s"
 .PHONY : help
 
 

@@ -13,15 +13,17 @@ add_definitions(${PCL_DEFINITIONS})
 #add_definitions (-Wall -O3 -Winvalid-pch -pipe -funroll-loops -fno-strict-aliasing)
 
 add_executable (stereo_rec
-        src/KeyPointDetector.cpp
-        include/KeyPointDetector.h
+        src/preprocessor/SIFTKeyPointDetector.cpp
+        include/preprocessor/SIFTKeyPointDetector.h
         src/main.cpp
 #        src/main_old.cpp
         include/feature_estimation.h
         include/typedefs.h
         include/Node.h
         include/RecognitionPipeline.h
-        src/RecognitionPipeline.cpp src/SurfaceNormalEstimator.cpp include/SurfaceNormalEstimator.h)
+        src/RecognitionPipeline.cpp
+        src/preprocessor/SurfaceNormalEstimator.cpp
+        include/preprocessor/SurfaceNormalEstimator.h src/featuredescriptor/VPFHExtractor.cpp include/featuredescriptor/VPFHExtractor.h)
 
 target_link_libraries (stereo_rec ${PCL_LIBRARIES})
 

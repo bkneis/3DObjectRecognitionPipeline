@@ -1,4 +1,4 @@
-/home/arthur/Downloads/clion-2017.2/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/arthur/iccv2011
+/home/arthur/Downloads/clion-2017.2/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/arthur/recognitionPipeline
 -- Checking for module 'eigen3'
 --   No package 'eigen3' found
 -- Boost version: 1.58.0
@@ -75,4 +75,4 @@
 -- looking for PCL_TRACKING
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/arthur/iccv2011/cmake-build-debug
+-- Build files have been written to: /home/arthur/recognitionPipeline/cmake-build-debug

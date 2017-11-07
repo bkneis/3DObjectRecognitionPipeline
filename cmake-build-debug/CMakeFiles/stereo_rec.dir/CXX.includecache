@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-../include/KeyPointDetector.h
-Node.h
-../include/Node.h
-
 ../include/Node.h
 
 ../include/RecognitionPipeline.h
@@ -17,32 +13,48 @@ vector
 -
 Node.h
 ../include/Node.h
-KeyPointDetector.h
-../include/KeyPointDetector.h
+preprocessor/SIFTKeyPointDetector.h
+../include/preprocessor/SIFTKeyPointDetector.h
 
-../include/SurfaceNormalEstimator.h
+../include/featuredescriptor/VPFHExtractor.h
 Node.h
-../include/Node.h
+-
 
-/home/arthur/iccv2011/src/KeyPointDetector.cpp
+../include/preprocessor/SIFTKeyPointDetector.h
+Node.h
+../include/preprocessor/Node.h
+
+../include/preprocessor/SurfaceNormalEstimator.h
+Node.h
+../include/preprocessor/Node.h
+
+/home/arthur/recognitionPipeline/src/RecognitionPipeline.cpp
+RecognitionPipeline.h
+/home/arthur/recognitionPipeline/src/RecognitionPipeline.h
+
+/home/arthur/recognitionPipeline/src/featuredescriptor/VPFHExtractor.cpp
 iostream
 -
-KeyPointDetector.h
-/home/arthur/iccv2011/src/KeyPointDetector.h
+featuredescriptor/VPFHExtractor.h
+/home/arthur/recognitionPipeline/src/featuredescriptor/featuredescriptor/VPFHExtractor.h
 
-/home/arthur/iccv2011/src/RecognitionPipeline.cpp
+/home/arthur/recognitionPipeline/src/main.cpp
 RecognitionPipeline.h
-/home/arthur/iccv2011/src/RecognitionPipeline.h
+-
+preprocessor/SurfaceNormalEstimator.h
+-
+featuredescriptor/VPFHExtractor.h
+/home/arthur/recognitionPipeline/src/featuredescriptor/VPFHExtractor.h
 
-/home/arthur/iccv2011/src/SurfaceNormalEstimator.cpp
+/home/arthur/recognitionPipeline/src/preprocessor/SIFTKeyPointDetector.cpp
+preprocessor/SIFTKeyPointDetector.h
+-
 iostream
 -
-SurfaceNormalEstimator.h
-/home/arthur/iccv2011/src/SurfaceNormalEstimator.h
 
-/home/arthur/iccv2011/src/main.cpp
-RecognitionPipeline.h
+/home/arthur/recognitionPipeline/src/preprocessor/SurfaceNormalEstimator.cpp
+iostream
 -
-SurfaceNormalEstimator.h
--
+preprocessor/SurfaceNormalEstimator.h
+/home/arthur/recognitionPipeline/src/preprocessor/preprocessor/SurfaceNormalEstimator.h
 

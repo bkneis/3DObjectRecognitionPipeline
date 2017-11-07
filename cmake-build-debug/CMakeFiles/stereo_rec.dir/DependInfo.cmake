@@ -4,10 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/arthur/iccv2011/src/KeyPointDetector.cpp" "/home/arthur/iccv2011/cmake-build-debug/CMakeFiles/stereo_rec.dir/src/KeyPointDetector.cpp.o"
-  "/home/arthur/iccv2011/src/RecognitionPipeline.cpp" "/home/arthur/iccv2011/cmake-build-debug/CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o"
-  "/home/arthur/iccv2011/src/SurfaceNormalEstimator.cpp" "/home/arthur/iccv2011/cmake-build-debug/CMakeFiles/stereo_rec.dir/src/SurfaceNormalEstimator.cpp.o"
-  "/home/arthur/iccv2011/src/main.cpp" "/home/arthur/iccv2011/cmake-build-debug/CMakeFiles/stereo_rec.dir/src/main.cpp.o"
+  "/home/arthur/recognitionPipeline/src/RecognitionPipeline.cpp" "/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/stereo_rec.dir/src/RecognitionPipeline.cpp.o"
+  "/home/arthur/recognitionPipeline/src/featuredescriptor/VPFHExtractor.cpp" "/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/stereo_rec.dir/src/featuredescriptor/VPFHExtractor.cpp.o"
+  "/home/arthur/recognitionPipeline/src/main.cpp" "/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/stereo_rec.dir/src/main.cpp.o"
+  "/home/arthur/recognitionPipeline/src/preprocessor/SIFTKeyPointDetector.cpp" "/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/stereo_rec.dir/src/preprocessor/SIFTKeyPointDetector.cpp.o"
+  "/home/arthur/recognitionPipeline/src/preprocessor/SurfaceNormalEstimator.cpp" "/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/stereo_rec.dir/src/preprocessor/SurfaceNormalEstimator.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
