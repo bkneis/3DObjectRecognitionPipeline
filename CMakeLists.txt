@@ -4,7 +4,7 @@ project(stereoRecognition)
 
 find_package(PCL 1.8 REQUIRED)
 
-include_directories(${PCL_INCLUDE_DIRS} include)
+include_directories(${PCL_INCLUDE_DIRS} include lib/yaml-cpp/include)
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
@@ -15,11 +15,14 @@ add_definitions(${PCL_DEFINITIONS})
 add_executable (stereo_rec
         include/preprocessor/SIFTKeyPointDetector.h
         src/main.cpp
-#        src/main_old.cpp
         include/feature_estimation.h
         include/typedefs.h
         include/RecognitionPipeline.h
-        include/preprocessor/SurfaceNormalEstimator.h include/featuredescriptor/VPFHExtractor.h include/featuredescriptor/FeatureExtractor.h include/preprocessor/KeypointDetector.h include/featuredescriptor/FPFHExtractor.h)
+        include/preprocessor/SurfaceNormalEstimator.h
+        include/featuredescriptor/VPFHExtractor.h
+        include/featuredescriptor/FeatureExtractor.h
+        include/preprocessor/KeypointDetector.h
+        include/featuredescriptor/FPFHExtractor.h src/ConfigReader.cpp include/ConfigReader.h src/Config.cpp include/Config.h include/mappings.h)
 
-target_link_libraries (stereo_rec ${PCL_LIBRARIES})
+target_link_libraries (stereo_rec ${PCL_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
 
