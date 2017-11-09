@@ -1,3 +1,0 @@
-/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/stereo_rec.dir
