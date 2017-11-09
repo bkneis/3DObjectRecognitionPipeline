@@ -1,0 +1,10 @@
+#ifndef STEREORECOGNITION_CONFIG_H
+#define STEREORECOGNITION_CONFIG_H
+
+
+class Config {
+
+};
+
+
+#endif //STEREORECOGNITION_CONFIG_H
