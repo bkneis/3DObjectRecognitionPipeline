@@ -5,12 +5,12 @@
 
 namespace featuredescriptor {
 
-    template <class DescriptorsPtr>
+    template <class DescriptorsPtr, typename Parameters>
     class FeatureExtractor {
 
     public:
 
-        virtual DescriptorsPtr run(const PointCloudPtr& points, const SurfaceNormalsPtr& normals) = 0;
+        virtual DescriptorsPtr run(const Parameters) = 0;
 
     };
 

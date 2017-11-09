@@ -10,17 +10,22 @@
 
 namespace preprocessor {
 
+    struct NormalsParameters {
+        float radius;
+        PointCloudPtr points;
+    };
+
     class SurfaceNormalEstimator {
 
     public:
 
-        SurfaceNormalsPtr run(const PointCloudPtr& input, float radius)
+        SurfaceNormalsPtr run(NormalsParameters params)
         {
             pcl::console::print_info ("Estimating surface normals of point cloud \n");
             pcl::NormalEstimation<PointT, NormalT> normal_estimation;
             normal_estimation.setSearchMethod (pcl::search::Search<PointT>::Ptr (new pcl::search::KdTree<PointT>));
-            normal_estimation.setRadiusSearch (radius);
-            normal_estimation.setInputCloud (input);
+            normal_estimation.setRadiusSearch (params.radius);
+            normal_estimation.setInputCloud (params.points);
             SurfaceNormalsPtr normals (new SurfaceNormals);
             normal_estimation.compute (*normals);
 

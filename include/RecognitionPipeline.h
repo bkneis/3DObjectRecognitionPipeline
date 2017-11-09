@@ -14,7 +14,7 @@ using namespace preprocessor;
 using namespace featuredescriptor;
 
 
-template <class PointCloudType, typename KeypointParams, class FeatureDescriptorsPtr>
+template <class PointCloudType, class FeatureDescriptorsPtr, typename NormalsParameters, typename KeypointParameters, typename FeatureParameters>
 class RecognitionPipeline {
 
 public:
@@ -22,10 +22,15 @@ public:
     void
     run(PointCloudPtr input)
     {
-      auto normals = this->normalEstimator->run(input, 0.2);
-      SiftParameters siftParams = { 0.01f, 3, 4, 0.001f };
-      auto keypoints = this->keypointDetector->run(input, normals, siftParams);
-      auto descriptors = this->featureExtractor->run(input, normals);
+      this->normalParams.points = input;
+      auto normals = this->normalEstimator->run(normalParams);
+
+      this->keypointParams.points = input;
+      auto keypoints = this->keypointDetector->run(this->keypointParams);
+
+      this->featureParams.points = input;
+      this->featureParams.normals = normals;
+      auto descriptors = this->featureExtractor->run(this->featureParams);
 
       pcl::console::print_info ("Starting visualizer... Close window to exit\n");
       pcl::visualization::PCLVisualizer vis;
@@ -44,28 +49,36 @@ public:
     }
 
     void
-    setKeypointDetector(KeypointDetector<PointCloudType, KeypointParams>* keypointDetector)
+    setKeypointDetector(KeypointDetector<PointCloudType, KeypointParameters>* keypointDetector, KeypointParameters params)
     {
       this->keypointDetector = keypointDetector;
+      this->keypointParams = params;
     }
 
     void
-    setSurfaceNormalEstimator(SurfaceNormalEstimator* normalEstimator)
+    setSurfaceNormalEstimator(SurfaceNormalEstimator* normalEstimator, NormalsParameters params)
     {
       this->normalEstimator = normalEstimator;
+      this->normalParams = params;
     }
 
     void
-    setFeatureExtractor(FeatureExtractor<FeatureDescriptorsPtr>* featureExtractor)
+    setFeatureExtractor(FeatureExtractor<FeatureDescriptorsPtr, FeatureParameters>* featureExtractor, FeatureParameters params)
     {
       this->featureExtractor = featureExtractor;
+      this->featureParams = params;
     }
 
 private:
 
-    KeypointDetector<PointCloudType, KeypointParams>* keypointDetector;
+    KeypointDetector<PointCloudType, KeypointParameters>* keypointDetector;
+    KeypointParameters keypointParams;
+
     SurfaceNormalEstimator* normalEstimator;
-    FeatureExtractor<FeatureDescriptorsPtr>* featureExtractor;
+    NormalsParameters normalParams;
+
+    FeatureExtractor<FeatureDescriptorsPtr, FeatureParameters>* featureExtractor;
+    FeatureParameters featureParams;
 
 };
 

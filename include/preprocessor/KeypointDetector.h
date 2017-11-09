@@ -5,12 +5,12 @@
 
 namespace preprocessor {
 
-    template <class PointCloudPtr, typename params>
+    template <class PointCloudPtr, typename Parameters>
     class KeypointDetector {
 
     public:
 
-        virtual PointCloudPtr run(const PointCloudPtr& points, const SurfaceNormalsPtr& normals, params args) = 0;
+        virtual PointCloudPtr run(Parameters params) = 0;
 
     };
 
