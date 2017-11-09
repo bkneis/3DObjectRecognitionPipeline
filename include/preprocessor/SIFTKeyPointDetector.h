@@ -1,17 +1,28 @@
-#ifndef STEREORECOGNITION_KEYPOINTDETECTOR_H
-#define STEREORECOGNITION_KEYPOINTDETECTOR_H
+#ifndef STEREORECOGNITION_SIFTKEYPOINTDETECTOR_H
+#define STEREORECOGNITION_SIFTKEYPOINTDETECTOR_H
 
-#include "Node.h"
+#include <typedefs.h>
+#include <pcl/keypoints/sift_keypoint.h>
+#include "KeypointDetector.h"
 
 namespace preprocessor {
 
-    class SIFTKeyPointDetector : public Node {
+    struct SiftParameters {
+        float minScale;
+        int numOctaves;
+        int numScalesPerOctave;
+        float minContrast;
+    };
+
+    class SIFTKeyPointDetector : public KeypointDetector<PointCloudPtr, SiftParameters> {
+
     public:
-        void* run(void* args);
+
+        PointCloudPtr run(const PointCloudPtr& points, const SurfaceNormalsPtr& normals, SiftParameters params);
+
     };
 
 }
 
 
-
-#endif //STEREORECOGNITION_KEYPOINTDETECTOR_H
+#endif //STEREORECOGNITION_SIFTKEYPOINTDETECTOR_H

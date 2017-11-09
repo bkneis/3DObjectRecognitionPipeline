@@ -142,16 +142,19 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/arthur/recognitionPipeline/include/Node.h">
-			<Option target="stereo_rec"/>
-		</Unit>
 		<Unit filename="/home/arthur/recognitionPipeline/include/RecognitionPipeline.h">
 			<Option target="stereo_rec"/>
 		</Unit>
 		<Unit filename="/home/arthur/recognitionPipeline/include/feature_estimation.h">
 			<Option target="stereo_rec"/>
 		</Unit>
+		<Unit filename="/home/arthur/recognitionPipeline/include/featuredescriptor/FeatureExtractor.h">
+			<Option target="stereo_rec"/>
+		</Unit>
 		<Unit filename="/home/arthur/recognitionPipeline/include/featuredescriptor/VPFHExtractor.h">
+			<Option target="stereo_rec"/>
+		</Unit>
+		<Unit filename="/home/arthur/recognitionPipeline/include/preprocessor/KeypointDetector.h">
 			<Option target="stereo_rec"/>
 		</Unit>
 		<Unit filename="/home/arthur/recognitionPipeline/include/preprocessor/SIFTKeyPointDetector.h">

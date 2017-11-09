@@ -19,11 +19,10 @@ add_executable (stereo_rec
 #        src/main_old.cpp
         include/feature_estimation.h
         include/typedefs.h
-        include/Node.h
         include/RecognitionPipeline.h
         src/RecognitionPipeline.cpp
         src/preprocessor/SurfaceNormalEstimator.cpp
-        include/preprocessor/SurfaceNormalEstimator.h src/featuredescriptor/VPFHExtractor.cpp include/featuredescriptor/VPFHExtractor.h)
+        include/preprocessor/SurfaceNormalEstimator.h src/featuredescriptor/VPFHExtractor.cpp include/featuredescriptor/VPFHExtractor.h include/featuredescriptor/FeatureExtractor.h include/preprocessor/KeypointDetector.h)
 
 target_link_libraries (stereo_rec ${PCL_LIBRARIES})
 

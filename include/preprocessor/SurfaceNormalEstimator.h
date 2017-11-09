@@ -1,13 +1,21 @@
 #ifndef STEREORECOGNITION_SURFACENORMALESTIMATOR_H
 #define STEREORECOGNITION_SURFACENORMALESTIMATOR_H
 
-#include "Node.h"
+#include "typedefs.h"
+
+#include <pcl/io/io.h>
+#include <pcl/features/normal_3d.h>
+#include <pcl/keypoints/sift_keypoint.h>
+#include <pcl/search/kdtree.h>
 
 namespace preprocessor {
 
-    class SurfaceNormalEstimator : public Node {
+    class SurfaceNormalEstimator {
+
     public:
-        void* run(void*);
+
+        SurfaceNormalsPtr run(const PointCloudPtr& input, float radius);
+
     };
 
 }
