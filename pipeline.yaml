@@ -14,7 +14,7 @@ Pipeline:
       strategy: VPFH
       parameters:
         something: some
-    Classififcation:
+    Classification:
       strategy: KNN
       parameters:
         k: 20
