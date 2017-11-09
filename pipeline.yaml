@@ -1,0 +1,20 @@
+Pipeline:
+    SurfaceNormalEstimation:
+      strategy: approximations
+      parameters:
+        radius: 0.2
+    KeypointDetection:
+      strategy : sift
+      parameters:
+        minScale : 0.01f
+        numberOfOctaves: 3
+        numberOfScalesPerOctave: 4
+        minContrast: 0.001f
+    FeatureDescriptor:
+      strategy: VPFH
+      parameters:
+        something: some
+    Classififcation:
+      strategy: KNN
+      parameters:
+        k: 20
