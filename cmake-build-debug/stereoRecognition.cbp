@@ -148,6 +148,9 @@
 		<Unit filename="/home/arthur/recognitionPipeline/include/feature_estimation.h">
 			<Option target="stereo_rec"/>
 		</Unit>
+		<Unit filename="/home/arthur/recognitionPipeline/include/featuredescriptor/FPFHExtractor.h">
+			<Option target="stereo_rec"/>
+		</Unit>
 		<Unit filename="/home/arthur/recognitionPipeline/include/featuredescriptor/FeatureExtractor.h">
 			<Option target="stereo_rec"/>
 		</Unit>
@@ -166,19 +169,7 @@
 		<Unit filename="/home/arthur/recognitionPipeline/include/typedefs.h">
 			<Option target="stereo_rec"/>
 		</Unit>
-		<Unit filename="/home/arthur/recognitionPipeline/src/RecognitionPipeline.cpp">
-			<Option target="stereo_rec"/>
-		</Unit>
-		<Unit filename="/home/arthur/recognitionPipeline/src/featuredescriptor/VPFHExtractor.cpp">
-			<Option target="stereo_rec"/>
-		</Unit>
 		<Unit filename="/home/arthur/recognitionPipeline/src/main.cpp">
-			<Option target="stereo_rec"/>
-		</Unit>
-		<Unit filename="/home/arthur/recognitionPipeline/src/preprocessor/SIFTKeyPointDetector.cpp">
-			<Option target="stereo_rec"/>
-		</Unit>
-		<Unit filename="/home/arthur/recognitionPipeline/src/preprocessor/SurfaceNormalEstimator.cpp">
 			<Option target="stereo_rec"/>
 		</Unit>
 		<Unit filename="/home/arthur/recognitionPipeline/CMakeLists.txt">

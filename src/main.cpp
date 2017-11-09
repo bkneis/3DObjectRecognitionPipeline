@@ -1,5 +1,4 @@
 #include <RecognitionPipeline.h>
-#include <pcl/console/print.h>
 #include <pcl/io/pcd_io.h>
 #include <preprocessor/SIFTKeyPointDetector.h>
 #include "featuredescriptor/VPFHExtractor.h"
