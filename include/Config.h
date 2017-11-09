@@ -14,6 +14,10 @@ public:
 
     void setStrategy(std::string element, std::string strategy);
     void addParameter(std::string element, std::string parameter, std::string parameterValue);
+    std::string getKeypointStrategy();
+    std::string getNormalsStrategy();
+    std::string getFeatureDescriptorStrategy();
+    std::string getClassificationStartegy();
 
 private:
 

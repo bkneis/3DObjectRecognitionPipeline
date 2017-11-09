@@ -26,3 +26,19 @@ Config::setStrategy(std::string element, std::string strategy)
     }
     this->parameters.insert(std::make_pair(strategy, ParameterSet()));
 }
+
+std::string Config::getKeypointStrategy() {
+    return this->keypointStrategy;
+}
+
+std::string Config::getNormalsStrategy() {
+    return this->normalsStrategy;
+}
+
+std::string Config::getFeatureDescriptorStrategy() {
+    return this->featureDescriptorStartegy;
+}
+
+std::string Config::getClassificationStartegy() {
+    return this->classfificationStrategy;
+}
