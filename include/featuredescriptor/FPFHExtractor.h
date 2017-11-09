@@ -15,23 +15,24 @@ namespace featuredescriptor {
         PointCloudPtr keypoints;
     };
 
-    class FPFHExtractor : public FeatureExtractor<LocalDescriptorsPtr, FPFHParameters> {
+    class FPFHExtractor : public FeatureExtractor<LocalDescriptorsPtr> {
 
     public:
 
         LocalDescriptorsPtr
-        run(FPFHParameters params)
+        run(void* params)
         {
-          pcl::FPFHEstimation<PointT, NormalT, LocalDescriptorT> fpfh_estimation;
-          fpfh_estimation.setSearchMethod (pcl::search::Search<PointT>::Ptr (new pcl::search::KdTree<PointT>));
-          fpfh_estimation.setRadiusSearch (params.featureRadius);
-          fpfh_estimation.setSearchSurface (params.points);
-          fpfh_estimation.setInputNormals (params.normals);
-          fpfh_estimation.setInputCloud (params.keypoints);
-          LocalDescriptorsPtr local_descriptors (new LocalDescriptors);
-          fpfh_estimation.compute (*local_descriptors);
+            auto fpfhParams = static_cast<FPFHParameters*>(params);
+            pcl::FPFHEstimation<PointT, NormalT, LocalDescriptorT> fpfh_estimation;
+            fpfh_estimation.setSearchMethod (pcl::search::Search<PointT>::Ptr (new pcl::search::KdTree<PointT>));
+            fpfh_estimation.setRadiusSearch (fpfhParams->featureRadius);
+            fpfh_estimation.setSearchSurface (fpfhParams->points);
+            fpfh_estimation.setInputNormals (fpfhParams->normals);
+            fpfh_estimation.setInputCloud (fpfhParams->keypoints);
+            LocalDescriptorsPtr local_descriptors (new LocalDescriptors);
+            fpfh_estimation.compute (*local_descriptors);
 
-          return (local_descriptors);
+            return (local_descriptors);
         }
 
 

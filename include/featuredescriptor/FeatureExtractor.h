@@ -5,12 +5,12 @@
 
 namespace featuredescriptor {
 
-    template <class DescriptorsPtr, typename Parameters>
+    template <class DescriptorsPtr>
     class FeatureExtractor {
 
     public:
 
-        virtual DescriptorsPtr run(const Parameters) = 0;
+        virtual DescriptorsPtr run(void* params) = 0;
 
     };
 

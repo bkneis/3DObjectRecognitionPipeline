@@ -8,78 +8,96 @@
 #include <preprocessor/SIFTKeyPointDetector.h>
 #include <pcl/visualization/pcl_visualizer.h>
 #include <pcl/visualization/histogram_visualizer.h>
+#include <featuredescriptor/VPFHExtractor.h>
 #include "typedefs.h"
+#include "Config.h"
 
 using namespace preprocessor;
 using namespace featuredescriptor;
 
 
-template <class PointCloudType, class FeatureDescriptorsPtr, typename NormalsParameters, typename KeypointParameters, typename FeatureParameters>
+template <class FeatureDescriptorsPtr>
 class RecognitionPipeline {
 
 public:
 
+    RecognitionPipeline(Config* config) {
+        this->config = config;
+    }
+
     void
     run(PointCloudPtr input)
     {
-      this->normalParams.points = input;
-      auto normals = this->normalEstimator->run(normalParams);
+        void* voidNormalParams;
+        if (!config->getNormalsStrategy().compare("approximations")) {
+            auto normalsParams = new NormalsParameters();
+            normalsParams->radius = 0.2;
+            normalsParams->points = input;
+            voidNormalParams = static_cast<void*>(normalsParams);
+        }
+        auto normals = this->normalEstimator->run(voidNormalParams);
 
-      this->keypointParams.points = input;
-      auto keypoints = this->keypointDetector->run(this->keypointParams);
+        void* voidKeypointParams;
+        if (!config->getKeypointStrategy().compare("sift")) {
+            auto siftParams = new SiftParameters();
+            siftParams->minScale = 0.01f;
+            siftParams->numOctaves = 3;
+            siftParams->numScalesPerOctave = 4;
+            siftParams->minContrast = 0.001f;
+            siftParams->points = input;
+            voidKeypointParams = static_cast<void*>(siftParams);
+        }
+        auto keypoints = this->keypointDetector->run(voidKeypointParams);
 
-      this->featureParams.points = input;
-      this->featureParams.normals = normals;
-      auto descriptors = this->featureExtractor->run(this->featureParams);
+        void* voidFeatureDescriptorParams;
+        if (!config->getFeatureDescriptorStrategy().compare("VPFH")) {
+            auto vpfhParams = new VPFHParameters();
+            vpfhParams->points = input;
+            vpfhParams->normals = normals;
+            voidFeatureDescriptorParams = static_cast<void*>(vpfhParams);
+        }
+        auto descriptors = this->featureExtractor->run(voidFeatureDescriptorParams);
 
-      pcl::console::print_info ("Starting visualizer... Close window to exit\n");
-      pcl::visualization::PCLVisualizer vis;
-      pcl::visualization::PCLHistogramVisualizer hist_vis;
-      vis.addPointCloud (input);
+        pcl::console::print_info ("Starting visualizer... Close window to exit\n");
+        pcl::visualization::PCLVisualizer vis;
+        pcl::visualization::PCLHistogramVisualizer hist_vis;
+        vis.addPointCloud (input);
 
-      vis.addPointCloudNormals<PointT,NormalT> (input, normals, 4, 0.02, "normals");
+        vis.addPointCloudNormals<PointT,NormalT> (input, normals, 4, 0.02, "normals");
 
-      pcl::visualization::PointCloudColorHandlerCustom<PointT> red (keypoints, 255, 0, 0);
-      vis.addPointCloud (keypoints, red, "keypoints");
-      vis.setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 3, "keypoints");
+        pcl::visualization::PointCloudColorHandlerCustom<PointT> red (keypoints, 255, 0, 0);
+        vis.addPointCloud (keypoints, red, "keypoints");
+        vis.setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 3, "keypoints");
 
-      // hist_vis.addFeatureHistogram (*descriptors, 308, "Global descriptor");
-      vis.resetCamera ();
-      vis.spin ();
+        // hist_vis.addFeatureHistogram (*descriptors, 308, "Global descriptor");
+        vis.resetCamera ();
+        vis.spin();
     }
 
     void
-    setKeypointDetector(KeypointDetector<PointCloudType, KeypointParameters>* keypointDetector, KeypointParameters params)
+    setKeypointDetector(KeypointDetector<PointCloudPtr>* keypointDetector)
     {
-      this->keypointDetector = keypointDetector;
-      this->keypointParams = params;
+        this->keypointDetector = keypointDetector;
     }
 
     void
-    setSurfaceNormalEstimator(SurfaceNormalEstimator* normalEstimator, NormalsParameters params)
+    setSurfaceNormalEstimator(SurfaceNormalEstimator* normalEstimator)
     {
-      this->normalEstimator = normalEstimator;
-      this->normalParams = params;
+        this->normalEstimator = normalEstimator;
     }
 
     void
-    setFeatureExtractor(FeatureExtractor<FeatureDescriptorsPtr, FeatureParameters>* featureExtractor, FeatureParameters params)
+    setFeatureExtractor(FeatureExtractor<FeatureDescriptorsPtr>* featureExtractor)
     {
-      this->featureExtractor = featureExtractor;
-      this->featureParams = params;
+        this->featureExtractor = featureExtractor;
     }
 
 private:
 
-    KeypointDetector<PointCloudType, KeypointParameters>* keypointDetector;
-    KeypointParameters keypointParams;
-
+    KeypointDetector<PointCloudPtr>* keypointDetector;
     SurfaceNormalEstimator* normalEstimator;
-    NormalsParameters normalParams;
-
-    FeatureExtractor<FeatureDescriptorsPtr, FeatureParameters>* featureExtractor;
-    FeatureParameters featureParams;
-
+    FeatureExtractor<FeatureDescriptorsPtr>* featureExtractor;
+    Config* config;
 };
 
 #endif //STEREORECOGNITION_RECOGNITIONPIPELINE_H

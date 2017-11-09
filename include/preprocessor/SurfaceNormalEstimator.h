@@ -19,13 +19,14 @@ namespace preprocessor {
 
     public:
 
-        SurfaceNormalsPtr run(NormalsParameters params)
+        SurfaceNormalsPtr run(void* params)
         {
+            NormalsParameters* normalsParams = static_cast<NormalsParameters*>(params);
             pcl::console::print_info ("Estimating surface normals of point cloud \n");
             pcl::NormalEstimation<PointT, NormalT> normal_estimation;
             normal_estimation.setSearchMethod (pcl::search::Search<PointT>::Ptr (new pcl::search::KdTree<PointT>));
-            normal_estimation.setRadiusSearch (params.radius);
-            normal_estimation.setInputCloud (params.points);
+            normal_estimation.setRadiusSearch (normalsParams->radius);
+            normal_estimation.setInputCloud (normalsParams->points);
             SurfaceNormalsPtr normals (new SurfaceNormals);
             normal_estimation.compute (*normals);
 

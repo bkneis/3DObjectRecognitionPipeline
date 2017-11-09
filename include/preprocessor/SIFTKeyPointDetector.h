@@ -15,19 +15,20 @@ namespace preprocessor {
         PointCloudPtr points;
     };
 
-    class SIFTKeyPointDetector : public KeypointDetector<PointCloudPtr, SiftParameters> {
+    class SIFTKeyPointDetector : public KeypointDetector<PointCloudPtr> {
 
     public:
 
         PointCloudPtr
-        run(SiftParameters params)
+        run(void* params)
         {
+            auto keypointParams = static_cast<SiftParameters*>(params);
             pcl::console::print_info ("Detecting keypoints using 3D SIFT with surface normals \n");
             pcl::SIFTKeypoint<PointT, pcl::PointWithScale> sift_detect;
             sift_detect.setSearchMethod (pcl::search::Search<PointT>::Ptr (new pcl::search::KdTree<PointT>));
-            sift_detect.setScales (params.minScale, params.numOctaves, params.numScalesPerOctave);
-            sift_detect.setMinimumContrast (params.minContrast);
-            sift_detect.setInputCloud (params.points);
+            sift_detect.setScales (keypointParams->minScale, keypointParams->numOctaves, keypointParams->numScalesPerOctave);
+            sift_detect.setMinimumContrast (keypointParams->minContrast);
+            sift_detect.setInputCloud (keypointParams->points);
             pcl::PointCloud<pcl::PointWithScale> keypoints_temp;
             sift_detect.compute (keypoints_temp);
             PointCloudPtr keypoints (new PointCloud);

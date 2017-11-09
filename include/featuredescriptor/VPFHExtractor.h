@@ -12,17 +12,18 @@ namespace featuredescriptor {
         SurfaceNormalsPtr normals;
     };
 
-    class VPFHExtractor : public FeatureExtractor<GlobalDescriptorsPtr, VPFHParameters> {
+    class VPFHExtractor : public FeatureExtractor<GlobalDescriptorsPtr> {
 
     public:
 
-        GlobalDescriptorsPtr run(VPFHParameters params)
+        GlobalDescriptorsPtr run(void* params)
         {
+            auto vpfhParams = static_cast<VPFHParameters*>(params);
             pcl::console::print_info ("Extracting features using Viewpoint Feature Histogram \n");
             pcl::VFHEstimation<PointT, NormalT, GlobalDescriptorT> vfh_estimation;
             vfh_estimation.setSearchMethod (pcl::search::Search<PointT>::Ptr (new pcl::search::KdTree<PointT>));
-            vfh_estimation.setInputCloud (params.points);
-            vfh_estimation.setInputNormals (params.normals);
+            vfh_estimation.setInputCloud (vpfhParams->points);
+            vfh_estimation.setInputNormals (vpfhParams->normals);
             GlobalDescriptorsPtr global_descriptor (new GlobalDescriptors);
             vfh_estimation.compute (*global_descriptor);
 

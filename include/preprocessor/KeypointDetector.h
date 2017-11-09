@@ -5,12 +5,12 @@
 
 namespace preprocessor {
 
-    template <class PointCloudPtr, typename Parameters>
+    template <class PointCloudPtr>
     class KeypointDetector {
 
     public:
 
-        virtual PointCloudPtr run(Parameters params) = 0;
+        virtual PointCloudPtr run(void* params) = 0;
 
     };
 
