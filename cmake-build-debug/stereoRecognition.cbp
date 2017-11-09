@@ -74,6 +74,7 @@
 					<Add directory="/usr/local/include/pcl-1.8"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/home/arthur/recognitionPipeline/include"/>
+					<Add directory="/home/arthur/recognitionPipeline/lib/yaml-cpp/include"/>
 					<Add directory="/usr/include/c++/5"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
 					<Add directory="/usr/include/c++/5/backward"/>
@@ -126,6 +127,7 @@
 					<Add directory="/usr/local/include/pcl-1.8"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/home/arthur/recognitionPipeline/include"/>
+					<Add directory="/home/arthur/recognitionPipeline/lib/yaml-cpp/include"/>
 					<Add directory="/usr/include/c++/5"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
 					<Add directory="/usr/include/c++/5/backward"/>
@@ -142,6 +144,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/arthur/recognitionPipeline/include/Config.h">
+			<Option target="stereo_rec"/>
+		</Unit>
+		<Unit filename="/home/arthur/recognitionPipeline/include/ConfigReader.h">
+			<Option target="stereo_rec"/>
+		</Unit>
 		<Unit filename="/home/arthur/recognitionPipeline/include/RecognitionPipeline.h">
 			<Option target="stereo_rec"/>
 		</Unit>
@@ -157,6 +165,9 @@
 		<Unit filename="/home/arthur/recognitionPipeline/include/featuredescriptor/VPFHExtractor.h">
 			<Option target="stereo_rec"/>
 		</Unit>
+		<Unit filename="/home/arthur/recognitionPipeline/include/mappings.h">
+			<Option target="stereo_rec"/>
+		</Unit>
 		<Unit filename="/home/arthur/recognitionPipeline/include/preprocessor/KeypointDetector.h">
 			<Option target="stereo_rec"/>
 		</Unit>
@@ -167,6 +178,12 @@
 			<Option target="stereo_rec"/>
 		</Unit>
 		<Unit filename="/home/arthur/recognitionPipeline/include/typedefs.h">
+			<Option target="stereo_rec"/>
+		</Unit>
+		<Unit filename="/home/arthur/recognitionPipeline/src/Config.cpp">
+			<Option target="stereo_rec"/>
+		</Unit>
+		<Unit filename="/home/arthur/recognitionPipeline/src/ConfigReader.cpp">
 			<Option target="stereo_rec"/>
 		</Unit>
 		<Unit filename="/home/arthur/recognitionPipeline/src/main.cpp">

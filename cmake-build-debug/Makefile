@@ -123,6 +123,60 @@ stereo_rec/fast:
 	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/build
 .PHONY : stereo_rec/fast
 
+src/Config.o: src/Config.cpp.o
+
+.PHONY : src/Config.o
+
+# target to build an object file
+src/Config.cpp.o:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/Config.cpp.o
+.PHONY : src/Config.cpp.o
+
+src/Config.i: src/Config.cpp.i
+
+.PHONY : src/Config.i
+
+# target to preprocess a source file
+src/Config.cpp.i:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/Config.cpp.i
+.PHONY : src/Config.cpp.i
+
+src/Config.s: src/Config.cpp.s
+
+.PHONY : src/Config.s
+
+# target to generate assembly for a file
+src/Config.cpp.s:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/Config.cpp.s
+.PHONY : src/Config.cpp.s
+
+src/ConfigReader.o: src/ConfigReader.cpp.o
+
+.PHONY : src/ConfigReader.o
+
+# target to build an object file
+src/ConfigReader.cpp.o:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o
+.PHONY : src/ConfigReader.cpp.o
+
+src/ConfigReader.i: src/ConfigReader.cpp.i
+
+.PHONY : src/ConfigReader.i
+
+# target to preprocess a source file
+src/ConfigReader.cpp.i:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.i
+.PHONY : src/ConfigReader.cpp.i
+
+src/ConfigReader.s: src/ConfigReader.cpp.s
+
+.PHONY : src/ConfigReader.s
+
+# target to generate assembly for a file
+src/ConfigReader.cpp.s:
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.s
+.PHONY : src/ConfigReader.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -159,6 +213,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... stereo_rec"
+	@echo "... src/Config.o"
+	@echo "... src/Config.i"
+	@echo "... src/Config.s"
+	@echo "... src/ConfigReader.o"
+	@echo "... src/ConfigReader.i"
+	@echo "... src/ConfigReader.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

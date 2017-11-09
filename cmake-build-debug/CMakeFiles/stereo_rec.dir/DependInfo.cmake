@@ -4,6 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/arthur/recognitionPipeline/src/Config.cpp" "/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/stereo_rec.dir/src/Config.cpp.o"
+  "/home/arthur/recognitionPipeline/src/ConfigReader.cpp" "/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o"
   "/home/arthur/recognitionPipeline/src/main.cpp" "/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles/stereo_rec.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
@@ -44,6 +46,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/local/include/pcl-1.8"
   "/usr/local/include"
   "../include"
+  "../lib/yaml-cpp/include"
   )
 
 # Targets to which this target links.

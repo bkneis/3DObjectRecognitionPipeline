@@ -81,14 +81,66 @@ CMakeFiles/stereo_rec.dir/src/main.cpp.o.provides: CMakeFiles/stereo_rec.dir/src
 CMakeFiles/stereo_rec.dir/src/main.cpp.o.provides.build: CMakeFiles/stereo_rec.dir/src/main.cpp.o
 
 
+CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o: CMakeFiles/stereo_rec.dir/flags.make
+CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o: ../src/ConfigReader.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o -c /home/arthur/recognitionPipeline/src/ConfigReader.cpp
+
+CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/recognitionPipeline/src/ConfigReader.cpp > CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.i
+
+CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/recognitionPipeline/src/ConfigReader.cpp -o CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.s
+
+CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o.requires:
+
+.PHONY : CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o.requires
+
+CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o.provides: CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o.requires
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o.provides.build
+.PHONY : CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o.provides
+
+CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o.provides.build: CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o
+
+
+CMakeFiles/stereo_rec.dir/src/Config.cpp.o: CMakeFiles/stereo_rec.dir/flags.make
+CMakeFiles/stereo_rec.dir/src/Config.cpp.o: ../src/Config.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/stereo_rec.dir/src/Config.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/stereo_rec.dir/src/Config.cpp.o -c /home/arthur/recognitionPipeline/src/Config.cpp
+
+CMakeFiles/stereo_rec.dir/src/Config.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/stereo_rec.dir/src/Config.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arthur/recognitionPipeline/src/Config.cpp > CMakeFiles/stereo_rec.dir/src/Config.cpp.i
+
+CMakeFiles/stereo_rec.dir/src/Config.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/stereo_rec.dir/src/Config.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arthur/recognitionPipeline/src/Config.cpp -o CMakeFiles/stereo_rec.dir/src/Config.cpp.s
+
+CMakeFiles/stereo_rec.dir/src/Config.cpp.o.requires:
+
+.PHONY : CMakeFiles/stereo_rec.dir/src/Config.cpp.o.requires
+
+CMakeFiles/stereo_rec.dir/src/Config.cpp.o.provides: CMakeFiles/stereo_rec.dir/src/Config.cpp.o.requires
+	$(MAKE) -f CMakeFiles/stereo_rec.dir/build.make CMakeFiles/stereo_rec.dir/src/Config.cpp.o.provides.build
+.PHONY : CMakeFiles/stereo_rec.dir/src/Config.cpp.o.provides
+
+CMakeFiles/stereo_rec.dir/src/Config.cpp.o.provides.build: CMakeFiles/stereo_rec.dir/src/Config.cpp.o
+
+
 # Object files for target stereo_rec
 stereo_rec_OBJECTS = \
-"CMakeFiles/stereo_rec.dir/src/main.cpp.o"
+"CMakeFiles/stereo_rec.dir/src/main.cpp.o" \
+"CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o" \
+"CMakeFiles/stereo_rec.dir/src/Config.cpp.o"
 
 # External object files for target stereo_rec
 stereo_rec_EXTERNAL_OBJECTS =
 
 stereo_rec: CMakeFiles/stereo_rec.dir/src/main.cpp.o
+stereo_rec: CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o
+stereo_rec: CMakeFiles/stereo_rec.dir/src/Config.cpp.o
 stereo_rec: CMakeFiles/stereo_rec.dir/build.make
 stereo_rec: /usr/lib/x86_64-linux-gnu/libboost_system.so
 stereo_rec: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
@@ -182,6 +234,7 @@ stereo_rec: /usr/local/lib/libvtkRenderingLOD-8.1.so.1
 stereo_rec: /usr/local/lib/libvtkParallelMPI4Py-8.1.so.1
 stereo_rec: /usr/local/lib/libvtkWebCore-8.1.so.1
 stereo_rec: /usr/local/lib/libvtkWrappingJava-8.1.so.1
+stereo_rec: ../lib/yaml-cpp/build/libyaml-cpp.a
 stereo_rec: /usr/local/lib/libpcl_common.so
 stereo_rec: /usr/local/lib/libpcl_octree.so
 stereo_rec: /usr/local/lib/libpcl_io.so
@@ -201,6 +254,7 @@ stereo_rec: /usr/local/lib/libpcl_outofcore.so
 stereo_rec: /usr/local/lib/libpcl_recognition.so
 stereo_rec: /usr/local/lib/libpcl_keypoints.so
 stereo_rec: /usr/local/lib/libpcl_tracking.so
+stereo_rec: ../lib/yaml-cpp/build/libyaml-cpp.a
 stereo_rec: /usr/local/lib/libvtklibxml2-8.1.so.1
 stereo_rec: /usr/local/lib/libvtkDomainsChemistry-8.1.so.1
 stereo_rec: /usr/local/lib/libvtkFiltersAMR-8.1.so.1
@@ -292,7 +346,7 @@ stereo_rec: /usr/local/lib/libvtkgl2ps-8.1.so.1
 stereo_rec: /usr/local/lib/libvtklibharu-8.1.so.1
 stereo_rec: /usr/local/lib/libvtkCommonCore-8.1.so.1
 stereo_rec: CMakeFiles/stereo_rec.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable stereo_rec"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/arthur/recognitionPipeline/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable stereo_rec"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/stereo_rec.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -301,6 +355,8 @@ CMakeFiles/stereo_rec.dir/build: stereo_rec
 .PHONY : CMakeFiles/stereo_rec.dir/build
 
 CMakeFiles/stereo_rec.dir/requires: CMakeFiles/stereo_rec.dir/src/main.cpp.o.requires
+CMakeFiles/stereo_rec.dir/requires: CMakeFiles/stereo_rec.dir/src/ConfigReader.cpp.o.requires
+CMakeFiles/stereo_rec.dir/requires: CMakeFiles/stereo_rec.dir/src/Config.cpp.o.requires
 
 .PHONY : CMakeFiles/stereo_rec.dir/requires
 
