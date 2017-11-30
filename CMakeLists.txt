@@ -22,7 +22,16 @@ add_executable (stereo_rec
         include/featuredescriptor/VPFHExtractor.h
         include/featuredescriptor/FeatureExtractor.h
         include/preprocessor/KeypointDetector.h
-        include/featuredescriptor/FPFHExtractor.h src/ConfigReader.cpp include/ConfigReader.h src/Config.cpp include/Config.h include/mappings.h)
+        include/featuredescriptor/FPFHExtractor.h
+        src/ConfigReader.cpp
+        include/ConfigReader.h
+        src/Config.cpp
+        include/Config.h
+        include/config_mappings.h
+        src/ParameterBuilder.cpp
+        include/ParameterBuilder.h
+        include/classifier/KNN.h
+        include/classifier/Classifier.h include/loader.h)
 
 target_link_libraries (stereo_rec ${PCL_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
 
