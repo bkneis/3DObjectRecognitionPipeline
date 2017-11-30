@@ -24,4 +24,12 @@ typedef pcl::VFHSignature308 GlobalDescriptorT;
 typedef pcl::PointCloud<GlobalDescriptorT> GlobalDescriptors;
 typedef pcl::PointCloud<GlobalDescriptorT>::Ptr GlobalDescriptorsPtr;
 
+struct ObjectModel
+{
+    PointCloudPtr points;
+    PointCloudPtr keypoints;
+    LocalDescriptorsPtr local_descriptors;
+    GlobalDescriptorsPtr global_descriptor;
+};
+
 #endif
