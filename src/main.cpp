@@ -1,8 +1,5 @@
 #include <RecognitionPipeline.h>
 #include <pcl/io/pcd_io.h>
-#include <preprocessor/SIFTKeyPointDetector.h>
-#include "featuredescriptor/VPFHExtractor.h"
-#include <yaml-cpp/yaml.h>
 #include <ConfigReader.h>
 
 using namespace preprocessor;
@@ -12,7 +9,7 @@ int
 main(int arc, char** argv)
 {
     if (arc < 3) {
-        pcl::console::print_info ("Not enough arguments, Example usage: ./%s pipeline.yaml cloud.pcd \n", argv[1]);
+        pcl::console::print_info ("Not enough arguments, Example usage: ./%s pipeline.yaml cloud.pcd \n", argv[0]);
         return 0;
     }
 
@@ -21,7 +18,7 @@ main(int arc, char** argv)
     // Load the input file
     PointCloudPtr cloud (new PointCloud);
     pcl::io::loadPCDFile (argv[2], *cloud);
-    pcl::console::print_info ("Loaded input point cloud %s (%lu points)\n", argv[1], cloud->size());
+    pcl::console::print_info ("Loaded input point cloud %s (%lu points)\n", argv[2], cloud->size());
 
     // Create the vision processing pipeline
     auto pipeline = new RecognitionPipeline<GlobalDescriptorsPtr>(config);

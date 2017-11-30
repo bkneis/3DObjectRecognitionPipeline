@@ -18,6 +18,7 @@ namespace featuredescriptor {
 
         GlobalDescriptorsPtr run(void* params)
         {
+            std::cout << "Calculating view point feature histogram \n";
             auto vpfhParams = static_cast<VPFHParameters*>(params);
             pcl::console::print_info ("Extracting features using Viewpoint Feature Histogram \n");
             pcl::VFHEstimation<PointT, NormalT, GlobalDescriptorT> vfh_estimation;

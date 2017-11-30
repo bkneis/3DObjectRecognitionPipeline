@@ -58,20 +58,20 @@ public:
         }
         auto descriptors = this->featureExtractor->run(voidFeatureDescriptorParams);
 
-        pcl::console::print_info ("Starting visualizer... Close window to exit\n");
-        pcl::visualization::PCLVisualizer vis;
-        pcl::visualization::PCLHistogramVisualizer hist_vis;
-        vis.addPointCloud (input);
-
-        vis.addPointCloudNormals<PointT,NormalT> (input, normals, 4, 0.02, "normals");
-
-        pcl::visualization::PointCloudColorHandlerCustom<PointT> red (keypoints, 255, 0, 0);
-        vis.addPointCloud (keypoints, red, "keypoints");
-        vis.setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 3, "keypoints");
-
-        // hist_vis.addFeatureHistogram (*descriptors, 308, "Global descriptor");
-        vis.resetCamera ();
-        vis.spin();
+//        pcl::console::print_info ("Starting visualizer... Close window to exit\n");
+//        pcl::visualization::PCLVisualizer vis;
+//        pcl::visualization::PCLHistogramVisualizer hist_vis;
+//        vis.addPointCloud (input);
+//
+//        vis.addPointCloudNormals<PointT,NormalT> (input, normals, 4, 0.02, "normals");
+//
+//        pcl::visualization::PointCloudColorHandlerCustom<PointT> red (keypoints, 255, 0, 0);
+//        vis.addPointCloud (keypoints, red, "keypoints");
+//        vis.setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 3, "keypoints");
+//
+//        // hist_vis.addFeatureHistogram (*descriptors, 308, "Global descriptor");
+//        vis.resetCamera ();
+//        vis.spin();
     }
 
     void

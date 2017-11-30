@@ -7,9 +7,7 @@ namespace featuredescriptor {
 
     template <class DescriptorsPtr>
     class FeatureExtractor {
-
     public:
-
         virtual DescriptorsPtr run(void* params) = 0;
 
     };
