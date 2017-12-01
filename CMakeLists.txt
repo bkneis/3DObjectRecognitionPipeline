@@ -31,7 +31,7 @@ add_executable (stereo_rec
         src/ParameterBuilder.cpp
         include/ParameterBuilder.h
         include/classifier/KNN.h
-        include/classifier/Classifier.h include/loader.h)
+        include/classifier/Classifier.h include/loader.h include/featuredescriptor/CVPFHExtractor.h include/preprocessor/GradientIntensityEstimator.h include/featuredescriptor/RIFTFeatureExtractor.h)
 
 target_link_libraries (stereo_rec ${PCL_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
 
