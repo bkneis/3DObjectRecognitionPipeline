@@ -22,6 +22,7 @@ namespace featuredescriptor {
         LocalDescriptorsPtr
         run(void* params)
         {
+            pcl::console::print_info ("\nExtracting features using Viewpoint Feature Histogram \n");
             auto fpfhParams = static_cast<FPFHParameters*>(params);
             pcl::FPFHEstimation<PointT, NormalT, LocalDescriptorT> fpfh_estimation;
             fpfh_estimation.setSearchMethod (pcl::search::Search<PointT>::Ptr (new pcl::search::KdTree<PointT>));
