@@ -1,6 +1,7 @@
 #include <RecognitionPipeline.h>
 #include <pcl/io/pcd_io.h>
 #include <ConfigReader.h>
+#include <preprocessor/filters.h>
 
 using namespace preprocessor;
 using namespace featuredescriptor;
@@ -27,6 +28,21 @@ main(int arc, char** argv)
     pipeline->setSurfaceNormalEstimator(new SurfaceNormalEstimator());
     pipeline->setKeypointDetector(new SIFTKeyPointDetector());
     pipeline->setFeatureExtractor(new VPFHExtractor());
+
+//    std::cerr << "Cloud before filtering: " << std::endl;
+//    for (size_t i = 0; i < cloud->points.size (); ++i)
+//        std::cerr << "    " << cloud->points[i].x << " "
+//                  << cloud->points[i].y << " "
+//                  << cloud->points[i].z << std::endl;
+
+    // cloud = preprocessor::thresholdDepth(cloud, -10, -20);
+    cloud = preprocessor::removeOutliers(cloud, 0.3, 300);
+
+//    std::cerr << "Cloud after filtering: " << std::endl;
+//    for (size_t i = 0; i < cloud->points.size (); ++i)
+//        std::cerr << "    " << cloud->points[i].x << " "
+//                  << cloud->points[i].y << " "
+//                  << cloud->points[i].z << std::endl;
 
     // Run the pipeline
     pipeline->run(cloud);
