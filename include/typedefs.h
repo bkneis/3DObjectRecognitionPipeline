@@ -24,6 +24,10 @@ typedef pcl::VFHSignature308 GlobalDescriptorT;
 typedef pcl::PointCloud<GlobalDescriptorT> GlobalDescriptors;
 typedef pcl::PointCloud<GlobalDescriptorT>::Ptr GlobalDescriptorsPtr;
 
+// Define for gradient intensities
+typedef pcl::PointCloud<pcl::IntensityGradient> IntensityGradientCloud;
+typedef pcl::PointCloud<pcl::IntensityGradient>::Ptr IntensityGradientPtr;
+
 struct ObjectModel
 {
     PointCloudPtr points;

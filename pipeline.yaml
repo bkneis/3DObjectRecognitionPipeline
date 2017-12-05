@@ -11,7 +11,7 @@ Pipeline:
         numberOfScalesPerOctave: 4
         minContrast: 0.001f
     FeatureDescriptor:
-      strategy: VPFH
+      strategy: FPFH
       parameters:
         something: some
     Classification:

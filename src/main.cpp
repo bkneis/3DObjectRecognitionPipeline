@@ -22,12 +22,13 @@ main(int arc, char** argv)
     pcl::console::print_info ("Loaded input point cloud %s (%lu points)\n", argv[2], cloud->size());
 
     // Create the vision processing pipeline
-    auto pipeline = new RecognitionPipeline<GlobalDescriptorsPtr>(config);
+    auto pipeline = new RecognitionPipeline<LocalDescriptorsPtr, PointCloudPtr>(config);
 
-    // Determine which processing elements to add based on recognition algorithm
     pipeline->setSurfaceNormalEstimator(new SurfaceNormalEstimator());
     pipeline->setKeypointDetector(new SIFTKeyPointDetector());
-    pipeline->setFeatureExtractor(new VPFHExtractor());
+    pipeline->setFeatureExtractor(new FPFHExtractor());
+    //pipeline->setFeatureExtractor(new CVPFHExtractor());
+    //pipeline->setFeatureExtractor(new VPFHExtractor());
 
 //    std::cerr << "Cloud before filtering: " << std::endl;
 //    for (size_t i = 0; i < cloud->points.size (); ++i)

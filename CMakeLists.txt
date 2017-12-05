@@ -33,14 +33,17 @@ add_executable (stereo_rec
         include/ParameterBuilder.h
         include/classifier/KNN.h
         include/classifier/Classifier.h
-        include/loader.h include/preprocessor/filters.h)
+        include/preprocessor/filters.h
+        include/loader.h
+        include/featuredescriptor/CVPFHExtractor.h
+        include/preprocessor/GradientIntensityEstimator.h
+        include/featuredescriptor/RIFTFeatureExtractor.h)
 
 target_link_libraries (stereo_rec ${PCL_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
 
 # Utility application to view point clouds
 add_executable (cloud_viewer src/viewer.cpp)
 target_link_libraries (cloud_viewer ${PCL_LIBRARIES})
-
 
 # Segmentation algorithm evaluation
 add_executable (seg src/regionGrowing.cpp)
