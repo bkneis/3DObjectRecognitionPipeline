@@ -29,8 +29,6 @@ add_executable (stereo_rec
         src/Config.cpp
         include/Config.h
         include/config_mappings.h
-        src/ParameterBuilder.cpp
-        include/ParameterBuilder.h
         include/classifier/KNN.h
         include/classifier/Classifier.h
         include/preprocessor/filters.h
