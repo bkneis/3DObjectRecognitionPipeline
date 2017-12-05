@@ -8,6 +8,7 @@ include_directories(${PCL_INCLUDE_DIRS} include lib/yaml-cpp/include)
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
+# Add these later for performance benefits
 #add_definitions(-Wall -O3 -DNDEBUG -pipe -ffast-math -funroll-loops -ftree-vectorize -fomit-frame-pointer -pipe -mfpmath=sse -mmmx -msse -mtune=core2 -march=core2 -msse2 -msse3 -mssse3 -msse4)
 ##add_definitions(-momit-leaf-frame-pointer -fomit-frame-pointer -floop-block -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -fgcse-lm -fgcse-sm -fsched-spec-load)
 #add_definitions (-Wall -O3 -Winvalid-pch -pipe -funroll-loops -fno-strict-aliasing)
@@ -31,7 +32,17 @@ add_executable (stereo_rec
         src/ParameterBuilder.cpp
         include/ParameterBuilder.h
         include/classifier/KNN.h
-        include/classifier/Classifier.h include/loader.h)
+        include/classifier/Classifier.h
+        include/loader.h include/preprocessor/filters.h)
 
 target_link_libraries (stereo_rec ${PCL_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
+
+# Utility application to view point clouds
+add_executable (cloud_viewer src/viewer.cpp)
+target_link_libraries (cloud_viewer ${PCL_LIBRARIES})
+
+
+# Segmentation algorithm evaluation
+add_executable (seg src/regionGrowing.cpp)
+target_link_libraries (seg ${PCL_LIBRARIES})
 
