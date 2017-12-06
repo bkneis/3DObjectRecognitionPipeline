@@ -1,0 +1,25 @@
+dist: trusty
+sudo: required
+
+language:
+  - cpp
+
+compiler:
+  - gcc
+
+before_install:
+  - sudo apt-get update
+
+install:
+
+  # PCL prebuilt binaries for trusty
+  - sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl
+  - sudo apt-get update
+  - sudo apt-get install libpcl-all
+
+script:
+  - cd 3DObjectRecognitionPipeline
+  - mkdir build && cd build
+  - cmake ..
+  - make all
+  - ./pipeline ../examples/pipeline.yml ../examples/cloud.pcd
