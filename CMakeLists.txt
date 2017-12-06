@@ -8,14 +8,16 @@ include_directories(${PCL_INCLUDE_DIRS} include lib/yaml-cpp/include)
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
-# Add these later for performance benefits
-#add_definitions(-Wall -O3 -DNDEBUG -pipe -ffast-math -funroll-loops -ftree-vectorize -fomit-frame-pointer -pipe -mfpmath=sse -mmmx -msse -mtune=core2 -march=core2 -msse2 -msse3 -mssse3 -msse4)
-##add_definitions(-momit-leaf-frame-pointer -fomit-frame-pointer -floop-block -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -fgcse-lm -fgcse-sm -fsched-spec-load)
-#add_definitions (-Wall -O3 -Winvalid-pch -pipe -funroll-loops -fno-strict-aliasing)
+# Add performance flags for release builds
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_definitions(-Wall -O3 -DNDEBUG -pipe -ffast-math -funroll-loops -ftree-vectorize -fomit-frame-pointer -pipe -mfpmath=sse -mmmx -msse -mtune=core2 -march=core2 -msse2 -msse3 -mssse3 -msse4)
+    add_definitions(-momit-leaf-frame-pointer -fomit-frame-pointer -floop-block -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -fgcse-lm -fgcse-sm -fsched-spec-load)
+    add_definitions (-Wall -O3 -Winvalid-pch -pipe -funroll-loops -fno-strict-aliasing)
+endif()
 
-add_executable (stereo_rec
-        include/preprocessor/SIFTKeyPointDetector.h
+add_executable (pipeline
         src/main.cpp
+        include/preprocessor/SIFTKeyPointDetector.h
         include/feature_estimation.h
         include/typedefs.h
         include/RecognitionPipeline.h
@@ -43,7 +45,7 @@ target_link_libraries (stereo_rec ${PCL_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/yaml-
 add_executable (cloud_viewer src/viewer.cpp)
 target_link_libraries (cloud_viewer ${PCL_LIBRARIES})
 
-# Segmentation algorithm evaluation
+# Experimental segmentation algorithm binary
 add_executable (seg src/regionGrowing.cpp)
 target_link_libraries (seg ${PCL_LIBRARIES})
 
