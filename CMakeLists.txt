@@ -39,7 +39,7 @@ add_executable (pipeline
         include/preprocessor/GradientIntensityEstimator.h
         include/featuredescriptor/RIFTFeatureExtractor.h)
 
-target_link_libraries (stereo_rec ${PCL_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
+target_link_libraries (pipeline ${PCL_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
 
 # Utility application to view point clouds
 add_executable (cloud_viewer src/viewer.cpp)
