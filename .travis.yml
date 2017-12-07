@@ -18,8 +18,7 @@ install:
   - sudo apt-get install libpcl-dev -y
 
 script:
-  - cd 3DObjectRecognitionPipeline
   - mkdir build && cd build
   - cmake ..
-  - make all
+  - make
   - ./pipeline ../examples/pipeline.yml ../examples/cloud.pcd
