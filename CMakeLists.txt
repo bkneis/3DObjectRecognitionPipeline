@@ -18,7 +18,6 @@ endif()
 add_executable (pipeline
         src/main.cpp
         include/preprocessor/SIFTKeyPointDetector.h
-        include/feature_estimation.h
         include/typedefs.h
         include/RecognitionPipeline.h
         include/preprocessor/SurfaceNormalEstimator.h
@@ -30,11 +29,11 @@ add_executable (pipeline
         include/ConfigReader.h
         src/Config.cpp
         include/Config.h
-        include/config_mappings.h
-        include/classifier/KNN.h
+        include/configdefs.h
         include/classifier/Classifier.h
+        include/classifier/KNN.h
         include/preprocessor/filters.h
-        include/loader.h
+        include/utils.h
         include/featuredescriptor/CVPFHExtractor.h
         include/preprocessor/GradientIntensityEstimator.h
         include/featuredescriptor/RIFTFeatureExtractor.h)
