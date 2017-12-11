@@ -10,6 +10,11 @@
 // Feature descriptor strategies
 #define VPFH "VPFH"
 #define FPFH "FPFH"
+#define RIFT "VIFT"
+#define CVPFH "CVPFH"
+
+// Classifiers
+#define KNN "KNN"
 
 // Strategy used to skip processing step
 #define NONE "NONE"

@@ -24,9 +24,9 @@ main(int arc, char** argv)
     // Create the vision processing pipeline
     auto pipeline = new RecognitionPipeline<GlobalDescriptorsPtr, PointCloudPtr>(config);
 
-    pipeline->setSurfaceNormalEstimator(new SurfaceNormalEstimator());
     pipeline->setKeypointDetector(new SIFTKeyPointDetector());
     pipeline->setFeatureExtractor(new VPFHExtractor());
+    pipeline->setClassifier(new KNN());
 
     cloud = preprocessor::removeOutliers(cloud, 0.3, 300);
 
