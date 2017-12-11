@@ -14,7 +14,7 @@
 #define CVPFH "CVPFH"
 
 // Classifiers
-#define KNN "KNN"
+#define knn "KNN"
 
 // Strategy used to skip processing step
 #define NONE "NONE"
