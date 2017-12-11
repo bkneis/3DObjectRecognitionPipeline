@@ -4,15 +4,17 @@
 #include <typedefs.h>
 #include <pcl/kdtree/kdtree_flann.h>
 #include <pcl/io/pcd_io.h>
-#include <loader.h>
 #include "Classifier.h"
 
 namespace classifier {
 
-    class KNN /*: public Clasifier<GlobalDescriptorsPtr> */ {
+    class KNN : public Classifier<GlobalDescriptorsPtr> {
 
     public:
-        const ObjectModel&
+
+        KNN() : Classifier() {}
+
+        GlobalDescriptorsPtr
         classify(GlobalDescriptorsPtr subject)
         {
             const GlobalDescriptorT & query_descriptor = subject->points[0];
@@ -26,8 +28,9 @@ namespace classifier {
         }
 
         void
-        loadModel(std::vector<GlobalDescriptorsPtr> global_descriptors)
+        populateDatabase(std::vector<GlobalDescriptorsPtr> global_descriptors)
         {
+            models_ = global_descriptors;
             size_t n = global_descriptors.size ();
             descriptors_ = GlobalDescriptorsPtr (new GlobalDescriptors);
             for (size_t i = 0; i < n; ++i) {
@@ -37,10 +40,15 @@ namespace classifier {
             kdtree_->setInputCloud (descriptors_);
         }
 
+        void train(const std::vector<std::string> & filenames) {}
+        void loadModel(const std::string filepath) {}
+
     private:
-        std::vector<ObjectModel> models_;
+
+        std::vector<GlobalDescriptorsPtr> models_;
         GlobalDescriptorsPtr descriptors_;
         pcl::KdTreeFLANN<GlobalDescriptorT>::Ptr kdtree_;
+
     };
 
 }
