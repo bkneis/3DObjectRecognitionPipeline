@@ -12,12 +12,16 @@
 #include <featuredescriptor/CVPFHExtractor.h>
 #include <featuredescriptor/FPFHExtractor.h>
 #include <featuredescriptor/RIFTFeatureExtractor.h>
+#include <classifier/Classifier.h>
+#include <classifier/KNN.h>
 #include "typedefs.h"
 #include "Config.h"
-#include "loader.h"
+#include "configdefs.h"
+#include "utils.h"
 
 using namespace preprocessor;
 using namespace featuredescriptor;
+using namespace classifier;
 
 
 template <class FeatureDescriptorsPtr, class PointCloudType>
@@ -31,9 +35,10 @@ public:
     FeatureDescriptorsPtr
     extract(PointCloudType input)
     {
+        PointCloudPtr keypoints = NULL;
         // Configure the normal estimation strategy
         void* voidNormalParams;
-        if (!config->getNormalsStrategy().compare("approximations")) {
+        if (!config->getNormalsStrategy().compare(APPROXIMATIONS)) {
             auto normalsParams = new NormalsParameters();
             normalsParams->radius = 0.2;
             normalsParams->points = input;
@@ -42,35 +47,33 @@ public:
         }
         auto normals = this->normalEstimator->run(voidNormalParams);
 
-        // Configure the keypoint detection strategy
-        // TODO don't calculate keypoints unless needed by feature descritor
-        void* voidKeypointParams;
-        if (!config->getKeypointStrategy().compare("sift")) {
-            auto siftParams = new SiftParameters();
-            siftParams->minScale = 0.01f;
-            siftParams->numOctaves = 3;
-            siftParams->numScalesPerOctave = 4;
-            siftParams->minContrast = 0.001f;
-            siftParams->points = input;
-            voidKeypointParams = static_cast<void*>(siftParams);
-        }
-        auto keypoints = this->keypointDetector->run(voidKeypointParams);
-
         // Configure the feature descriptor
         void* voidFeatureDescriptorParams;
-        if (!config->getFeatureDescriptorStrategy().compare("VPFH")) {
+        if (!config->getFeatureDescriptorStrategy().compare(VPFH)) {
             auto vpfhParams = new VPFHParameters();
             vpfhParams->points = input;
             vpfhParams->normals = normals;
             voidFeatureDescriptorParams = static_cast<void*>(vpfhParams);
         }
-        else if (!config->getFeatureDescriptorStrategy().compare("CVPFH")) {
+        else if (!config->getFeatureDescriptorStrategy().compare(CVPFH)) {
             auto cvpfhParams = new CVPFHParameters();
             cvpfhParams->points = input;
             cvpfhParams->normals = normals;
             voidFeatureDescriptorParams = static_cast<void*>(cvpfhParams);
         }
-        else if (!config->getFeatureDescriptorStrategy().compare("FPFH")) {
+        else if (!config->getFeatureDescriptorStrategy().compare(FPFH)) {
+            void* voidKeypointParams;
+            // Configure the keypoint detection strategy
+            if (!config->getKeypointStrategy().compare(SIFT)) {
+                auto siftParams = new SiftParameters();
+                siftParams->minScale = 0.01f;
+                siftParams->numOctaves = 3;
+                siftParams->numScalesPerOctave = 4;
+                siftParams->minContrast = 0.001f;
+                siftParams->points = input;
+                voidKeypointParams = static_cast<void*>(siftParams);
+            }
+            keypoints = this->keypointDetector->run(voidKeypointParams);
             auto fpfhParams = new FPFHParameters();
             fpfhParams->featureRadius = 0.2;
             fpfhParams->points = input;
@@ -86,8 +89,14 @@ public:
 //        }
         GlobalDescriptorsPtr descriptors = this->featureExtractor->run(voidFeatureDescriptorParams);
 
-        // std::cout<<"Feature descriptor contains "<< descriptors << " many features" << std::endl;
+        // visualize(input, normals, descriptors);
 
+        return descriptors;
+    }
+
+    void
+    visualize(PointCloudType input, SurfaceNormalsPtr normals, FeatureDescriptorsPtr descriptors)
+    {
         pcl::console::print_info ("Starting visualizer... Close window to exit\n");
         pcl::visualization::PCLVisualizer vis;
         pcl::visualization::PCLHistogramVisualizer hist_vis;
@@ -95,21 +104,31 @@ public:
 
         vis.addPointCloudNormals<PointT,NormalT> (input, normals, 4, 0.02, "normals");
 
-        pcl::visualization::PointCloudColorHandlerCustom<PointT> red (keypoints, 255, 0, 0);
-        // vis.addPointCloud (keypoints, red, "keypoints");
-        vis.setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 3, "keypoints");
+//        if (!config->getFeatureDescriptorStrategy().compare("FPFH")) {
+//            pcl::visualization::PointCloudColorHandlerCustom<PointT> red (keypoints, 255, 0, 0);
+//            vis.addPointCloud (keypoints, red, "keypoints");
+//            vis.setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 3, "keypoints");
+//        }
 
         hist_vis.addFeatureHistogram (*descriptors, 308, "Global descriptor");
         vis.resetCamera ();
         vis.spin();
-
-        return descriptors;
     }
 
     void
     run(PointCloudType input)
     {
-        auto descriptor = extract(input);
+        FeatureDescriptorsPtr descriptor = extract(input);
+        std::vector<FeatureDescriptorsPtr> models;
+        models.push_back(descriptor);
+        int size = 20;
+        std::vector<PointCloudType> clouds = generateRandomClouds(size, 100, 100);
+        for (int i = 0; i < size; i++) {
+            auto desc = extract(clouds.at(i));
+            models.push_back(desc);
+        }
+        this->classifier->populateDatabase(models);
+        auto test = this->classifier->classify(descriptor);
     }
 
     void
@@ -130,10 +149,17 @@ public:
         this->featureExtractor = featureExtractor;
     }
 
+    void
+    setClassifier(Classifier<FeatureDescriptorsPtr>* classifier)
+    {
+        this->classifier = classifier;
+    }
+
 private:
     KeypointDetector<PointCloudType>* keypointDetector;
     SurfaceNormalEstimator* normalEstimator;
     FeatureExtractor<FeatureDescriptorsPtr>* featureExtractor;
+    Classifier<FeatureDescriptorsPtr>* classifier;
     Config* config;
 };
 
