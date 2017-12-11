@@ -11,6 +11,7 @@
 #include <featuredescriptor/VPFHExtractor.h>
 #include <featuredescriptor/CVPFHExtractor.h>
 #include <featuredescriptor/FPFHExtractor.h>
+#include <featuredescriptor/RIFTFeatureExtractor.h>
 #include "typedefs.h"
 #include "Config.h"
 #include "loader.h"
@@ -77,7 +78,15 @@ public:
             fpfhParams->keypoints = keypoints;
             voidFeatureDescriptorParams = static_cast<void*>(fpfhParams);
         }
-        auto descriptors = this->featureExtractor->run(voidFeatureDescriptorParams);
+//        else if (!config->getFeatureDescriptorStrategy().compare("RIFT")) {
+//            auto riftParams = new RIFTParameters();
+//            riftParams->points = input;
+//            riftParams->normals = normals;
+//            voidFeatureDescriptorParams = static_cast<void*>(riftParams);
+//        }
+        GlobalDescriptorsPtr descriptors = this->featureExtractor->run(voidFeatureDescriptorParams);
+
+        // std::cout<<"Feature descriptor contains "<< descriptors << " many features" << std::endl;
 
         pcl::console::print_info ("Starting visualizer... Close window to exit\n");
         pcl::visualization::PCLVisualizer vis;
