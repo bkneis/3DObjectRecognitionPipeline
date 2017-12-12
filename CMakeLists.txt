@@ -74,6 +74,8 @@ add_executable (pipeline
         include/preprocessor/GradientIntensityEstimator.h
         include/featuredescriptor/RIFTFeatureExtractor.h
         src/acquisition/StereoVision.cpp
+        src/detection/CCFaceDetector.cpp
+        include/detection/CCFaceDetector.h
         include/acquisition/StereoVision.h)
 
 # TODO change hard coded linkage to libyaml
