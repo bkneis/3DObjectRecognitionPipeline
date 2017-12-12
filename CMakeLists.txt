@@ -4,9 +4,22 @@ project(stereoRecognition)
 
 find_package(PCL 1.8 REQUIRED)
 
+if(PCL_FOUND)
+else(PCL_FOUND)
+    message(FATAL_ERROR "PCL is needed for the application.  Cannot continue.")
+endif(PCL_FOUND)
+
 include_directories(${PCL_INCLUDE_DIRS} include lib/yaml-cpp/include)
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
+
+include_directories("/usr/include/flycapture")
+find_library(FLYCAPTURE2 flycapture)
+
+if(FLYCAPTURE2)
+else(FLYCAPTURE2)
+    message(FATAL_ERROR "FlyCapture2 is needed for the Point Grey cameras.  Cannot continue.")
+endif(FLYCAPTURE2)
 
 # Add performance flags for release builds
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -36,13 +49,17 @@ add_executable (pipeline
         include/utils.h
         include/featuredescriptor/CVPFHExtractor.h
         include/preprocessor/GradientIntensityEstimator.h
-        include/featuredescriptor/RIFTFeatureExtractor.h)
+        include/featuredescriptor/RIFTFeatureExtractor.h src/test.cpp)
 
 target_link_libraries (pipeline ${PCL_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
 
 # Utility application to view point clouds
 add_executable (cloud_viewer src/viewer.cpp)
 target_link_libraries (cloud_viewer ${PCL_LIBRARIES})
+
+# test
+add_executable(testr src/test.cpp)
+target_link_libraries(testr ${FLYCAPTURE2})
 
 # Experimental segmentation algorithm binary
 add_executable (seg src/regionGrowing.cpp)
