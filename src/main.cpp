@@ -2,7 +2,9 @@
 #include <pcl/io/pcd_io.h>
 #include <ConfigReader.h>
 #include <preprocessor/filters.h>
+#include <acquisition/StereoVision.h>
 
+using namespace acquisition;
 using namespace preprocessor;
 using namespace featuredescriptor;
 
@@ -13,6 +15,10 @@ main(int arc, char** argv)
         pcl::console::print_info ("Not enough arguments, Example usage: ./%s pipeline.yaml cloud.pcd \n", argv[0]);
         return 0;
     }
+
+    auto sensor = new StereoVision;
+
+    sensor->run();
 
     auto config = ConfigReader::get(argv[1]);
 
