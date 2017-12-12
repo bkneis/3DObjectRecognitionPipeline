@@ -1,6 +1,7 @@
 #include "acquisition/StereoVision.h"
 #include <iostream>
 #include <sstream>
+#include <detection/CCFaceDetector.h>
 
 using namespace FlyCapture2;
 using namespace std;
@@ -123,6 +124,8 @@ acquisition::StereoVision::run()
 
     srand (time(NULL));
 
+    auto detector = new CCFaceDetector;
+
     while (true) {
         for (unsigned int i = 0; i < 1; i++) {
             Image image;
@@ -145,6 +148,7 @@ acquisition::StereoVision::run()
                 error.PrintErrorTrace();
                 return -1;
             }
+            detector->detect(filename.str().c_str());
 
         }
     }
