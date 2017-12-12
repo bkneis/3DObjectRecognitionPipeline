@@ -21,6 +21,29 @@ else(FLYCAPTURE2)
     message(FATAL_ERROR "FlyCapture2 is needed for the Point Grey cameras.  Cannot continue.")
 endif(FLYCAPTURE2)
 
+# Find OpenCV, you may need to set OpenCV_DIR variable
+# to the absolute path to the directory containing OpenCVConfig.cmake file
+# via the command line or GUI
+find_package(OpenCV REQUIRED)
+
+if(OpenCV_FOUND)
+    # If the package has been found, several variables will
+    # be set, you can find the full list with descriptions
+    # in the OpenCVConfig.cmake file.
+    # Print some message showing some of them
+    message(STATUS "OpenCV library status: ")
+    message(STATUS "    version: ${OpenCV_VERSION}")
+    message(STATUS "    libraries: ${OpenCV_LIBS}")
+    message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
+else(OpenCV_FOUND)
+    message(FATAL_ERROR "OpenCV is needed for the application.  Cannot continue.")
+endif(OpenCV_FOUND)
+
+if(CMAKE_VERSION VERSION_LESS "2.8.11")
+    # Add OpenCV headers location to your include paths
+    include_directories(${OpenCV_INCLUDE_DIRS})
+endif()
+
 # Add performance flags for release builds
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     add_definitions(-Wall -O3 -DNDEBUG -pipe -ffast-math -funroll-loops -ftree-vectorize -fomit-frame-pointer -pipe -mfpmath=sse -mmmx -msse -mtune=core2 -march=core2 -msse2 -msse3 -mssse3 -msse4)
@@ -49,17 +72,20 @@ add_executable (pipeline
         include/utils.h
         include/featuredescriptor/CVPFHExtractor.h
         include/preprocessor/GradientIntensityEstimator.h
-        include/featuredescriptor/RIFTFeatureExtractor.h src/test.cpp)
+        include/featuredescriptor/RIFTFeatureExtractor.h
+        src/acquisition/StereoVision.cpp
+        include/acquisition/StereoVision.h)
 
-target_link_libraries (pipeline ${PCL_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
+# TODO change hard coded linkage to libyaml
+target_link_libraries (pipeline
+        ${PCL_LIBRARIES}
+        ${OpenCV_LIBS}
+        ${FLYCAPTURE2}
+        ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
 
 # Utility application to view point clouds
 add_executable (cloud_viewer src/viewer.cpp)
 target_link_libraries (cloud_viewer ${PCL_LIBRARIES})
-
-# test
-add_executable(testr src/test.cpp)
-target_link_libraries(testr ${FLYCAPTURE2})
 
 # Experimental segmentation algorithm binary
 add_executable (seg src/regionGrowing.cpp)
