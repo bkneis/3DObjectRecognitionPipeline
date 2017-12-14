@@ -17,6 +17,6 @@
 #define knn "KNN"
 
 // Strategy used to skip processing step
-#define NONE "NONE"
+//#define NONE "NONE"
 
 #endif //STEREORECOGNITION_MAPPINGS_H

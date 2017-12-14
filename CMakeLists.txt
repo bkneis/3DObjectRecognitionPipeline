@@ -4,9 +4,47 @@ project(stereoRecognition)
 
 find_package(PCL 1.8 REQUIRED)
 
+if(PCL_FOUND)
+else(PCL_FOUND)
+    message(FATAL_ERROR "PCL is needed for the application.  Cannot continue.")
+endif(PCL_FOUND)
+
 include_directories(${PCL_INCLUDE_DIRS} include lib/yaml-cpp/include)
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
+
+include_directories("/usr/include/flycapture")
+find_library(FLYCAPTURE2 flycapture)
+
+if(FLYCAPTURE2)
+else(FLYCAPTURE2)
+    message(FATAL_ERROR "FlyCapture2 is needed for the Point Grey cameras.  Cannot continue.")
+endif(FLYCAPTURE2)
+
+#add_subdirectory(/usr/src/dlib dlib_build)
+
+# Find OpenCV, you may need to set OpenCV_DIR variable
+# to the absolute path to the directory containing OpenCVConfig.cmake file
+# via the command line or GUI
+find_package(OpenCV REQUIRED)
+
+if(OpenCV_FOUND)
+    # If the package has been found, several variables will
+    # be set, you can find the full list with descriptions
+    # in the OpenCVConfig.cmake file.
+    # Print some message showing some of them
+    message(STATUS "OpenCV library status: ")
+    message(STATUS "    version: ${OpenCV_VERSION}")
+    message(STATUS "    libraries: ${OpenCV_LIBS}")
+    message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
+else(OpenCV_FOUND)
+    message(FATAL_ERROR "OpenCV is needed for the application.  Cannot continue.")
+endif(OpenCV_FOUND)
+
+if(CMAKE_VERSION VERSION_LESS "2.8.11")
+    # Add OpenCV headers location to your include paths
+    include_directories(${OpenCV_INCLUDE_DIRS})
+endif()
 
 # Add performance flags for release builds
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -14,6 +52,14 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
     add_definitions(-momit-leaf-frame-pointer -fomit-frame-pointer -floop-block -ftree-loop-distribution -ftree-loop-linear -floop-interchange -floop-strip-mine -fgcse-lm -fgcse-sm -fsched-spec-load)
     add_definitions (-Wall -O3 -Winvalid-pch -pipe -funroll-loops -fno-strict-aliasing)
 endif()
+
+find_package(Boost COMPONENTS thread REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+
+if(Boost_FOUND)
+elseif(Boost_FOUND)
+    message(FATAL_ERROR "Boost is needed for the threading used in this application.  Cannot continue.")
+endif(Boost_FOUND)
 
 add_executable (pipeline
         src/main.cpp
@@ -36,9 +82,20 @@ add_executable (pipeline
         include/utils.h
         include/featuredescriptor/CVPFHExtractor.h
         include/preprocessor/GradientIntensityEstimator.h
-        include/featuredescriptor/RIFTFeatureExtractor.h)
+        include/featuredescriptor/RIFTFeatureExtractor.h
+        src/acquisition/StereoVision.cpp
+        src/detection/CCFaceDetector.cpp
+        include/detection/CCFaceDetector.h
+        include/acquisition/StereoVision.h src/detection/HOGDetector.cpp include/detection/HOGDetector.h)
 
-target_link_libraries (pipeline ${PCL_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
+# TODO change hard coded linkage to libyaml
+target_link_libraries (pipeline
+        ${PCL_LIBRARIES}
+        ${OpenCV_LIBS}
+        ${FLYCAPTURE2}
+        ${Boost_LIBRARIES}
+        #dlib::dlib
+        ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
 
 # Utility application to view point clouds
 add_executable (cloud_viewer src/viewer.cpp)
@@ -47,4 +104,8 @@ target_link_libraries (cloud_viewer ${PCL_LIBRARIES})
 # Experimental segmentation algorithm binary
 add_executable (seg src/regionGrowing.cpp)
 target_link_libraries (seg ${PCL_LIBRARIES})
+
+# Utility application for face detection
+add_executable (faceDetect src/faceDetector.cpp)
+target_link_libraries (faceDetect ${OpenCV_LIBS})
 
