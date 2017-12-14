@@ -137,19 +137,10 @@ acquisition::StereoVision::run()
             }
             images[i] = image;
         }
-        for (unsigned int k = 0; k < 1; k++) {
-            ostringstream filename;
-            filename << OUTPUT_FILE_PATH << camerasInfo[k].serialNumber << "--" << std::to_string(rand() % 100) << OUTPUT_FILE_TYPE;
 
-            // Save the image. If a file format is not passed in, then the file
-            // extension is parsed to attempt to determine the file format.
-            error = images[k].Save(filename.str().c_str());
-            if (error != PGRERROR_OK) {
-                error.PrintErrorTrace();
-                return -1;
-            }
-            detector->detect(filename.str().c_str());
-
+        bool isFace = detector->detect(images[0]);
+        if (isFace) {
+            std::cout << "face detected" << endl;
         }
     }
 
