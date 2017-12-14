@@ -51,6 +51,14 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
     add_definitions (-Wall -O3 -Winvalid-pch -pipe -funroll-loops -fno-strict-aliasing)
 endif()
 
+find_package(Boost COMPONENTS thread REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+
+if(Boost_FOUND)
+elseif(Boost_FOUND)
+    message(FATAL_ERROR "Boost is needed for the threading used in this application.  Cannot continue.")
+endif(Boost_FOUND)
+
 add_executable (pipeline
         src/main.cpp
         include/preprocessor/SIFTKeyPointDetector.h
@@ -83,6 +91,7 @@ target_link_libraries (pipeline
         ${PCL_LIBRARIES}
         ${OpenCV_LIBS}
         ${FLYCAPTURE2}
+        ${Boost_LIBRARIES}
         ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
 
 # Utility application to view point clouds
