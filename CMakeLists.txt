@@ -86,7 +86,10 @@ add_executable (pipeline
         src/acquisition/StereoVision.cpp
         src/detection/CCFaceDetector.cpp
         include/detection/CCFaceDetector.h
-        include/acquisition/StereoVision.h src/detection/HOGDetector.cpp include/detection/HOGDetector.h)
+        include/acquisition/StereoVision.h
+        src/detection/HOGDetector.cpp
+        include/detection/HOGDetector.h
+        include/reconstruct.h)
 
 # TODO change hard coded linkage to libyaml
 target_link_libraries (pipeline
