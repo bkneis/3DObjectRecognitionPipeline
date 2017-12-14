@@ -34,13 +34,12 @@ CCFaceDetector::detectCPU(Mat image)
     //-- Detect faces
     face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CASCADE_SCALE_IMAGE, Size(30, 30) );
     for (int i = 0; i < faces.size(); i++) {
-        std::cout << "detect face " << faces[i].width << " " << faces[i].height << std::endl;
         // Remove outliers
         if (faces[i].width < 200 || faces[i].height < 200) {
             faces.erase(faces.begin() + i);
             continue;
         }
-        std::cout << "detect face " << faces[i].width << " " << faces[i].height << std::endl;
+        std::cout << "detect face above the threshold" << faces[i].width << " " << faces[i].height << std::endl;
         Point center(faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2 );
         ellipse( image, center, Size(faces[i].width/2, faces[i].height/2 ), 0, 0, 360, Scalar( 255, 0, 255 ), 4, 8, 0 );
     }
@@ -65,13 +64,12 @@ CCFaceDetector::detectGPU(Mat image)
     std::vector<Rect> faces;
     cascade_gpu->convert(objbuf, faces);
     for (int i = 0; i < faces.size(); i++) {
-        std::cout << "detect face " << faces[i].width << " " << faces[i].height << std::endl;
         // Remove outliers
         if (faces[i].width < 200 || faces[i].height < 200) {
             faces.erase(faces.begin() + i);
             continue;
         }
-        std::cout << "detect face " << faces[i].width << " " << faces[i].height << std::endl;
+        std::cout << "detect face above the threshold" << faces[i].width << " " << faces[i].height << std::endl;
         cv::rectangle(image, faces[i], Scalar(255));
     }
 
