@@ -21,6 +21,8 @@ else(FLYCAPTURE2)
     message(FATAL_ERROR "FlyCapture2 is needed for the Point Grey cameras.  Cannot continue.")
 endif(FLYCAPTURE2)
 
+#add_subdirectory(/usr/src/dlib dlib_build)
+
 # Find OpenCV, you may need to set OpenCV_DIR variable
 # to the absolute path to the directory containing OpenCVConfig.cmake file
 # via the command line or GUI
@@ -84,7 +86,7 @@ add_executable (pipeline
         src/acquisition/StereoVision.cpp
         src/detection/CCFaceDetector.cpp
         include/detection/CCFaceDetector.h
-        include/acquisition/StereoVision.h)
+        include/acquisition/StereoVision.h src/detection/HOGDetector.cpp include/detection/HOGDetector.h)
 
 # TODO change hard coded linkage to libyaml
 target_link_libraries (pipeline
@@ -92,6 +94,7 @@ target_link_libraries (pipeline
         ${OpenCV_LIBS}
         ${FLYCAPTURE2}
         ${Boost_LIBRARIES}
+        #dlib::dlib
         ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
 
 # Utility application to view point clouds
@@ -101,4 +104,8 @@ target_link_libraries (cloud_viewer ${PCL_LIBRARIES})
 # Experimental segmentation algorithm binary
 add_executable (seg src/regionGrowing.cpp)
 target_link_libraries (seg ${PCL_LIBRARIES})
+
+# Utility application for face detection
+add_executable (faceDetect src/faceDetector.cpp)
+target_link_libraries (faceDetect ${OpenCV_LIBS})
 
