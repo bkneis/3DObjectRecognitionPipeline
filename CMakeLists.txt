@@ -100,15 +100,24 @@ target_link_libraries (pipeline
         #dlib::dlib
         ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
 
+macro (build_util name)
+    add_executable (${name} src/${name}.cpp)
+    target_link_libraries (${name} ${PCL_LIBRARIES} ${OpenCV_LIBS})
+endmacro()
+
+build_util(regionGrowing)
+build_util(viewer)
+build_util(faceDetector)
+
 # Utility application to view point clouds
-add_executable (cloud_viewer src/viewer.cpp)
-target_link_libraries (cloud_viewer ${PCL_LIBRARIES})
-
-# Experimental segmentation algorithm binary
-add_executable (seg src/regionGrowing.cpp)
-target_link_libraries (seg ${PCL_LIBRARIES})
-
-# Utility application for face detection
-add_executable (faceDetect src/faceDetector.cpp)
-target_link_libraries (faceDetect ${OpenCV_LIBS})
+#add_executable (cloud_viewer src/viewer.cpp)
+#target_link_libraries (cloud_viewer ${PCL_LIBRARIES})
+#
+## Experimental segmentation algorithm binary
+#add_executable (seg src/regionGrowing.cpp)
+#target_link_libraries (seg ${PCL_LIBRARIES})
+#
+## Utility application for face detection
+#add_executable (faceDetect src/faceDetector.cpp)
+#target_link_libraries (faceDetect ${OpenCV_LIBS})
 
