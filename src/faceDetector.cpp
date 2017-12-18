@@ -47,17 +47,10 @@ int main( int argc, const char** argv )
         return 0;
     }
 
-    //-- 3. Apply the classifier to the frame
-    high_resolution_clock::time_point t1 = high_resolution_clock::now();
     detectAndDisplayCPU( frame );
-    high_resolution_clock::time_point t2 = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>( t2 - t1 ).count();
-    cout << "CPU took " << duration << endl;
-    t1 = high_resolution_clock::now();
+
     detectAndDisplayGPU( frame );
-    t2 = high_resolution_clock::now();
-    duration = duration_cast<microseconds>( t2 - t1 ).count();
-    cout << "GPU took " << duration << endl;
+
 
     return 0;
 }
@@ -65,47 +58,54 @@ int main( int argc, const char** argv )
 void detectAndDisplayCPU( Mat frame )
 {
     std::vector<Rect> faces;
-    Mat frame_gray;
-    //cvtColor( frame, frame_gray, COLOR_BGR2GRAY );
-    //equalizeHist( frame_gray, frame_gray );
-    //-- Detect faces
-    face_cascade.detectMultiScale( frame, faces, 1.3, 5, 0|CASCADE_SCALE_IMAGE, gst );
-//    for ( size_t i = 0; i < faces.size(); i++ )
-//    {
-//        Point center( faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2 );
-//        ellipse( frame, center, Size( faces[i].width/2, faces[i].height/2 ), 0, 0, 360, Scalar( 255, 0, 255 ), 4, 8, 0 );
-//    }
-//    Mat resized;
-//    resize(frame, resized, Size(), 0.5, 0.5);
-//    //-- Show what you got
-//
-//    imshow( window_name, resized );
-//
-//    while (true) {
-//        char c = (char)waitKey(10);
-//        if( c == 27 ) { break; } // press escape
-//    }
+
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+    face_cascade.detectMultiScale( frame, faces, 1.3, 5, 0|CASCADE_SCALE_IMAGE );
+    high_resolution_clock::time_point t2 = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>( t2 - t1 ).count();
+    cout << "CPU took " << duration << endl;
+
+    for ( size_t i = 0; i < faces.size(); i++ )
+    {
+        Point center( faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2 );
+        ellipse( frame, center, Size( faces[i].width/2, faces[i].height/2 ), 0, 0, 360, Scalar( 255, 0, 255 ), 4, 8, 0 );
+    }
+
+    Mat resized;
+    resize(frame, resized, Size(), 0.5, 0.5);
+
+    imshow( window_name, resized );
+
+    while (true) {
+        char c = (char)waitKey(10);
+        if( c == 27 ) { break; } // press escape
+    }
 
 }
 
 void detectAndDisplayGPU( Mat frame )
 {
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
     cuda::GpuMat image_gpu(frame);
     cuda::GpuMat objbuf;
     cascade_gpu->detectMultiScale(image_gpu, objbuf);
+    high_resolution_clock::time_point t2 = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>( t2 - t1 ).count();
+    cout << "GPU took " << duration << endl;
+
     std::vector<Rect> faces;
     cascade_gpu->convert(objbuf, faces);
-//    for (int i = 0; i < faces.size(); i++) {
-//        cv::rectangle(frame, faces[i], Scalar(255));
-//    }
-//
-//    Mat resized;
-//    resize(frame, resized, Size(), 0.5, 0.5);
-//    imshow( window_name, resized );
-//
-//    while (true) {
-//        char c = (char)waitKey(10);
-//        if( c == 27 ) { break; } // press escape
-//    }
+    for (int i = 0; i < faces.size(); i++) {
+        cv::rectangle(frame, faces[i], Scalar(255));
+    }
+
+    Mat resized;
+    resize(frame, resized, Size(), 0.5, 0.5);
+    imshow( window_name, resized );
+
+    while (true) {
+        char c = (char)waitKey(10);
+        if( c == 27 ) { break; } // press escape
+    }
 
 }
