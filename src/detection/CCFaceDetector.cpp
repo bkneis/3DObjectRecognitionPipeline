@@ -8,7 +8,7 @@
 using namespace std;
 using namespace cv;
 
-#define USING_GPU true // change this to read from Cmake if gpu is supported
+#define USING_GPU false // change this to read from Cmake if gpu is supported
 
 bool
 CCFaceDetector::detect(FlyCapture2::Image image)
@@ -28,17 +28,12 @@ CCFaceDetector::detectCPU(Mat image)
     }
 
     std::vector<Rect> faces;
-    Mat frame_gray;
-    cvtColor( image, frame_gray, COLOR_BGR2GRAY );
-    equalizeHist( frame_gray, frame_gray );
+    //Mat frame_gray;
+    //cvtColor( image, frame_gray, COLOR_BGR2GRAY );
+    //equalizeHist( frame_gray, frame_gray );
     //-- Detect faces
-    face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CASCADE_SCALE_IMAGE, Size(30, 30) );
+    face_cascade.detectMultiScale( image, faces, 1.3, 5, 0|CASCADE_SCALE_IMAGE, Size(200, 200) );
     for (int i = 0; i < faces.size(); i++) {
-        // Remove outliers
-        if (faces[i].width < 200 || faces[i].height < 200) {
-            faces.erase(faces.begin() + i);
-            continue;
-        }
         std::cout << "detect face above the threshold" << faces[i].width << " " << faces[i].height << std::endl;
         Point center(faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2 );
         ellipse( image, center, Size(faces[i].width/2, faces[i].height/2 ), 0, 0, 360, Scalar( 255, 0, 255 ), 4, 8, 0 );
