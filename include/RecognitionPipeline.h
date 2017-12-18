@@ -25,6 +25,7 @@ using namespace preprocessor;
 using namespace featuredescriptor;
 using namespace classifier;
 
+#define DEBUG_MODE false
 
 template <class FeatureDescriptorsPtr, class PointCloudType>
 class RecognitionPipeline {
@@ -95,7 +96,9 @@ public:
 //        }
         GlobalDescriptorsPtr descriptors = this->featureExtractor->run(voidFeatureDescriptorParams);
 
-        // visualize(input, normals, descriptors);
+        if (DEBUG_MODE) {
+            visualize(input, normals, descriptors);
+        }
 
         return descriptors;
     }
@@ -109,12 +112,6 @@ public:
         vis.addPointCloud (input);
 
         vis.addPointCloudNormals<PointT,NormalT> (input, normals, 4, 0.02, "normals");
-
-//        if (!config->getFeatureDescriptorStrategy().compare("FPFH")) {
-//            pcl::visualization::PointCloudColorHandlerCustom<PointT> red (keypoints, 255, 0, 0);
-//            vis.addPointCloud (keypoints, red, "keypoints");
-//            vis.setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 3, "keypoints");
-//        }
 
         hist_vis.addFeatureHistogram (*descriptors, 308, "Global descriptor");
         vis.resetCamera ();
