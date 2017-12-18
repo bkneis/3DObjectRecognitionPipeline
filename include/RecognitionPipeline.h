@@ -14,6 +14,8 @@
 #include <featuredescriptor/RIFTFeatureExtractor.h>
 #include <classifier/Classifier.h>
 #include <classifier/KNN.h>
+#include <chrono>
+#include <preprocessor/filters.h>
 #include "typedefs.h"
 #include "Config.h"
 #include "configdefs.h"
@@ -30,6 +32,8 @@ class RecognitionPipeline {
 public:
     RecognitionPipeline(Config* config) {
         this->config = config;
+        setClassifier(new KNN());
+        loadModels();
     }
 
     FeatureDescriptorsPtr
@@ -54,6 +58,7 @@ public:
             vpfhParams->points = input;
             vpfhParams->normals = normals;
             voidFeatureDescriptorParams = static_cast<void*>(vpfhParams);
+            setFeatureExtractor(new VPFHExtractor());
         }
         else if (!config->getFeatureDescriptorStrategy().compare(CVPFH)) {
             auto cvpfhParams = new CVPFHParameters();
@@ -72,6 +77,7 @@ public:
                 siftParams->minContrast = 0.001f;
                 siftParams->points = input;
                 voidKeypointParams = static_cast<void*>(siftParams);
+                setKeypointDetector(new SIFTKeyPointDetector());
             }
             keypoints = this->keypointDetector->run(voidKeypointParams);
             auto fpfhParams = new FPFHParameters();
@@ -118,17 +124,20 @@ public:
     void
     run(PointCloudType input)
     {
+        // Perform segmentation and remove background
+        input = preprocessor::removeOutliers(input, 0.3, 300);
+
+        auto t1 = std::chrono::high_resolution_clock::now();
+
         FeatureDescriptorsPtr descriptor = extract(input);
-        std::vector<FeatureDescriptorsPtr> models;
+        // todo move this to loadModels
         models.push_back(descriptor);
-        int size = 20;
-        std::vector<PointCloudType> clouds = generateRandomClouds(size, 100, 100);
-        for (int i = 0; i < size; i++) {
-            auto desc = extract(clouds.at(i));
-            models.push_back(desc);
-        }
         this->classifier->populateDatabase(models);
         auto test = this->classifier->classify(descriptor);
+
+        auto t2 = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
+        cout << "Pipeline took " << duration << " micro seconds" << endl;
     }
 
     void
@@ -156,6 +165,19 @@ public:
     }
 
 private:
+
+    void
+    loadModels()
+    {
+        int size = 20;
+        std::vector<PointCloudType> clouds = generateRandomClouds(size, 100, 100);
+        for (int i = 0; i < size; i++) {
+            auto desc = extract(clouds.at(i));
+            models.push_back(desc);
+        }
+    }
+
+    std::vector<FeatureDescriptorsPtr> models;
     KeypointDetector<PointCloudType>* keypointDetector;
     SurfaceNormalEstimator* normalEstimator;
     FeatureExtractor<FeatureDescriptorsPtr>* featureExtractor;
