@@ -16,8 +16,9 @@
  */
 inline void generatePointCloud(std::string leftPath, std::string rightPath) {
     std::ostringstream command;
-    command << "python /home/arthur/memo/faceRecognitionAlgorithms/3dru/stereoMatch.py "; // Python file
+    command << "source activate cv && python ../scripts/reconstruct.py "; // Python script
     command << leftPath << " " << rightPath; // The image paths
+    command << " " << "cloud"; // the prefix name todo when threading use thread idx
     system(command.str().c_str());
 }
 
