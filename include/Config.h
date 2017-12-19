@@ -5,15 +5,16 @@
 #include <vector>
 #include <unordered_map>
 
-typedef std::vector<std::pair<std::string, std::string>> ParameterSet;
+typedef std::unordered_map<std::string, std::string> ParameterSet;
 typedef std::unordered_map<std::string, ParameterSet> ParameterList;
 
 class Config {
 
 public:
-
+    static Config* create(std::string filepath);
     void setStrategy(std::string element, std::string strategy);
     void addParameter(std::string element, std::string parameter, std::string parameterValue);
+    std::string get(std::string element, std::string parameter);
     std::string getKeypointStrategy();
     std::string getNormalsStrategy();
     std::string getFeatureDescriptorStrategy();
