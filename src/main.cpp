@@ -1,6 +1,5 @@
 #include <RecognitionPipeline.h>
 #include <pcl/io/pcd_io.h>
-#include <ConfigReader.h>
 #include <acquisition/StereoVision.h>
 
 using namespace acquisition;
@@ -15,11 +14,10 @@ main(int arc, char** argv)
         return 0;
     }
 
-
 //    auto sensor = new StereoVision;
 //    sensor->run();
 
-    auto config = ConfigReader::get(argv[1]);
+    auto config = Config::create(argv[1]);
 
     // Load the input file
     PointCloudPtr cloud (new PointCloud);
