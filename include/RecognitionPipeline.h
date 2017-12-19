@@ -45,7 +45,7 @@ public:
         void* voidNormalParams;
         if (!config->getNormalsStrategy().compare(APPROXIMATIONS)) {
             auto normalsParams = new NormalsParameters();
-            normalsParams->radius = 0.2;
+            normalsParams->radius = std::stof(config->get(APPROXIMATIONS, "radius"));
             normalsParams->points = input;
             voidNormalParams = static_cast<void*>(normalsParams);
             setSurfaceNormalEstimator(new SurfaceNormalEstimator());
@@ -72,17 +72,17 @@ public:
             // Configure the keypoint detection strategy
             if (!config->getKeypointStrategy().compare(SIFT)) {
                 auto siftParams = new SiftParameters();
-                siftParams->minScale = 0.01f;
-                siftParams->numOctaves = 3;
-                siftParams->numScalesPerOctave = 4;
-                siftParams->minContrast = 0.001f;
+                siftParams->minScale = std::stof(config->get(SIFT, "minScale"));
+                siftParams->numOctaves = stoi(config->get(SIFT, "numOctaves"));
+                siftParams->numScalesPerOctave = stoi(config->get(SIFT, "numScalesPerOctave"));
+                siftParams->minContrast = std::stof(config->get(SIFT, "minContrast"));
                 siftParams->points = input;
                 voidKeypointParams = static_cast<void*>(siftParams);
                 setKeypointDetector(new SIFTKeyPointDetector());
             }
             keypoints = this->keypointDetector->run(voidKeypointParams);
             auto fpfhParams = new FPFHParameters();
-            fpfhParams->featureRadius = 0.2;
+            fpfhParams->featureRadius = std::stof(config->get(FPFH, "featureRadius"));
             fpfhParams->points = input;
             fpfhParams->normals = normals;
             fpfhParams->keypoints = keypoints;
