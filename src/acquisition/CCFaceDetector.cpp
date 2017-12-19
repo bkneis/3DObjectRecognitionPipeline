@@ -1,5 +1,5 @@
 #include <Image.h>
-#include "detection/CCFaceDetector.h"
+#include "acquisition/CCFaceDetector.h"
 #include "opencv2/objdetect.hpp"
 #include "opencv2/cudaobjdetect.hpp"
 #include "opencv2/highgui.hpp"

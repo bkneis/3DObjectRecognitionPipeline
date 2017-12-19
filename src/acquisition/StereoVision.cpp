@@ -1,7 +1,7 @@
 #include "acquisition/StereoVision.h"
 #include <iostream>
 #include <sstream>
-#include <detection/CCFaceDetector.h>
+#include <acquisition/CCFaceDetector.h>
 #include <reconstruct.h>
 
 using namespace FlyCapture2;
