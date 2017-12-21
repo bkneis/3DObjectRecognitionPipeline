@@ -10,7 +10,6 @@
 // Feature descriptor strategies
 #define VPFH "VPFH"
 #define FPFH "FPFH"
-#define RIFT "RIFT"
 #define CVPFH "CVPFH"
 
 // Classifiers

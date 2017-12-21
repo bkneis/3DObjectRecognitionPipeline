@@ -8,35 +8,39 @@
 
 namespace classifier {
 
-    class KNN : public Classifier<GlobalDescriptorsPtr> {
+    class KNN : public Classifier<LocalDescriptorsPtr> {
 
     public:
 
         KNN() : Classifier() {}
 
-        GlobalDescriptorsPtr
-        classify(GlobalDescriptorsPtr subject)
+        LocalDescriptorsPtr
+        classify(LocalDescriptorsPtr subject)
         {
-            const GlobalDescriptorT & query_descriptor = subject->points[0];
+            const LocalDescriptorT & query_descriptor = subject->points[0];
 
             std::vector<int> nn_index (1);
             std::vector<float> nn_sqr_distance (1);
-            kdtree_->nearestKSearch (query_descriptor, 1, nn_index, nn_sqr_distance);
+            int j = kdtree_->nearestKSearch (query_descriptor, 1, nn_index, nn_sqr_distance);
+            int i = nn_index[0];
+            std::cout << "i is " << i << std::endl;
             const int & best_match = nn_index[0];
 
-            return (models_[best_match]);
+            auto test = (models_[best_match]);
+
+            return test;
         }
 
         void
-        populateDatabase(std::vector<GlobalDescriptorsPtr> global_descriptors)
+        populateDatabase(std::vector<LocalDescriptorsPtr> global_descriptors)
         {
             models_ = global_descriptors;
             size_t n = global_descriptors.size ();
-            descriptors_ = GlobalDescriptorsPtr (new GlobalDescriptors);
+            descriptors_ = LocalDescriptorsPtr (new LocalDescriptors);
             for (size_t i = 0; i < n; ++i) {
                 *descriptors_ += *(global_descriptors[i]);
             }
-            kdtree_ = pcl::KdTreeFLANN<GlobalDescriptorT>::Ptr (new pcl::KdTreeFLANN<GlobalDescriptorT>);
+            kdtree_ = pcl::KdTreeFLANN<LocalDescriptorT>::Ptr (new pcl::KdTreeFLANN<LocalDescriptorT>);
             kdtree_->setInputCloud (descriptors_);
         }
 
@@ -45,9 +49,9 @@ namespace classifier {
 
     private:
 
-        std::vector<GlobalDescriptorsPtr> models_;
-        GlobalDescriptorsPtr descriptors_;
-        pcl::KdTreeFLANN<GlobalDescriptorT>::Ptr kdtree_;
+        std::vector<LocalDescriptorsPtr> models_;
+        LocalDescriptorsPtr descriptors_;
+        pcl::KdTreeFLANN<LocalDescriptorT>::Ptr kdtree_;
 
     };
 

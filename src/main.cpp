@@ -25,7 +25,7 @@ main(int arc, char** argv)
     pcl::console::print_info ("Loaded input point cloud %s (%lu points)\n", argv[2], cloud->size());
 
     // Create the vision processing pipeline
-    auto pipeline = new RecognitionPipeline<GlobalDescriptorsPtr, PointCloudPtr>(config);
+    auto pipeline = new RecognitionPipeline<LocalDescriptorsPtr, PointCloudPtr>(config);
 
     // Run the pipeline
     pipeline->run(cloud);

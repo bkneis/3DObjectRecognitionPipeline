@@ -82,7 +82,6 @@ add_executable (pipeline
         include/utils.h
         include/featuredescriptor/CVPFHExtractor.h
         include/preprocessor/GradientIntensityEstimator.h
-        include/featuredescriptor/RIFTFeatureExtractor.h
         src/acquisition/StereoVision.cpp
         src/acquisition/CCFaceDetector.cpp
         include/acquisition/CCFaceDetector.h

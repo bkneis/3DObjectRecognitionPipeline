@@ -11,7 +11,6 @@
 #include <featuredescriptor/VPFHExtractor.h>
 #include <featuredescriptor/CVPFHExtractor.h>
 #include <featuredescriptor/FPFHExtractor.h>
-#include <featuredescriptor/RIFTFeatureExtractor.h>
 #include <classifier/Classifier.h>
 #include <classifier/KNN.h>
 #include <chrono>
@@ -52,20 +51,22 @@ public:
         // Compute the surface normals
         auto normals = this->normalEstimator->run(input, config);
 
-        // Configure the feature extractor
-        if (!config->getFeatureDescriptorStrategy().compare(VPFH)) {
-            setFeatureExtractor(new VPFHExtractor());
-        }
-        else if (!config->getFeatureDescriptorStrategy().compare(CVPFH)) {
-            setFeatureExtractor(new CVPFHExtractor());
-        }
-//        else if (!config->getFeatureDescriptorStrategy().compare(FPFH)) {
-//            setFeatureExtractor(new FPFHExtractor());
+//        // Configure the feature extractor
+//        if (!config->getFeatureDescriptorStrategy().compare(VPFH)) {
+//            setFeatureExtractor(new VPFHExtractor());
 //        }
-        else {
-            // Fall back to default
-            setFeatureExtractor(new VPFHExtractor());
-        }
+//        else if (!config->getFeatureDescriptorStrategy().compare(CVPFH)) {
+//            setFeatureExtractor(new CVPFHExtractor());
+//        }
+////        else if (!config->getFeatureDescriptorStrategy().compare(FPFH)) {
+////            setFeatureExtractor(new FPFHExtractor());
+////        }
+//        else {
+//            // Fall back to default
+//            setFeatureExtractor(new VPFHExtractor());
+//        }
+
+        setFeatureExtractor(new FPFHExtractor());
 
         // Compute the feature descriptor
         auto descriptors = this->featureExtractor->run(input, normals, config);
@@ -141,6 +142,9 @@ private:
             auto desc = extract(clouds.at(i));
             models.push_back(desc);
         }
+        PointCloudPtr cloud (new PointCloud);
+        pcl::io::loadPCDFile ("/home/arthur/memo/cloud3.pcd", *cloud);
+        models.push_back(extract(cloud));
     }
 
     std::vector<FeatureDescriptorsPtr> models;
