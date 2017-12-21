@@ -19,8 +19,8 @@ namespace preprocessor {
 
             // Get the parameters for SIFT from the pipeline config
             float minScale = std::stof(conf->get(SIFT, "minScale"));
-            int numOctaves = std::stoi(conf->get(SIFT, "numOctaves"));
-            int numScalesPerOctave = std::stoi(conf->get(SIFT, "numScalesPerOctave"));
+            int numOctaves = std::stoi(conf->get(SIFT, "numberOfOctaves"));
+            int numScalesPerOctave = std::stoi(conf->get(SIFT, "numberOfScalesPerOctave"));
             float minContrast = std::stof(conf->get(SIFT, "minContrast"));
 
             pcl::SIFTKeypoint<PointT, pcl::PointWithScale> sift_detect;
