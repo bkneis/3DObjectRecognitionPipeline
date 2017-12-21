@@ -26,6 +26,13 @@ using namespace classifier;
 
 #define DEBUG_MODE false
 
+/**
+ * TODO remove feature descriptor template
+ * TODO create functions for both feature descriptors to be passed to classify()
+ * TODO load random clouds from file instead of creating them
+ * @tparam FeatureDescriptorsPtr
+ * @tparam PointCloudType
+ */
 template <class FeatureDescriptorsPtr, class PointCloudType>
 class RecognitionPipeline {
 
