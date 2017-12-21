@@ -13,7 +13,7 @@ namespace classifier {
         virtual PointCloudType classify(PointCloudType subject) = 0;
         virtual void train(const std::vector<std::string> & filenames) = 0;
         virtual void loadModel(const std::string filepath) = 0;
-        virtual void populateDatabase(std::vector<PointCloudType> global_descriptors) = 0;
+        virtual void populateDatabase(std::string clouds) = 0;
 
     };
 

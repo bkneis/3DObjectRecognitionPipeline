@@ -26,68 +26,88 @@ using namespace classifier;
 
 #define DEBUG_MODE false
 
-/**
- * TODO remove feature descriptor template
- * TODO create functions for both feature descriptors to be passed to classify()
- * TODO load random clouds from file instead of creating them
- * @tparam FeatureDescriptorsPtr
- * @tparam PointCloudType
- */
-template <class FeatureDescriptorsPtr, class PointCloudType>
+template <class PointCloudType>
 class RecognitionPipeline {
 
 public:
     RecognitionPipeline(Config* config) {
         this->config = config;
-        setClassifier(new KNN());
-        loadModels();
+        if (isLocal()) {
+            localClassifier = new KNN();
+            localClassifier->populateDatabase("../data/");
+        }
+//        else {
+//            globalClassifier = new KNN();
+//            globalClassifier->populateDatabase("../data/");
+//        }
     }
 
-    FeatureDescriptorsPtr
-    extract(PointCloudType input)
+    bool
+    isLocal()
     {
-        // Configure the normal estimation strategy
-        if (!config->getNormalsStrategy().compare(APPROXIMATIONS)) {
-            setSurfaceNormalEstimator(new SurfaceNormalEstimator<PointCloudType>());
-        }
-        else {
-            // Fall back to default
-            setSurfaceNormalEstimator(new SurfaceNormalEstimator<PointCloudType>());
-        }
-
-        // Compute the surface normals
-        auto normals = this->normalEstimator->run(input, config);
-
-//        // Configure the feature extractor
-//        if (!config->getFeatureDescriptorStrategy().compare(VPFH)) {
-//            setFeatureExtractor(new VPFHExtractor());
-//        }
-//        else if (!config->getFeatureDescriptorStrategy().compare(CVPFH)) {
-//            setFeatureExtractor(new CVPFHExtractor());
-//        }
-////        else if (!config->getFeatureDescriptorStrategy().compare(FPFH)) {
-////            setFeatureExtractor(new FPFHExtractor());
-////        }
-//        else {
-//            // Fall back to default
-//            setFeatureExtractor(new VPFHExtractor());
-//        }
-
-        setFeatureExtractor(new FPFHExtractor());
-
-        // Compute the feature descriptor
-        auto descriptors = this->featureExtractor->run(input, normals, config);
-
-        // Show the point cloud if in debug mode
-        if (DEBUG_MODE) {
-            visualize(input, normals, descriptors);
-        }
-
-        return descriptors;
+        return (!config->getFeatureDescriptorStrategy().compare(FPFH));
     }
 
     void
-    visualize(PointCloudType input, SurfaceNormalsPtr normals, FeatureDescriptorsPtr descriptors)
+    extract(PointCloudType input)
+    {
+        SurfaceNormalsPtr normals;
+
+        // Configure the normal estimation strategy
+        if (!config->getNormalsStrategy().compare(APPROXIMATIONS)) {
+            auto estimator = new SurfaceNormalEstimator<PointCloudType>();
+            normals = estimator->run(input, config);
+        }
+        else {
+            // Fall back to default
+            auto estimator = new SurfaceNormalEstimator<PointCloudType>();
+            normals = estimator->run(input, config);
+        }
+
+        // Configure the feature extractor
+        if (!config->getFeatureDescriptorStrategy().compare(VPFH)) {
+            auto extractor = new VPFHExtractor();
+            auto descriptor = extractor->run(input, normals, config);
+
+            // Show the point cloud if in debug mode
+            if (DEBUG_MODE) {
+                visualize(input, normals, descriptor);
+            }
+            globalClassifier->classify(descriptor);
+        }
+        else if (!config->getFeatureDescriptorStrategy().compare(CVPFH)) {
+            auto extractor = new CVPFHExtractor();
+            auto descriptor = extractor->run(input, normals, config);
+            // Show the point cloud if in debug mode
+            if (DEBUG_MODE) {
+                visualize(input, normals, descriptor);
+            }
+            globalClassifier->classify(descriptor);
+        }
+        else if (!config->getFeatureDescriptorStrategy().compare(FPFH)) {
+            auto extractor = new FPFHExtractor();
+            auto descriptor = extractor->run(input, normals, config);
+            // Show the point cloud if in debug mode
+            if (DEBUG_MODE) {
+                visualize(input, normals, descriptor);
+            }
+            localClassifier->classify(descriptor);
+        }
+        else {
+            // Fall back to default
+            auto extractor = new VPFHExtractor();
+            auto descriptor = extractor->run(input, normals, config);
+            // Show the point cloud if in debug mode
+            if (DEBUG_MODE) {
+                visualize(input, normals, descriptor);
+            }
+            globalClassifier->classify(descriptor);
+        }
+
+    }
+
+    void
+    visualize(PointCloudType input, SurfaceNormalsPtr normals, GlobalDescriptorsPtr descriptors)
     {
         pcl::console::print_info ("Starting visualizer... Close window to exit\n");
         pcl::visualization::PCLVisualizer vis;
@@ -102,6 +122,21 @@ public:
     }
 
     void
+    visualize(PointCloudType input, SurfaceNormalsPtr normals, LocalDescriptorsPtr descriptors)
+    {
+        pcl::console::print_info ("Starting visualizer... Close window to exit\n");
+        pcl::visualization::PCLVisualizer vis;
+        pcl::visualization::PCLHistogramVisualizer hist_vis;
+        vis.addPointCloud (input);
+
+        vis.addPointCloudNormals<PointT,NormalT> (input, normals, 4, 0.02, "normals");
+
+        hist_vis.addFeatureHistogram (*descriptors, 33, "Global descriptor");
+        vis.resetCamera ();
+        vis.spin();
+    }
+
+    void
     run(PointCloudType input)
     {
         // Perform segmentation and remove background
@@ -109,55 +144,17 @@ public:
 
         auto t1 = std::chrono::high_resolution_clock::now();
 
-        FeatureDescriptorsPtr descriptor = extract(input);
-        // todo move this to loadModels
-        models.push_back(descriptor);
-        this->classifier->populateDatabase(models);
-        auto test = this->classifier->classify(descriptor);
+        extract(input);
 
         auto t2 = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
         cout << "Pipeline took " << duration << " micro seconds" << endl;
     }
 
-    void
-    setSurfaceNormalEstimator(SurfaceNormalEstimator<PointCloudType>* normalEstimator)
-    {
-        this->normalEstimator = normalEstimator;
-    }
-
-    void
-    setFeatureExtractor(FeatureExtractor<FeatureDescriptorsPtr>* featureExtractor)
-    {
-        this->featureExtractor = featureExtractor;
-    }
-
-    void
-    setClassifier(Classifier<FeatureDescriptorsPtr>* classifier)
-    {
-        this->classifier = classifier;
-    }
-
 private:
 
-    void
-    loadModels()
-    {
-        int size = 20;
-        std::vector<PointCloudType> clouds = generateRandomClouds(size, 100, 100);
-        for (int i = 0; i < size; i++) {
-            auto desc = extract(clouds.at(i));
-            models.push_back(desc);
-        }
-        PointCloudPtr cloud (new PointCloud);
-        pcl::io::loadPCDFile ("/home/arthur/memo/cloud3.pcd", *cloud);
-        models.push_back(extract(cloud));
-    }
-
-    std::vector<FeatureDescriptorsPtr> models;
-    SurfaceNormalEstimator<PointCloudType>* normalEstimator;
-    FeatureExtractor<FeatureDescriptorsPtr>* featureExtractor;
-    Classifier<FeatureDescriptorsPtr>* classifier;
+    Classifier<LocalDescriptorsPtr>* localClassifier;
+    Classifier<GlobalDescriptorsPtr>* globalClassifier;
     Config* config;
 };
 

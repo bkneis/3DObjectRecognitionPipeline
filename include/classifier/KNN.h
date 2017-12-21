@@ -4,7 +4,9 @@
 #include <typedefs.h>
 #include <pcl/kdtree/kdtree_flann.h>
 #include <pcl/io/pcd_io.h>
+#include <utils.h>
 #include "Classifier.h"
+
 
 namespace classifier {
 
@@ -32,13 +34,23 @@ namespace classifier {
         }
 
         void
-        populateDatabase(std::vector<LocalDescriptorsPtr> global_descriptors)
+        populateDatabase(std::string clouds)
         {
-            models_ = global_descriptors;
-            size_t n = global_descriptors.size ();
+            boost::filesystem::path targetDir(clouds);
+
+            boost::filesystem::directory_iterator it(targetDir), eod;
+
+            BOOST_FOREACH(boost::filesystem::path const &p, std::make_pair(it, eod)) {
+                if(boost::filesystem::is_regular_file(p)) {
+                    auto cloud = loadPointCloud<LocalDescriptorT>(p.string());
+                    models_.push_back(cloud);
+                }
+            }
+
+            size_t n = models_.size ();
             descriptors_ = LocalDescriptorsPtr (new LocalDescriptors);
             for (size_t i = 0; i < n; ++i) {
-                *descriptors_ += *(global_descriptors[i]);
+                *descriptors_ += *(models_[i]);
             }
             kdtree_ = pcl::KdTreeFLANN<LocalDescriptorT>::Ptr (new pcl::KdTreeFLANN<LocalDescriptorT>);
             kdtree_->setInputCloud (descriptors_);
