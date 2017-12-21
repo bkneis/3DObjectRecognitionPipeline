@@ -2,15 +2,15 @@
 #define STEREORECOGNITION_KEYPOINTDETECTOR_H
 
 #include <typedefs.h>
+#include <Config.h>
 
 namespace preprocessor {
 
-    template <class PointCloudPtr>
+    template <class PointCloudType>
     class KeypointDetector {
 
     public:
-
-        virtual PointCloudPtr run(void* params) = 0;
+        virtual PointCloudType run(PointCloudType points, Config* conf) = 0;
 
     };
 

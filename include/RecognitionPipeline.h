@@ -40,62 +40,37 @@ public:
     FeatureDescriptorsPtr
     extract(PointCloudType input)
     {
-        PointCloudPtr keypoints = NULL;
         // Configure the normal estimation strategy
-        void* voidNormalParams;
         if (!config->getNormalsStrategy().compare(APPROXIMATIONS)) {
-            auto normalsParams = new NormalsParameters();
-            normalsParams->radius = std::stof(config->get(APPROXIMATIONS, "radius"));
-            normalsParams->points = input;
-            voidNormalParams = static_cast<void*>(normalsParams);
-            setSurfaceNormalEstimator(new SurfaceNormalEstimator());
+            setSurfaceNormalEstimator(new SurfaceNormalEstimator<PointCloudType>());
         }
-        auto normals = this->normalEstimator->run(voidNormalParams);
+        else {
+            // Fall back to default
+            setSurfaceNormalEstimator(new SurfaceNormalEstimator<PointCloudType>());
+        }
 
-        // Configure the feature descriptor
-        void* voidFeatureDescriptorParams;
+        // Compute the surface normals
+        auto normals = this->normalEstimator->run(input, config);
+
+        // Configure the feature extractor
         if (!config->getFeatureDescriptorStrategy().compare(VPFH)) {
-            auto vpfhParams = new VPFHParameters();
-            vpfhParams->points = input;
-            vpfhParams->normals = normals;
-            voidFeatureDescriptorParams = static_cast<void*>(vpfhParams);
             setFeatureExtractor(new VPFHExtractor());
         }
         else if (!config->getFeatureDescriptorStrategy().compare(CVPFH)) {
-            auto cvpfhParams = new CVPFHParameters();
-            cvpfhParams->points = input;
-            cvpfhParams->normals = normals;
-            voidFeatureDescriptorParams = static_cast<void*>(cvpfhParams);
+            setFeatureExtractor(new CVPFHExtractor());
         }
-        else if (!config->getFeatureDescriptorStrategy().compare(FPFH)) {
-            void* voidKeypointParams;
-            // Configure the keypoint detection strategy
-            if (!config->getKeypointStrategy().compare(SIFT)) {
-                auto siftParams = new SiftParameters();
-                siftParams->minScale = std::stof(config->get(SIFT, "minScale"));
-                siftParams->numOctaves = stoi(config->get(SIFT, "numOctaves"));
-                siftParams->numScalesPerOctave = stoi(config->get(SIFT, "numScalesPerOctave"));
-                siftParams->minContrast = std::stof(config->get(SIFT, "minContrast"));
-                siftParams->points = input;
-                voidKeypointParams = static_cast<void*>(siftParams);
-                setKeypointDetector(new SIFTKeyPointDetector());
-            }
-            keypoints = this->keypointDetector->run(voidKeypointParams);
-            auto fpfhParams = new FPFHParameters();
-            fpfhParams->featureRadius = std::stof(config->get(FPFH, "featureRadius"));
-            fpfhParams->points = input;
-            fpfhParams->normals = normals;
-            fpfhParams->keypoints = keypoints;
-            voidFeatureDescriptorParams = static_cast<void*>(fpfhParams);
-        }
-//        else if (!config->getFeatureDescriptorStrategy().compare("RIFT")) {
-//            auto riftParams = new RIFTParameters();
-//            riftParams->points = input;
-//            riftParams->normals = normals;
-//            voidFeatureDescriptorParams = static_cast<void*>(riftParams);
+//        else if (!config->getFeatureDescriptorStrategy().compare(FPFH)) {
+//            setFeatureExtractor(new FPFHExtractor());
 //        }
-        GlobalDescriptorsPtr descriptors = this->featureExtractor->run(voidFeatureDescriptorParams);
+        else {
+            // Fall back to default
+            setFeatureExtractor(new VPFHExtractor());
+        }
 
+        // Compute the feature descriptor
+        auto descriptors = this->featureExtractor->run(input, normals, config);
+
+        // Show the point cloud if in debug mode
         if (DEBUG_MODE) {
             visualize(input, normals, descriptors);
         }
@@ -138,13 +113,7 @@ public:
     }
 
     void
-    setKeypointDetector(KeypointDetector<PointCloudType>* keypointDetector)
-    {
-        this->keypointDetector = keypointDetector;
-    }
-
-    void
-    setSurfaceNormalEstimator(SurfaceNormalEstimator* normalEstimator)
+    setSurfaceNormalEstimator(SurfaceNormalEstimator<PointCloudType>* normalEstimator)
     {
         this->normalEstimator = normalEstimator;
     }
@@ -175,8 +144,7 @@ private:
     }
 
     std::vector<FeatureDescriptorsPtr> models;
-    KeypointDetector<PointCloudType>* keypointDetector;
-    SurfaceNormalEstimator* normalEstimator;
+    SurfaceNormalEstimator<PointCloudType>* normalEstimator;
     FeatureExtractor<FeatureDescriptorsPtr>* featureExtractor;
     Classifier<FeatureDescriptorsPtr>* classifier;
     Config* config;

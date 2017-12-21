@@ -4,32 +4,28 @@
 #include <typedefs.h>
 #include <pcl/console/print.h>
 #include <pcl/features/fpfh.h>
+#include <configdefs.h>
 #include "FeatureExtractor.h"
 
 namespace featuredescriptor {
-
-    struct FPFHParameters {
-        float featureRadius;
-        PointCloudPtr points;
-        SurfaceNormalsPtr normals;
-        PointCloudPtr keypoints;
-    };
 
     class FPFHExtractor : public FeatureExtractor<LocalDescriptorsPtr> {
 
     public:
 
         LocalDescriptorsPtr
-        run(void* params)
+        run(PointCloudPtr points, SurfaceNormalsPtr normals, Config* conf)
         {
+            auto keypointDetector = new preprocessor::SIFTKeyPointDetector();
+            auto keypoints = keypointDetector->run(points, conf);
             pcl::console::print_info ("\nExtracting features using Viewpoint Feature Histogram \n");
-            auto fpfhParams = static_cast<FPFHParameters*>(params);
             pcl::FPFHEstimation<PointT, NormalT, LocalDescriptorT> fpfh_estimation;
             fpfh_estimation.setSearchMethod (pcl::search::Search<PointT>::Ptr (new pcl::search::KdTree<PointT>));
-            fpfh_estimation.setRadiusSearch (fpfhParams->featureRadius);
-            fpfh_estimation.setSearchSurface (fpfhParams->points);
-            fpfh_estimation.setInputNormals (fpfhParams->normals);
-            fpfh_estimation.setInputCloud (fpfhParams->keypoints);
+            double featureRadius = std::stod(conf->get(FPFH, "featureRadius"));
+            fpfh_estimation.setRadiusSearch (featureRadius);
+            fpfh_estimation.setSearchSurface (points);
+            fpfh_estimation.setInputNormals (normals);
+            fpfh_estimation.setInputCloud (keypoints);
             LocalDescriptorsPtr local_descriptors (new LocalDescriptors);
             fpfh_estimation.compute (*local_descriptors);
 

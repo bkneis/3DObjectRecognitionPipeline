@@ -2,13 +2,15 @@
 #define STEREORECOGNITION_FEATUREEXTRACTOR_H
 
 #include <typedefs.h>
+#include <Config.h>
 
 namespace featuredescriptor {
 
     template <class DescriptorsPtr>
     class FeatureExtractor {
+
     public:
-        virtual DescriptorsPtr run(void* params) = 0;
+        virtual DescriptorsPtr run(PointCloudPtr points, SurfaceNormalsPtr normals, Config* conf) = 0;
 
     };
 

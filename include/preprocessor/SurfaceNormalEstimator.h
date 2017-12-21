@@ -7,26 +7,24 @@
 #include <pcl/features/normal_3d.h>
 #include <pcl/keypoints/sift_keypoint.h>
 #include <pcl/search/kdtree.h>
+#include <configdefs.h>
 
 namespace preprocessor {
 
-    struct NormalsParameters {
-        float radius;
-        PointCloudPtr points;
-    };
-
+    template <class PointCloudType>
     class SurfaceNormalEstimator {
 
     public:
 
-        SurfaceNormalsPtr run(void* params)
+        SurfaceNormalsPtr run(PointCloudType points, Config* conf)
         {
-            NormalsParameters* normalsParams = static_cast<NormalsParameters*>(params);
             pcl::console::print_info ("Estimating surface normals of point cloud \n");
+
             pcl::NormalEstimation<PointT, NormalT> normal_estimation;
             normal_estimation.setSearchMethod (pcl::search::Search<PointT>::Ptr (new pcl::search::KdTree<PointT>));
-            normal_estimation.setRadiusSearch (normalsParams->radius);
-            normal_estimation.setInputCloud (normalsParams->points);
+            double radius = std::stod(conf->get(APPROXIMATIONS, "radius"));
+            normal_estimation.setRadiusSearch (radius);
+            normal_estimation.setInputCloud (points);
             SurfaceNormalsPtr normals (new SurfaceNormals);
             normal_estimation.compute (*normals);
 

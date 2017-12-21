@@ -9,23 +9,18 @@
 
 namespace featuredescriptor {
 
-    struct CVPFHParameters {
-        PointCloudPtr points;
-        SurfaceNormalsPtr normals;
-    };
-
     class CVPFHExtractor : public FeatureExtractor<GlobalDescriptorsPtr> {
 
     public:
 
-        GlobalDescriptorsPtr run(void* params)
+        GlobalDescriptorsPtr run(PointCloudPtr points, SurfaceNormalsPtr normals, Config* conf)
         {
-            auto cvpfhParams = static_cast<CVPFHParameters*>(params);
             pcl::console::print_info ("Extracting features using Clustered Viewpoint Feature Histogram \n");
+
             pcl::CVFHEstimation<PointT, NormalT, GlobalDescriptorT> vfh_estimation;
             vfh_estimation.setSearchMethod (pcl::search::Search<PointT>::Ptr (new pcl::search::KdTree<PointT>));
-            vfh_estimation.setInputCloud (cvpfhParams->points);
-            vfh_estimation.setInputNormals (cvpfhParams->normals);
+            vfh_estimation.setInputCloud (points);
+            vfh_estimation.setInputNormals (normals);
             GlobalDescriptorsPtr global_descriptor (new GlobalDescriptors);
             vfh_estimation.compute (*global_descriptor);
 
