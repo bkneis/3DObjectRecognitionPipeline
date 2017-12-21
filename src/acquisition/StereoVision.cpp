@@ -1,7 +1,8 @@
 #include "acquisition/StereoVision.h"
 #include <iostream>
 #include <sstream>
-#include <detection/CCFaceDetector.h>
+#include <acquisition/CCFaceDetector.h>
+#include <reconstruct.h>
 
 using namespace FlyCapture2;
 using namespace std;
@@ -17,8 +18,7 @@ acquisition::StereoVision::PrintCameraInfo(CameraInfo *pCamInfo)
     cout << "Sensor - " << pCamInfo->sensorInfo << endl;
     cout << "Resolution - " << pCamInfo->sensorResolution << endl;
     cout << "Firmware version - " << pCamInfo->firmwareVersion << endl;
-    cout << "Firmware build time - " << pCamInfo->firmwareBuildTime << endl
-         << endl;
+    cout << "Firmware build time - " << pCamInfo->firmwareBuildTime << endl << endl;
 }
 
 int
@@ -139,9 +139,35 @@ acquisition::StereoVision::run()
         }
 
         bool isFace = detector->detect(images[0]);
-        if (isFace) {
-            std::cout << "face detected" << endl;
-        }
+//        if (isFace) {
+//            std::cout << "face detected" << endl;
+//            ostringstream filename;
+//            filename << "/tmp/" << std::to_string(rand() % 100) << "1" << OUTPUT_FILE_TYPE;
+//            std::string leftPath = filename.str();
+//
+//            // Save the image. If a file format is not passed in, then the file
+//            // extension is parsed to attempt to determine the file format.
+//            error = images[0].Save(leftPath.c_str());
+//            if (error != PGRERROR_OK) {
+//                error.PrintErrorTrace();
+//                return -1;
+//            }
+//
+//            filename.clear();
+//
+//            filename << "/tmp/" << std::to_string(rand() % 100) << "2" << OUTPUT_FILE_TYPE;
+//            std::string rightPath = filename.str();
+//
+//            // Save the image. If a file format is not passed in, then the file
+//            // extension is parsed to attempt to determine the file format.
+//            error = images[1].Save(rightPath.c_str());
+//            if (error != PGRERROR_OK) {
+//                error.PrintErrorTrace();
+//                return -1;
+//            }
+//
+//            generatePointCloud(leftPath, rightPath);
+//        }
     }
 
 }

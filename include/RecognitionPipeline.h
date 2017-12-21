@@ -14,6 +14,8 @@
 #include <featuredescriptor/RIFTFeatureExtractor.h>
 #include <classifier/Classifier.h>
 #include <classifier/KNN.h>
+#include <chrono>
+#include <preprocessor/filters.h>
 #include "typedefs.h"
 #include "Config.h"
 #include "configdefs.h"
@@ -23,6 +25,7 @@ using namespace preprocessor;
 using namespace featuredescriptor;
 using namespace classifier;
 
+#define DEBUG_MODE false
 
 template <class FeatureDescriptorsPtr, class PointCloudType>
 class RecognitionPipeline {
@@ -30,6 +33,8 @@ class RecognitionPipeline {
 public:
     RecognitionPipeline(Config* config) {
         this->config = config;
+        setClassifier(new KNN());
+        loadModels();
     }
 
     FeatureDescriptorsPtr
@@ -40,7 +45,7 @@ public:
         void* voidNormalParams;
         if (!config->getNormalsStrategy().compare(APPROXIMATIONS)) {
             auto normalsParams = new NormalsParameters();
-            normalsParams->radius = 0.2;
+            normalsParams->radius = std::stof(config->get(APPROXIMATIONS, "radius"));
             normalsParams->points = input;
             voidNormalParams = static_cast<void*>(normalsParams);
             setSurfaceNormalEstimator(new SurfaceNormalEstimator());
@@ -54,6 +59,7 @@ public:
             vpfhParams->points = input;
             vpfhParams->normals = normals;
             voidFeatureDescriptorParams = static_cast<void*>(vpfhParams);
+            setFeatureExtractor(new VPFHExtractor());
         }
         else if (!config->getFeatureDescriptorStrategy().compare(CVPFH)) {
             auto cvpfhParams = new CVPFHParameters();
@@ -66,16 +72,17 @@ public:
             // Configure the keypoint detection strategy
             if (!config->getKeypointStrategy().compare(SIFT)) {
                 auto siftParams = new SiftParameters();
-                siftParams->minScale = 0.01f;
-                siftParams->numOctaves = 3;
-                siftParams->numScalesPerOctave = 4;
-                siftParams->minContrast = 0.001f;
+                siftParams->minScale = std::stof(config->get(SIFT, "minScale"));
+                siftParams->numOctaves = stoi(config->get(SIFT, "numOctaves"));
+                siftParams->numScalesPerOctave = stoi(config->get(SIFT, "numScalesPerOctave"));
+                siftParams->minContrast = std::stof(config->get(SIFT, "minContrast"));
                 siftParams->points = input;
                 voidKeypointParams = static_cast<void*>(siftParams);
+                setKeypointDetector(new SIFTKeyPointDetector());
             }
             keypoints = this->keypointDetector->run(voidKeypointParams);
             auto fpfhParams = new FPFHParameters();
-            fpfhParams->featureRadius = 0.2;
+            fpfhParams->featureRadius = std::stof(config->get(FPFH, "featureRadius"));
             fpfhParams->points = input;
             fpfhParams->normals = normals;
             fpfhParams->keypoints = keypoints;
@@ -89,7 +96,9 @@ public:
 //        }
         GlobalDescriptorsPtr descriptors = this->featureExtractor->run(voidFeatureDescriptorParams);
 
-        // visualize(input, normals, descriptors);
+        if (DEBUG_MODE) {
+            visualize(input, normals, descriptors);
+        }
 
         return descriptors;
     }
@@ -104,12 +113,6 @@ public:
 
         vis.addPointCloudNormals<PointT,NormalT> (input, normals, 4, 0.02, "normals");
 
-//        if (!config->getFeatureDescriptorStrategy().compare("FPFH")) {
-//            pcl::visualization::PointCloudColorHandlerCustom<PointT> red (keypoints, 255, 0, 0);
-//            vis.addPointCloud (keypoints, red, "keypoints");
-//            vis.setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 3, "keypoints");
-//        }
-
         hist_vis.addFeatureHistogram (*descriptors, 308, "Global descriptor");
         vis.resetCamera ();
         vis.spin();
@@ -118,17 +121,20 @@ public:
     void
     run(PointCloudType input)
     {
+        // Perform segmentation and remove background
+        input = preprocessor::removeOutliers(input, 0.3, 300);
+
+        auto t1 = std::chrono::high_resolution_clock::now();
+
         FeatureDescriptorsPtr descriptor = extract(input);
-        std::vector<FeatureDescriptorsPtr> models;
+        // todo move this to loadModels
         models.push_back(descriptor);
-        int size = 20;
-        std::vector<PointCloudType> clouds = generateRandomClouds(size, 100, 100);
-        for (int i = 0; i < size; i++) {
-            auto desc = extract(clouds.at(i));
-            models.push_back(desc);
-        }
         this->classifier->populateDatabase(models);
         auto test = this->classifier->classify(descriptor);
+
+        auto t2 = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
+        cout << "Pipeline took " << duration << " micro seconds" << endl;
     }
 
     void
@@ -156,6 +162,19 @@ public:
     }
 
 private:
+
+    void
+    loadModels()
+    {
+        int size = 20;
+        std::vector<PointCloudType> clouds = generateRandomClouds(size, 100, 100);
+        for (int i = 0; i < size; i++) {
+            auto desc = extract(clouds.at(i));
+            models.push_back(desc);
+        }
+    }
+
+    std::vector<FeatureDescriptorsPtr> models;
     KeypointDetector<PointCloudType>* keypointDetector;
     SurfaceNormalEstimator* normalEstimator;
     FeatureExtractor<FeatureDescriptorsPtr>* featureExtractor;

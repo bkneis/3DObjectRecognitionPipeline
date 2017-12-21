@@ -33,12 +33,4 @@ typedef pcl::Histogram<32> RIFTHistogram;
 typedef pcl::PointCloud<RIFTHistogram> RIFTDescriptor;
 typedef RIFTDescriptor::Ptr RIFTDescriptorPtr;
 
-struct ObjectModel
-{
-    PointCloudPtr points;
-    PointCloudPtr keypoints;
-    LocalDescriptorsPtr local_descriptors;
-    GlobalDescriptorsPtr global_descriptor;
-};
-
 #endif

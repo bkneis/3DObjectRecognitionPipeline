@@ -1,9 +1,11 @@
+#include <ConfigReader.h>
 #include "Config.h"
 
 void
 Config::addParameter(const std::string element, std::string parameter, std::string parameterValue)
 {
-    this->parameters[element].push_back(std::make_pair(parameter, parameterValue));
+    this->parameters.at(element).insert(std::make_pair(parameter, parameterValue));
+    // this->parameters[element].push_back(std::make_pair(parameter, parameterValue));
 }
 
 void
@@ -41,4 +43,12 @@ std::string Config::getFeatureDescriptorStrategy() {
 
 std::string Config::getClassificationStartegy() {
     return this->classfificationStrategy;
+}
+
+std::string Config::get(std::string element, std::string parameter) {
+    return this->parameters.at(element).at(parameter);
+}
+
+Config *Config::create(std::string filepath) {
+    return ConfigReader::get(filepath);
 }

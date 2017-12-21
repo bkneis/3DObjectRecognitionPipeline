@@ -84,9 +84,10 @@ add_executable (pipeline
         include/preprocessor/GradientIntensityEstimator.h
         include/featuredescriptor/RIFTFeatureExtractor.h
         src/acquisition/StereoVision.cpp
-        src/detection/CCFaceDetector.cpp
-        include/detection/CCFaceDetector.h
-        include/acquisition/StereoVision.h src/detection/HOGDetector.cpp include/detection/HOGDetector.h)
+        src/acquisition/CCFaceDetector.cpp
+        include/acquisition/CCFaceDetector.h
+        include/acquisition/StereoVision.h
+        include/reconstruct.h)
 
 # TODO change hard coded linkage to libyaml
 target_link_libraries (pipeline
@@ -97,15 +98,13 @@ target_link_libraries (pipeline
         #dlib::dlib
         ${CMAKE_SOURCE_DIR}/lib/yaml-cpp/build/libyaml-cpp.a)
 
-# Utility application to view point clouds
-add_executable (cloud_viewer src/viewer.cpp)
-target_link_libraries (cloud_viewer ${PCL_LIBRARIES})
+# Helper macro to build and link utility libraries
+macro (build_util name)
+    add_executable (${name} src/${name}.cpp)
+    target_link_libraries (${name} ${PCL_LIBRARIES} ${OpenCV_LIBS})
+endmacro()
 
-# Experimental segmentation algorithm binary
-add_executable (seg src/regionGrowing.cpp)
-target_link_libraries (seg ${PCL_LIBRARIES})
-
-# Utility application for face detection
-add_executable (faceDetect src/faceDetector.cpp)
-target_link_libraries (faceDetect ${OpenCV_LIBS})
-
+build_util(regionGrowing)
+build_util(viewer)
+build_util(faceDetector)
+build_util(reconstruct3D)
