@@ -8,6 +8,7 @@
 #include <pcl/keypoints/sift_keypoint.h>
 #include <pcl/search/kdtree.h>
 #include <configdefs.h>
+#include <Config.h>
 
 namespace preprocessor {
 
