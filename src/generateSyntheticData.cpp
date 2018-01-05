@@ -1,8 +1,5 @@
-
-
 #include <pcl/io/pcd_io.h>
 #include <sstream>
-#include <Config.h>
 #include <typedefs.h>
 #include <pipeline/RecognitionPipeline.h>
 
@@ -36,18 +33,12 @@ generateRandomClouds (int num, uint32_t width, uint32_t height)
 int
 main(int argc, char** argv)
 {
-    auto config = Config::create(argv[1]);
-
-    // Create the vision processing pipeline
-    auto pipeline = new RecognitionPipeline<PointCloudPtr>(config);
-
     auto randomClouds = generateRandomClouds(20, 100, 100);
     for (size_t i = 0; i < randomClouds.size(); i++) {
         std::ostringstream ss;
         ss << "../data/random/cloud";
         ss << i;
         ss << ".pcd";
-        // TODO convert the cloud to descriptor
         pcl::io::savePCDFileASCII (ss.str(), *randomClouds.at(i));
     }
 }
