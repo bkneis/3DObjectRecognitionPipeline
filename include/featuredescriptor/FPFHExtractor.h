@@ -1,9 +1,15 @@
 #ifndef STEREORECOGNITION_FPFHEXTRACTOR_H
 #define STEREORECOGNITION_FPFHEXTRACTOR_H
 
+#ifdef USE_OMP
+#include <pcl/features/fpfh_omp.h>
+#else
+#include <pcl/features/fpfh.h>
+#endif
+
 #include <typedefs.h>
 #include <pcl/console/print.h>
-#include <pcl/features/fpfh.h>
+
 #include "FeatureExtractor.h"
 
 namespace featuredescriptor {
@@ -24,7 +30,12 @@ namespace featuredescriptor {
         {
             pcl::console::print_info ("\nExtracting features using Viewpoint Feature Histogram \n");
             auto fpfhParams = static_cast<FPFHParameters*>(params);
+
+#ifdef USE_OMP
+            pcl::FPFHEstimationOMP<PointT, NormalT, LocalDescriptorT> fpfh_estimation;
+#else
             pcl::FPFHEstimation<PointT, NormalT, LocalDescriptorT> fpfh_estimation;
+#endif
             fpfh_estimation.setSearchMethod (pcl::search::Search<PointT>::Ptr (new pcl::search::KdTree<PointT>));
             fpfh_estimation.setRadiusSearch (fpfhParams->featureRadius);
             fpfh_estimation.setSearchSurface (fpfhParams->points);
