@@ -16,7 +16,7 @@ namespace classifier {
 
         KNN() : Classifier() {}
 
-        GlobalDescriptorsPtr
+        Subject<GlobalDescriptorT>*
         classify(GlobalDescriptorsPtr subject) override
         {
             const GlobalDescriptorT & query_descriptor = subject->points[0];
@@ -27,19 +27,19 @@ namespace classifier {
             int i = nn_index[0];
             const int & best_match = nn_index[0];
 
-            auto test = (models_[best_match]);
+            Subject<GlobalDescriptorT>* test = (models_[best_match]);
 
             return test;
         }
 
         void
-        populateDatabase(std::vector<GlobalDescriptorsPtr> models) override
+        populateDatabase(std::vector<Subject<GlobalDescriptorT>*> models) override
         {
             models_ = models;
             size_t n = models_.size ();
             descriptors_ = GlobalDescriptorsPtr (new GlobalDescriptors);
             for (size_t i = 0; i < n; ++i) {
-                *descriptors_ += *(models_[i]);
+                *descriptors_ += *(models_[i]->descriptor);
             }
             kdtree_ = pcl::KdTreeFLANN<GlobalDescriptorT>::Ptr (new pcl::KdTreeFLANN<GlobalDescriptorT>);
             kdtree_->setInputCloud (descriptors_);
@@ -50,7 +50,7 @@ namespace classifier {
 
     private:
 
-        std::vector<GlobalDescriptorsPtr> models_;
+        std::vector<Subject<GlobalDescriptorT>*> models_;
         GlobalDescriptorsPtr descriptors_;
         pcl::KdTreeFLANN<GlobalDescriptorT>::Ptr kdtree_;
 

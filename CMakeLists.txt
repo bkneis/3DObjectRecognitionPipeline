@@ -78,6 +78,7 @@ add_executable (pipeline
         include/ConfigReader.h
         src/Config.cpp
         include/Config.h
+        include/classifier/Subject.h
         include/configdefs.h
         include/classifier/Classifier.h
         include/classifier/KNN.h

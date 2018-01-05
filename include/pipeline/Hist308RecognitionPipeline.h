@@ -66,14 +66,15 @@ namespace pipeline {
         classify() override
         {
             auto res = classifier->classify(descriptors);
+            std::cout << "The subject is " << res->name << std::endl;
         }
 
     protected:
 
-        std::vector<GlobalDescriptorsPtr>
+        std::vector<classifier::Subject<GlobalDescriptorT>*>
         describeDatabase(std::string clouds)
         {
-            std::vector<GlobalDescriptorsPtr> models;
+            std::vector<classifier::Subject<GlobalDescriptorT>*> models;
             boost::filesystem::path targetDir(clouds);
 
             boost::filesystem::directory_iterator it(targetDir), eod;
@@ -84,7 +85,8 @@ namespace pipeline {
                     this->input = cloud;
                     this->estimateSurfaceNormals();
                     describe();
-                    models.push_back(descriptors);
+                    auto subject = new classifier::Subject<GlobalDescriptorT>(p.stem().string(), descriptors);
+                    models.push_back(subject);
                 }
             }
 
