@@ -1,10 +1,10 @@
-#include <RecognitionPipeline.h>
 #include <pcl/io/pcd_io.h>
 #include <acquisition/StereoVision.h>
+#include <typedefs.h>
+#include <Config.h>
+#include "pipeline/RecognitionPipelineFactory.h"
 
 using namespace acquisition;
-using namespace preprocessor;
-using namespace featuredescriptor;
 
 int
 main(int arc, char** argv)
@@ -25,7 +25,7 @@ main(int arc, char** argv)
     pcl::console::print_info ("Loaded input point cloud %s (%lu points)\n", argv[2], cloud->size());
 
     // Create the vision processing pipeline
-    auto pipeline = new RecognitionPipeline<GlobalDescriptorsPtr, PointCloudPtr>(config);
+    auto pipeline = pipeline::RecognitionPipelineFactory<PointCloudPtr>::create(config);
 
     // Run the pipeline
     pipeline->run(cloud);

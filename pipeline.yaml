@@ -11,9 +11,9 @@ Pipeline:
         numberOfScalesPerOctave: 4
         minContrast: 0.001f
     FeatureDescriptor:
-      strategy: VPFH
+      strategy: FPFH
       parameters:
-        something: some
+        featureRadius: 0.2
     Classification:
       strategy: KNN
       parameters:

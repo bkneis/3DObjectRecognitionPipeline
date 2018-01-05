@@ -12,7 +12,7 @@ void
 Config::setStrategy(std::string element, std::string strategy)
 {
     if (!element.compare("SurfaceNormalEstimation")) {
-        this->normalsStrategy = strategy;
+        normalsStrategy = strategy;
     }
     else if (!element.compare("KeypointDetection")) {
         this->keypointStrategy = strategy;

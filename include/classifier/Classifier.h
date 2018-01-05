@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include "Subject.h"
 
 namespace classifier {
 
@@ -10,10 +11,10 @@ namespace classifier {
     class Classifier {
 
     public:
-        virtual PointCloudType classify(PointCloudType subject) = 0;
+        virtual Subject<GlobalDescriptorT>* classify(PointCloudType subject) = 0;
         virtual void train(const std::vector<std::string> & filenames) = 0;
         virtual void loadModel(const std::string filepath) = 0;
-        virtual void populateDatabase(std::vector<PointCloudType> global_descriptors) = 0;
+        virtual void populateDatabase(std::vector<Subject<GlobalDescriptorT>*> models) = 0;
 
     };
 

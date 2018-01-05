@@ -28,9 +28,4 @@ typedef pcl::PointCloud<GlobalDescriptorT>::Ptr GlobalDescriptorsPtr;
 typedef pcl::PointCloud<pcl::IntensityGradient> IntensityGradientCloud;
 typedef pcl::PointCloud<pcl::IntensityGradient>::Ptr IntensityGradientPtr;
 
-// Define for RIFT histogram
-typedef pcl::Histogram<32> RIFTHistogram;
-typedef pcl::PointCloud<RIFTHistogram> RIFTDescriptor;
-typedef RIFTDescriptor::Ptr RIFTDescriptorPtr;
-
 #endif

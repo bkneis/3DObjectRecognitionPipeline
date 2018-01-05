@@ -11,6 +11,8 @@ typedef std::unordered_map<std::string, ParameterSet> ParameterList;
 class Config {
 
 public:
+    Config() = default;
+
     static Config* create(std::string filepath);
     void setStrategy(std::string element, std::string strategy);
     void addParameter(std::string element, std::string parameter, std::string parameterValue);

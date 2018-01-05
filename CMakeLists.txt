@@ -27,7 +27,7 @@ if (OPENMP_FOUND)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
     add_definitions(-DUSE_OMP)
 else (OPENMP_FOUND)
-    message(STATUS "Open MP not found, the pipeline may not run optimally for parallel tasks.")
+    message(STATUS "Open MP not found, the pipeline may not run as optimal for parallel tasks.")
 endif()
 
 #add_subdirectory(/usr/src/dlib dlib_build)
@@ -74,7 +74,10 @@ add_executable (pipeline
         src/main.cpp
         include/preprocessor/SIFTKeyPointDetector.h
         include/typedefs.h
-        include/RecognitionPipeline.h
+        include/pipeline/RecognitionPipeline.h
+        include/pipeline/Hist308RecognitionPipeline.h
+        include/pipeline/Hist33RecognitionPipeline.h
+        include/pipeline/RecognitionPipelineFactory.h
         include/preprocessor/SurfaceNormalEstimator.h
         include/featuredescriptor/VPFHExtractor.h
         include/featuredescriptor/FeatureExtractor.h
@@ -84,6 +87,7 @@ add_executable (pipeline
         include/ConfigReader.h
         src/Config.cpp
         include/Config.h
+        include/classifier/Subject.h
         include/configdefs.h
         include/classifier/Classifier.h
         include/classifier/KNN.h
@@ -91,7 +95,6 @@ add_executable (pipeline
         include/utils.h
         include/featuredescriptor/CVPFHExtractor.h
         include/preprocessor/GradientIntensityEstimator.h
-        include/featuredescriptor/RIFTFeatureExtractor.h
         src/acquisition/StereoVision.cpp
         src/acquisition/CCFaceDetector.cpp
         include/acquisition/CCFaceDetector.h
@@ -117,3 +120,4 @@ build_util(regionGrowing)
 build_util(viewer)
 build_util(faceDetector)
 build_util(reconstruct3D)
+build_util(generateSyntheticData)

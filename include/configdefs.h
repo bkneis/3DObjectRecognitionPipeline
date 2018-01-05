@@ -5,18 +5,17 @@
 #define APPROXIMATIONS "approximations"
 
 // Keypoint detection strategies
-#define SIFT "approximations"
+#define SIFT "sift"
 
 // Feature descriptor strategies
 #define VPFH "VPFH"
 #define FPFH "FPFH"
-#define RIFT "VIFT"
 #define CVPFH "CVPFH"
 
 // Classifiers
 #define knn "KNN"
 
 // Strategy used to skip processing step
-//#define NONE "NONE"
+//#define SKIP "SKIP"
 
 #endif //STEREORECOGNITION_MAPPINGS_H

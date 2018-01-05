@@ -4,7 +4,9 @@
 #include <typedefs.h>
 #include <pcl/kdtree/kdtree_flann.h>
 #include <pcl/io/pcd_io.h>
+#include <utils.h>
 #include "Classifier.h"
+
 
 namespace classifier {
 
@@ -14,38 +16,41 @@ namespace classifier {
 
         KNN() : Classifier() {}
 
-        GlobalDescriptorsPtr
-        classify(GlobalDescriptorsPtr subject)
+        Subject<GlobalDescriptorT>*
+        classify(GlobalDescriptorsPtr subject) override
         {
             const GlobalDescriptorT & query_descriptor = subject->points[0];
 
             std::vector<int> nn_index (1);
             std::vector<float> nn_sqr_distance (1);
-            kdtree_->nearestKSearch (query_descriptor, 1, nn_index, nn_sqr_distance);
+            int j = kdtree_->nearestKSearch (query_descriptor, 1, nn_index, nn_sqr_distance);
+            int i = nn_index[0];
             const int & best_match = nn_index[0];
 
-            return (models_[best_match]);
+            Subject<GlobalDescriptorT>* test = (models_[best_match]);
+
+            return test;
         }
 
         void
-        populateDatabase(std::vector<GlobalDescriptorsPtr> global_descriptors)
+        populateDatabase(std::vector<Subject<GlobalDescriptorT>*> models) override
         {
-            models_ = global_descriptors;
-            size_t n = global_descriptors.size ();
+            models_ = models;
+            size_t n = models_.size ();
             descriptors_ = GlobalDescriptorsPtr (new GlobalDescriptors);
             for (size_t i = 0; i < n; ++i) {
-                *descriptors_ += *(global_descriptors[i]);
+                *descriptors_ += *(models_[i]->descriptor);
             }
             kdtree_ = pcl::KdTreeFLANN<GlobalDescriptorT>::Ptr (new pcl::KdTreeFLANN<GlobalDescriptorT>);
             kdtree_->setInputCloud (descriptors_);
         }
 
-        void train(const std::vector<std::string> & filenames) {}
-        void loadModel(const std::string filepath) {}
+        void train(const std::vector<std::string> & filenames) override {}
+        void loadModel(const std::string filepath) override {}
 
     private:
 
-        std::vector<GlobalDescriptorsPtr> models_;
+        std::vector<Subject<GlobalDescriptorT>*> models_;
         GlobalDescriptorsPtr descriptors_;
         pcl::KdTreeFLANN<GlobalDescriptorT>::Ptr kdtree_;
 
