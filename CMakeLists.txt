@@ -21,6 +21,15 @@ else(FLYCAPTURE2)
     message(FATAL_ERROR "FlyCapture2 is needed for the Point Grey cameras.  Cannot continue.")
 endif(FLYCAPTURE2)
 
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    add_definitions(-DUSE_OMP)
+else (OPENMP_FOUND)
+    message(STATUS "Open MP not found, the pipeline may not run optimally for parallel tasks.")
+endif()
+
 #add_subdirectory(/usr/src/dlib dlib_build)
 
 # Find OpenCV, you may need to set OpenCV_DIR variable

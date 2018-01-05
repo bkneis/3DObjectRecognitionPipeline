@@ -50,5 +50,6 @@ std::string Config::get(std::string element, std::string parameter) {
 }
 
 Config *Config::create(std::string filepath) {
-    return ConfigReader::get(filepath);
+    auto reader = new ConfigReader();
+    return reader->get(filepath);
 }
