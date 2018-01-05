@@ -2,7 +2,7 @@
 #include <acquisition/StereoVision.h>
 #include <typedefs.h>
 #include <Config.h>
-#include "RecognitionPipelineFactory.h"
+#include "pipeline/RecognitionPipelineFactory.h"
 
 using namespace acquisition;
 

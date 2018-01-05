@@ -4,7 +4,7 @@
 #include <sstream>
 #include <Config.h>
 #include <typedefs.h>
-#include <RecognitionPipeline.h>
+#include <pipeline/RecognitionPipeline.h>
 
 template <typename PointT = pcl::PointXYZRGB>
 std::vector<boost::shared_ptr<pcl::PointCloud<PointT>>>
