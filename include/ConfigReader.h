@@ -9,10 +9,9 @@ class ConfigReader {
 
 public:
 
-    ConfigReader () :
-        config()
+    ConfigReader ()
     {
-
+        config = new Config;
     }
 
     Config* get(std::string pipelineYaml);
