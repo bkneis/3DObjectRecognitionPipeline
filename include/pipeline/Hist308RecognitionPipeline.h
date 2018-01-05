@@ -10,6 +10,7 @@
 
 namespace pipeline {
 
+    // todo pass point cloud type and create pointer
     template<class PointCloudType>
     class Hist308RecognitionPipeline : public RecognitionPipeline<PointCloudType> {
 
@@ -18,7 +19,7 @@ namespace pipeline {
         explicit Hist308RecognitionPipeline(Config *conf)
                 : RecognitionPipeline<PointCloudType>(conf)
         {
-            if (!RecognitionPipeline<PointCloudType>::config->getClassificationStartegy().compare(knn)) {
+            if (!conf->getClassificationStartegy().compare(knn)) {
                 classifier = new classifier::KNN();
             } else {
                 classifier = new classifier::KNN();
@@ -28,13 +29,14 @@ namespace pipeline {
         }
 
         void
-        visualize() override {
+        visualize() override
+        {
             pcl::console::print_info("Starting visualizer... Close window to exit\n");
             pcl::visualization::PCLVisualizer vis;
             pcl::visualization::PCLHistogramVisualizer hist_vis;
-            vis.addPointCloud(RecognitionPipeline<PointCloudType>::input);
+            vis.addPointCloud(this->input);
 
-            vis.addPointCloudNormals<PointT, NormalT>(RecognitionPipeline<PointCloudType>::input, RecognitionPipeline<PointCloudType>::normals, 4, 0.02, "normals");
+            vis.addPointCloudNormals<PointT, NormalT>(this->input, this->normals, 4, 0.02, "normals");
 
             hist_vis.addFeatureHistogram(*descriptors, 308, "Global descriptor");
             vis.resetCamera();
@@ -42,25 +44,27 @@ namespace pipeline {
         }
 
         void
-        describe() override {
+        describe() override
+        {
             // Configure the feature extractor
-            if (!RecognitionPipeline<PointCloudType>::config->getFeatureDescriptorStrategy().compare(VPFH)) {
+            if (!this->config->getFeatureDescriptorStrategy().compare(VPFH)) {
                 auto extractor = new featuredescriptor::VPFHExtractor();
-                descriptors = extractor->run(RecognitionPipeline<PointCloudType>::input, RecognitionPipeline<PointCloudType>::normals, RecognitionPipeline<PointCloudType>::config);
+                descriptors = extractor->run(this->input, this->normals, this->config);
             }
-            else if (!RecognitionPipeline<PointCloudType>::config->getFeatureDescriptorStrategy().compare(CVPFH)) {
+            else if (!this->config->getFeatureDescriptorStrategy().compare(CVPFH)) {
                 auto extractor = new featuredescriptor::CVPFHExtractor();
-                descriptors = extractor->run(RecognitionPipeline<PointCloudType>::input, RecognitionPipeline<PointCloudType>::normals, RecognitionPipeline<PointCloudType>::config);
+                descriptors = extractor->run(this->input, this->normals, this->config);
             }
             else {
                 // Fall back to default
                 auto extractor = new featuredescriptor::VPFHExtractor();
-                descriptors = extractor->run(RecognitionPipeline<PointCloudType>::input, RecognitionPipeline<PointCloudType>::normals, RecognitionPipeline<PointCloudType>::config);
+                descriptors = extractor->run(this->input, this->normals, this->config);
             }
         }
 
         void
-        classify() override {
+        classify() override
+        {
             auto res = classifier->classify(descriptors);
         }
 
@@ -76,17 +80,9 @@ namespace pipeline {
 
             BOOST_FOREACH(boost::filesystem::path const &p, std::make_pair(it, eod)) {
                 if(boost::filesystem::is_regular_file(p)) {
-                    // todo Fix me pass point cloud type not pointer
                     auto cloud = loadPointCloud<PointT>(p.string());
-                    // todo hack remove
-                    if (cloud->points.size() > 10001) {
-                        // not random cloud
-                        RecognitionPipeline<PointCloudType>::input = preprocessor::removeOutliers(cloud, 0.3, 300);
-                    }
-                    else {
-                        RecognitionPipeline<PointCloudType>::input = cloud;
-                    }
-                    RecognitionPipeline<PointCloudType>::estimateSurfaceNormals();
+                    this->input = cloud;
+                    this->estimateSurfaceNormals();
                     describe();
                     models.push_back(descriptors);
                 }
