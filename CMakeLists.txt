@@ -66,6 +66,9 @@ add_executable (pipeline
         include/preprocessor/SIFTKeyPointDetector.h
         include/typedefs.h
         include/RecognitionPipeline.h
+        include/Hist308RecognitionPipeline.h
+        include/Hist33RecognitionPipeline.h
+        include/RecognitionPipelineFactory.h
         include/preprocessor/SurfaceNormalEstimator.h
         include/featuredescriptor/VPFHExtractor.h
         include/featuredescriptor/FeatureExtractor.h
