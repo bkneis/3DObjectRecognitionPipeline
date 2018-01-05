@@ -89,7 +89,7 @@ add_executable (pipeline
         include/Config.h
         include/classifier/Subject.h
         include/configdefs.h
-        include/classifier/Classifier.h
+        include/classifier/IClassifier.h
         include/classifier/KNN.h
         include/preprocessor/filters.h
         include/utils.h

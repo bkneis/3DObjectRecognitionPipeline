@@ -20,9 +20,9 @@ namespace pipeline {
                 : RecognitionPipeline<PointCloudType>(conf)
         {
             if (!conf->getClassificationStartegy().compare(knn)) {
-                classifier = new classifier::KNN();
+                classifier = new classifier::KNN<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
             } else {
-                classifier = new classifier::KNN();
+                classifier = new classifier::KNN<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
             }
             auto models = describeDatabase("../data/random");
             classifier->populateDatabase(models);
@@ -94,7 +94,7 @@ namespace pipeline {
         }
 
         GlobalDescriptorsPtr descriptors;
-        classifier::Classifier<GlobalDescriptorsPtr>* classifier;
+        classifier::IClassifier<GlobalDescriptorT, GlobalDescriptorsPtr>* classifier;
 
     };
 }
