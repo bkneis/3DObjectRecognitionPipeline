@@ -1,7 +1,12 @@
 #ifndef STEREORECOGNITION_SURFACENORMALESTIMATOR_H
 #define STEREORECOGNITION_SURFACENORMALESTIMATOR_H
 
-#include "typedefs.h"
+
+#ifdef USE_OMP
+#include <pcl/features/normal_3d_omp.h>
+#else
+#include <pcl/features/normal_3d.h>
+#endif
 
 #include <pcl/io/io.h>
 #include <pcl/features/normal_3d.h>
@@ -9,6 +14,8 @@
 #include <pcl/search/kdtree.h>
 #include <configdefs.h>
 #include <Config.h>
+
+#include "typedefs.h"
 
 namespace preprocessor {
 
@@ -21,7 +28,12 @@ namespace preprocessor {
         {
             pcl::console::print_info ("Estimating surface normals of point cloud \n");
 
+#ifdef USE_OMP
+            pcl::NormalEstimationOMP<PointT, NormalT> normal_estimation;
+#else
             pcl::NormalEstimation<PointT, NormalT> normal_estimation;
+#endif
+
             normal_estimation.setSearchMethod (pcl::search::Search<PointT>::Ptr (new pcl::search::KdTree<PointT>));
             double radius = std::stod(conf->get(APPROXIMATIONS, "radius"));
             normal_estimation.setRadiusSearch (radius);

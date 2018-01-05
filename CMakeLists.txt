@@ -27,7 +27,7 @@ if (OPENMP_FOUND)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
     add_definitions(-DUSE_OMP)
 else (OPENMP_FOUND)
-    message(STATUS "Open MP not found, the pipeline may not run optimally for parallel tasks.")
+    message(STATUS "Open MP not found, the pipeline may not run as optimal for parallel tasks.")
 endif()
 
 #add_subdirectory(/usr/src/dlib dlib_build)
