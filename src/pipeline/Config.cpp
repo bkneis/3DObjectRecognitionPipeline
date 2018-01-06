@@ -1,5 +1,5 @@
-#include <ConfigReader.h>
-#include "Config.h"
+#include <pipeline/ConfigReader.h>
+#include "pipeline/Config.h"
 
 void
 Config::addParameter(const std::string element, std::string parameter, std::string parameterValue)

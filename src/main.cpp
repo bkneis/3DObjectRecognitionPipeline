@@ -1,7 +1,7 @@
 #include <pcl/io/pcd_io.h>
 #include <acquisition/StereoVision.h>
 #include <typedefs.h>
-#include <Config.h>
+#include <pipeline/Config.h>
 #include "pipeline/RecognitionPipelineFactory.h"
 
 using namespace acquisition;

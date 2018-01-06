@@ -13,7 +13,7 @@
 #include <pcl/keypoints/sift_keypoint.h>
 #include <pcl/search/kdtree.h>
 #include <configdefs.h>
-#include <Config.h>
+#include <pipeline/Config.h>
 
 #include "typedefs.h"
 

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ConfigReader.h"
+#include "pipeline/ConfigReader.h"
 
 Config*
 ConfigReader::get(std::string pipelineYaml)

@@ -4,6 +4,9 @@
 #include <featuredescriptor/FPFHExtractor.h>
 #include <pcl/visualization/histogram_visualizer.h>
 #include <pcl/visualization/pcl_visualizer.h>
+#include <utils.h>
+#include <classifier/KNN.h>
+#include <classifier/SubjectNotFound.h>
 #include "RecognitionPipeline.h"
 
 namespace pipeline {
@@ -16,7 +19,13 @@ namespace pipeline {
         explicit Hist33RecognitionPipeline(Config* conf)
                 : RecognitionPipeline<PointCloudType>(conf)
         {
-
+            if (!conf->getClassificationStartegy().compare(knn)) {
+                classifier = new classifier::KNN<LocalDescriptorT, LocalDescriptors, LocalDescriptorsPtr>();
+            } else {
+                classifier = new classifier::KNN<LocalDescriptorT, LocalDescriptors, LocalDescriptorsPtr>();
+            }
+            auto models = describeDatabase("../data/random");
+            classifier->populateDatabase(models);
         }
 
         void
@@ -45,11 +54,41 @@ namespace pipeline {
         void
         classify() override
         {
-
+            try {
+                auto res = classifier->classify(descriptors);
+                std::cout << "The subject is " << res->name << std::endl;
+            }
+            catch (classifier::SubjectNotFound &ex) {
+                std::cout << ex.what() << std::endl;
+            }
         }
 
     protected:
+
+        std::vector<classifier::Subject<LocalDescriptorT>*>
+        describeDatabase(std::string clouds)
+        {
+            std::vector<classifier::Subject<LocalDescriptorT>*> models;
+            boost::filesystem::path targetDir(clouds);
+
+            boost::filesystem::directory_iterator it(targetDir), eod;
+
+            BOOST_FOREACH(boost::filesystem::path const &p, std::make_pair(it, eod)) {
+                if(boost::filesystem::is_regular_file(p)) {
+                    auto cloud = loadPointCloud<PointT>(p.string());
+                    this->input = cloud;
+                    this->estimateSurfaceNormals();
+                    describe();
+                    auto subject = new classifier::Subject<LocalDescriptorT>(p.stem().string(), descriptors);
+                    models.push_back(subject);
+                }
+            }
+
+            return models;
+        }
+
         LocalDescriptorsPtr descriptors;
+        classifier::IClassifier<LocalDescriptorT, LocalDescriptorsPtr>* classifier;
 
     };
 

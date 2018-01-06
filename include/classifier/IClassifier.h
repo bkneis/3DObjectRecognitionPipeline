@@ -14,7 +14,7 @@ namespace classifier {
         virtual Subject<FeatureT>* classify(FeatureDescriptorPtr subject) = 0;
         virtual void train(const std::vector<std::string> & filenames) = 0;
         virtual void loadModel(std::string filepath) = 0;
-        virtual void populateDatabase(std::vector<Subject<GlobalDescriptorT>*> models) = 0;
+        virtual void populateDatabase(std::vector<Subject<FeatureT>*> models) = 0;
 
     };
 

@@ -6,6 +6,7 @@
 #include <pcl/io/pcd_io.h>
 #include <utils.h>
 #include "IClassifier.h"
+#include "SubjectNotFound.h"
 
 
 namespace classifier {
@@ -28,9 +29,11 @@ namespace classifier {
             int i = nn_index[0];
             const int & best_match = nn_index[0];
 
-            Subject<FeatureT>* test = (models_[best_match]);
+            if (best_match > models_.size()) {
+                throw SubjectNotFound("The nearest neighbour index is out of bounds so the classifier has failed");
+            }
 
-            return test;
+            return (models_[best_match]);
         }
 
         void
@@ -42,7 +45,7 @@ namespace classifier {
             for (size_t i = 0; i < n; ++i) {
                 *descriptors_ += *(models_[i]->descriptor);
             }
-            kdtree_ = pcl::KdTreeFLANN<GlobalDescriptorT>::Ptr (new pcl::KdTreeFLANN<FeatureT>);
+            kdtree_ = typename pcl::KdTreeFLANN<FeatureT>::Ptr (new pcl::KdTreeFLANN<FeatureT>);
             kdtree_->setInputCloud (descriptors_);
         }
 
