@@ -17,10 +17,10 @@ namespace pipeline {
         create(Config* conf)
         {
             if (!conf->getFeatureDescriptorStrategy().compare(FPFH)) {
-                return new Hist308RecognitionPipeline<PointCloudType>(conf);
+                return new Hist33RecognitionPipeline<PointCloudType>(conf);
             }
 
-            return new Hist33RecognitionPipeline<PointCloudType>(conf);
+            return new Hist308RecognitionPipeline<PointCloudType>(conf);
         }
 
     };
