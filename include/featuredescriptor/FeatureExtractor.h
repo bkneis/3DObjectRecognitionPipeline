@@ -2,7 +2,7 @@
 #define STEREORECOGNITION_FEATUREEXTRACTOR_H
 
 #include <typedefs.h>
-#include <Config.h>
+#include <pipeline/Config.h>
 
 namespace featuredescriptor {
 

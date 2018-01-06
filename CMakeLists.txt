@@ -83,11 +83,11 @@ add_executable (pipeline
         include/featuredescriptor/FeatureExtractor.h
         include/preprocessor/KeypointDetector.h
         include/featuredescriptor/FPFHExtractor.h
-        src/ConfigReader.cpp
-        include/ConfigReader.h
+        src/pipeline/ConfigReader.cpp
+        include/pipeline/ConfigReader.h
         include/classifier/SubjectNotFound.h
-        src/Config.cpp
-        include/Config.h
+        src/pipeline/Config.cpp
+        include/pipeline/Config.h
         include/classifier/Subject.h
         include/configdefs.h
         include/classifier/IClassifier.h
@@ -113,7 +113,7 @@ target_link_libraries (pipeline
 
 # Helper macro to build and link utility libraries
 macro (build_util name)
-    add_executable (${name} src/${name}.cpp)
+    add_executable (${name} apps/${name}.cpp)
     target_link_libraries (${name} ${PCL_LIBRARIES} ${OpenCV_LIBS})
 endmacro()
 
