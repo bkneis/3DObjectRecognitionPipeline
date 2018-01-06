@@ -85,6 +85,7 @@ add_executable (pipeline
         include/featuredescriptor/FPFHExtractor.h
         src/ConfigReader.cpp
         include/ConfigReader.h
+        include/classifier/SubjectNotFound.h
         src/Config.cpp
         include/Config.h
         include/classifier/Subject.h
