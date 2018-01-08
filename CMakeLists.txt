@@ -30,6 +30,9 @@ else (OPENMP_FOUND)
     message(STATUS "Open MP not found, the pipeline may not run as optimal for parallel tasks.")
 endif()
 
+# Warning this will only work for gcc
+#SET(GCC_COVERAGE_COMPILE_FLAGS "-m64")
+
 #add_subdirectory(/usr/src/dlib dlib_build)
 
 # Find OpenCV, you may need to set OpenCV_DIR variable
@@ -100,7 +103,8 @@ add_executable (pipeline
         src/acquisition/CCFaceDetector.cpp
         include/acquisition/CCFaceDetector.h
         include/acquisition/StereoVision.h
-        include/reconstruct.h)
+        include/reconstruct.h
+        include/classifier/Svm.h)
 
 # TODO change hard coded linkage to libyaml
 target_link_libraries (pipeline
@@ -122,3 +126,4 @@ build_util(viewer)
 build_util(faceDetector)
 build_util(reconstruct3D)
 build_util(generateSyntheticData)
+build_util(svm)
