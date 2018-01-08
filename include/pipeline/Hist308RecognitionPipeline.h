@@ -6,6 +6,7 @@
 #include <featuredescriptor/VPFHExtractor.h>
 #include <featuredescriptor/CVPFHExtractor.h>
 #include <classifier/KNN.h>
+#include <classifier/Svm.h>
 #include "RecognitionPipeline.h"
 
 namespace pipeline {
@@ -21,6 +22,8 @@ namespace pipeline {
         {
             if (!conf->getClassificationStartegy().compare(knn)) {
                 classifier = new classifier::KNN<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
+            } else if (!conf->getClassificationStartegy().compare("SVM")) {
+                classifier = new classifier::Svm<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
             } else {
                 classifier = new classifier::KNN<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
             }
