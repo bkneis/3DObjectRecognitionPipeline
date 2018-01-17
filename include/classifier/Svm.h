@@ -5,6 +5,9 @@
 #include <opencv/ml.h>
 #include "IClassifier.h"
 
+#define NTRAINING_SAMPLES   100
+#define FRAC_LINEAR_SEP     0.9f
+
 namespace classifier {
 
     typedef struct SvmData {
@@ -23,11 +26,11 @@ namespace classifier {
         }
 
         Subject<FeatureT>* classify(FeatureDescriptorPtr subject) override {
-            cv::Mat responses(1, 308, CV_32F);
-            for(int j = 0; j < responses.cols; j++) {
-                responses.at<double>(0, j) = subject->points[0].histogram[j];
-            }
-            float res = svm->predict(responses, responses);
+            cv::Mat responses(1, 308, CV_32F, subject->points[0].histogram);
+//            for(int j = 0; j < responses.cols; j++) {
+//                responses.at<double>(0, j) = subject->points[0].histogram[j];
+//            }
+            float res = svm->predict(responses);
         }
 
         void train(const std::vector<std::string> & filenames) override {}
@@ -37,16 +40,34 @@ namespace classifier {
         void
         populateDatabase(std::vector<classifier::Subject<FeatureT>*> models) override
         {
-            auto data = convertSubjectsToMat(models);
+            int numModels = static_cast<int>(models.size());
+            float descriptors[numModels][308];
+            int labels_[numModels][1];
+
+            for (int i = 0; i < numModels; i++) {
+                memcpy(descriptors[i], models.at(i)->descriptor->points[0].histogram, sizeof(float) * numModels);
+                //descriptors[i] = models.at(i)->descriptor->points[0].histogram;
+                //labels_[i] = {i};
+                int l[] = {i};
+                memcpy(labels_[i], l, sizeof(int));
+            }
+
+            cv::Mat trainData(static_cast<int>(models.size()), 308, CV_32FC1, descriptors);
+            cv::Mat labels   (static_cast<int>(models.size()), 1, CV_32SC1, labels_);
 
             svm->setGamma(0.50625);
             svm->setC(12.5);
             svm->setKernel(cv::ml::SVM::RBF);
             svm->setType(cv::ml::SVM::C_SVC);
-            cv::Ptr<cv::ml::TrainData> td = cv::ml::TrainData::create(data.train, cv::ml::ROW_SAMPLE, data.labels);
-            svm->train(td);
-            // svm->trainAuto(td);
-            svm->save("/tmp/svm.yml");
+            // cv::Ptr<cv::ml::TrainData> td = cv::ml::TrainData::create(data.train, cv::ml::ROW_SAMPLE, data.labels);
+            cv::Ptr<cv::ml::TrainData> td = cv::ml::TrainData::create(trainData, cv::ml::ROW_SAMPLE, labels);
+            bool trained = svm->train(td);
+            if (trained) {
+                svm->save("/tmp/svm.yml");
+            } else {
+                std::cout << "ERROR: Could not train the SVM";
+            }
+            //svm->trainAuto(td);
             // svm->predict(testMat, testResponse);
         }
 
