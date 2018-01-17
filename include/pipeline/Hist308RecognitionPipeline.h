@@ -7,6 +7,7 @@
 #include <featuredescriptor/CVPFHExtractor.h>
 #include <classifier/KNN.h>
 #include <classifier/Svm.h>
+#include <classifier/NormalBayes.h>
 #include "RecognitionPipeline.h"
 
 namespace pipeline {
@@ -24,6 +25,8 @@ namespace pipeline {
                 classifier = new classifier::KNN<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
             } else if (!conf->getClassificationStartegy().compare("SVM")) {
                 classifier = new classifier::Svm<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
+            } else if (!conf->getClassificationStartegy().compare("NB")) {
+                classifier = new classifier::NormalBayes<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
             } else {
                 classifier = new classifier::KNN<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
             }
