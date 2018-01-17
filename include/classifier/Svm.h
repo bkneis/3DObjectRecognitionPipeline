@@ -31,6 +31,11 @@ namespace classifier {
 //                responses.at<double>(0, j) = subject->points[0].histogram[j];
 //            }
             float res = svm->predict(responses);
+            std::cout << "res " << res << std::endl;
+            if (res > subjects.size()) {
+                std::cout << "ERR" << std::endl;
+            }
+            return subjects.at(res);
         }
 
         void train(const std::vector<std::string> & filenames) override {}
@@ -40,6 +45,7 @@ namespace classifier {
         void
         populateDatabase(std::vector<classifier::Subject<FeatureT>*> models) override
         {
+            subjects = models;
             int numModels = static_cast<int>(models.size());
             float descriptors[numModels][308];
             int labels_[numModels][1];
@@ -95,9 +101,9 @@ namespace classifier {
 
         cv::Ptr<cv::ml::SVM> svm;
 
-    private:
+    protected:
 
-
+        std::vector<classifier::Subject<FeatureT>*> subjects;
 
     };
 
