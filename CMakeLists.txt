@@ -104,7 +104,7 @@ add_executable (pipeline
         include/acquisition/CCFaceDetector.h
         include/acquisition/StereoVision.h
         include/reconstruct.h
-        include/classifier/Svm.h)
+        include/classifier/Svm.h include/classifier/NormalBayes.h)
 
 # TODO change hard coded linkage to libyaml
 target_link_libraries (pipeline
