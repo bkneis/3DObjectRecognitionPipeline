@@ -15,7 +15,7 @@ Pipeline:
       parameters:
         featureRadius: 0.2
     Classification:
-      strategy: SVM
+      strategy: NB
       parameters:
         k: 20
         Gamma: 0.50625

@@ -23,11 +23,13 @@ namespace classifier {
         }
 
         Subject<FeatureT>* classify(FeatureDescriptorPtr subject) override {
-            cv::Mat responses(1, 308, CV_32F);
-            for(int j = 0; j < responses.cols; j++) {
-                responses.at<double>(0, j) = subject->points[0].histogram[j];
-            }
+            cv::Mat responses(1, 308, CV_32F, subject->points[0].histogram);
             float res = nbc->predict(responses);
+            std::cout << "res " << res << std::endl;
+            if (res > subjects.size()) {
+                std::cout << "ERR" << std::endl;
+            }
+            return subjects.at(res);
         }
 
         void train(const std::vector<std::string> & filenames) override {}
@@ -37,41 +39,19 @@ namespace classifier {
         void
         populateDatabase(std::vector<classifier::Subject<FeatureT>*> models) override
         {
-            const int WIDTH = 512, HEIGHT = 512;
-            //--------------------- 1. Set up training data randomly ---------------------------------------
-            cv::Mat trainData(2*NTRAINING_SAMPLES, 308, CV_32FC1);
-            cv::Mat labels   (2*NTRAINING_SAMPLES, 1, CV_32SC1);
-            cv::RNG rng(100); // Random value generation class
-            // Set up the linearly separable part of the training data
-            int nLinearSamples = (int) (FRAC_LINEAR_SEP * NTRAINING_SAMPLES);
-            // Generate random points for the class 1
-            cv::Mat trainClass = trainData.rowRange(0, nLinearSamples);
-            // The x coordinate of the points is in [0, 0.4)
-            cv::Mat c = trainClass.colRange(0, 1);
-            rng.fill(c, cv::RNG::UNIFORM, cv::Scalar(1), cv::Scalar(0.4 * WIDTH));
-            // The y coordinate of the points is in [0, 1)
-            c = trainClass.colRange(1,2);
-            rng.fill(c, cv::RNG::UNIFORM, cv::Scalar(1), cv::Scalar(HEIGHT));
-            // Generate random points for the class 2
-            trainClass = trainData.rowRange(2*NTRAINING_SAMPLES-nLinearSamples, 2*NTRAINING_SAMPLES);
-            // The x coordinate of the points is in [0.6, 1]
-            c = trainClass.colRange(0 , 1);
-            rng.fill(c, cv::RNG::UNIFORM, cv::Scalar(0.6*WIDTH), cv::Scalar(WIDTH));
-            // The y coordinate of the points is in [0, 1)
-            c = trainClass.colRange(1,2);
-            rng.fill(c, cv::RNG::UNIFORM, cv::Scalar(1), cv::Scalar(HEIGHT));
-            //------------------ Set up the non-linearly separable part of the training data ---------------
-            // Generate random points for the classes 1 and 2
-            trainClass = trainData.rowRange(  nLinearSamples, 2*NTRAINING_SAMPLES-nLinearSamples);
-            // The x coordinate of the points is in [0.4, 0.6)
-            c = trainClass.colRange(0,1);
-            rng.fill(c, cv::RNG::UNIFORM, cv::Scalar(0.4*WIDTH), cv::Scalar(0.6*WIDTH));
-            // The y coordinate of the points is in [0, 1)
-            c = trainClass.colRange(1,2);
-            rng.fill(c, cv::RNG::UNIFORM, cv::Scalar(1), cv::Scalar(HEIGHT));
-            //------------------------- Set up the labels for the classes ---------------------------------
-            labels.rowRange(                0,   NTRAINING_SAMPLES).setTo(1);  // Class 1
-            labels.rowRange(NTRAINING_SAMPLES, 2*NTRAINING_SAMPLES).setTo(2);  // Class 2
+            subjects = models;
+            int numModels = static_cast<int>(models.size());
+            float descriptors[numModels][308];
+            int labels_[numModels][1];
+
+            for (int i = 0; i < numModels; i++) {
+                memcpy(descriptors[i], models.at(i)->descriptor->points[0].histogram, sizeof(float) * numModels);
+                int l[] = {i};
+                memcpy(labels_[i], l, sizeof(int));
+            }
+
+            cv::Mat trainData(static_cast<int>(models.size()), 308, CV_32FC1, descriptors);
+            cv::Mat labels   (static_cast<int>(models.size()), 1, CV_32SC1, labels_);
 
             nbc->train(trainData, cv::ml::ROW_SAMPLE, labels);
         }
@@ -123,6 +103,7 @@ namespace classifier {
         }
 
         cv::Ptr<cv::ml::NormalBayesClassifier> nbc;
+        std::vector<classifier::Subject<FeatureT>*> subjects;
 
     };
 
