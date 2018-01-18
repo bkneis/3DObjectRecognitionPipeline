@@ -20,9 +20,11 @@ namespace classifier {
 
     public:
 
-        Svm()
+        Svm(Config* conf_, std::vector<classifier::Subject<FeatureT>*> subjects_)
         {
             svm = cv::ml::SVM::create();
+            conf = conf_;
+            subjects = subjects_;
         }
 
         Subject<FeatureT>* classify(FeatureDescriptorPtr subject) override {
@@ -37,7 +39,11 @@ namespace classifier {
 
         void train(const std::vector<std::string> & filenames) override {}
 
-        void loadModel(std::string filepath) override {}
+        void
+        loadModel(std::string filepath) override
+        {
+            svm = cv::ml::SVM::load(filepath);
+        }
 
         void
         populateDatabase(std::vector<classifier::Subject<FeatureT>*> models) override
@@ -56,11 +62,12 @@ namespace classifier {
             cv::Mat trainData(static_cast<int>(models.size()), 308, CV_32FC1, descriptors);
             cv::Mat labels   (static_cast<int>(models.size()), 1, CV_32SC1, labels_);
 
-            svm->setGamma(0.50625);
-            svm->setC(12.5);
+            svm->setGamma(10); // 0.50625
+            svm->setC(100); // 12.5
             svm->setKernel(cv::ml::SVM::RBF);
             svm->setType(cv::ml::SVM::C_SVC);
             cv::Ptr<cv::ml::TrainData> td = cv::ml::TrainData::create(trainData, cv::ml::ROW_SAMPLE, labels);
+            // Can't use auto train as synthetic data doesnt fit into K folds
             // bool trained = svm->trainAuto(td, 2);
             bool trained = svm->train(td);
             if (trained) {
@@ -97,6 +104,7 @@ namespace classifier {
     protected:
 
         std::vector<classifier::Subject<FeatureT>*> subjects;
+        Config* conf{};
 
     };
 
