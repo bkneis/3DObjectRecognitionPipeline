@@ -46,7 +46,11 @@ std::string Config::getClassificationStartegy() {
 }
 
 std::string Config::get(std::string element, std::string parameter) {
-    return this->parameters.at(element).at(parameter);
+    try {
+        return this->parameters.at(element).at(parameter);
+    } catch (std::out_of_range err) {
+        return "";
+    }
 }
 
 Config *Config::create(std::string filepath) {
