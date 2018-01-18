@@ -18,20 +18,29 @@ namespace pipeline {
 
     public:
 
-        explicit Hist308RecognitionPipeline(Config *conf)
+        explicit Hist308RecognitionPipeline(Config *conf) // NOLINT
                 : RecognitionPipeline<PointCloudType>(conf)
         {
-            if (!conf->getClassificationStartegy().compare(knn)) {
+            std::string classificationStrategy = conf->getClassificationStartegy();
+
+            auto models = describeDatabase("../data/random");
+
+            if (classificationStrategy == knn) {
                 classifier = new classifier::KNN<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
-            } else if (!conf->getClassificationStartegy().compare("SVM")) {
-                classifier = new classifier::Svm<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
-            } else if (!conf->getClassificationStartegy().compare("NB")) {
+            } else if (classificationStrategy == "SVM") {
+                classifier = new classifier::Svm<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>(conf, models);
+            } else if (classificationStrategy == "NB") {
                 classifier = new classifier::NormalBayes<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
             } else {
                 classifier = new classifier::KNN<GlobalDescriptorT, GlobalDescriptors, GlobalDescriptorsPtr>();
             }
-            auto models = describeDatabase("../data/random");
-            classifier->populateDatabase(models);
+
+            std::string modelPath = conf->get("SVM", "modelPath");
+            if (modelPath == "") {
+                classifier->populateDatabase(models);
+            } else {
+                classifier->loadModel(modelPath);
+            }
         }
 
         void
