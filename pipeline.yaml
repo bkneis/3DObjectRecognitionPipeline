@@ -15,11 +15,11 @@ Pipeline:
       parameters:
         featureRadius: 0.2
     Classification:
-      strategy: NB
+      strategy: SVM
       parameters:
-        k: 20
-        Gamma: 0.50625
-        C: 12.5
-        Kernel: RBF
-        Type: C_SVC
+        gamma: 0.50625
+        c: 12.5
+        kernel: RBF
+        type: C_SVC
         auto: true
+        modelPath: /tmp/svm.yml
