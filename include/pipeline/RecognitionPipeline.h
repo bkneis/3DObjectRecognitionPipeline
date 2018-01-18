@@ -46,11 +46,13 @@ namespace pipeline {
             estimateSurfaceNormals();
             describe();
             classify();
-            visualize();
 
+            // Log total time taken for feature extraction and classification
             auto t2 = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
             std::cout << "Pipeline took " << duration << " micro seconds" << std::endl;
+
+            visualize();
         }
 
     protected:
