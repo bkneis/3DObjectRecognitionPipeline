@@ -15,7 +15,7 @@ Pipeline:
       parameters:
         featureRadius: 0.2
     Classification:
-      strategy: SVM
+      strategy: KNN
       parameters:
         gamma: 0.50625
         c: 12.5
